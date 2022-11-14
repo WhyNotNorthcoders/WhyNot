@@ -1,7 +1,9 @@
-import { View, Text } from 'react-native'
+import * as React from "react";
+import { View, Text, useWindowDimensions } from "react-native";
+import { TabView, SceneMap } from "react-native-tab-view";
 
 const SearchTopTab = () => {
-    return <View><Text>SearchTopTab</Text></View>
-}
+  return <View><Text>Search Tab Bar</Text></View>
+};
 
-export default SearchTopTab
+export default SearchTopTab;

@@ -15,7 +15,7 @@ const SearchBar = ({ clicked, setClicked, searchPhrase, setSearchPhrase }) => {
           name="search"
           size={20}
           color="black"
-          style={{ marginLeft: 5, position: "absolute" }}
+          style={{ marginLeft: 15, position: "absolute" }}
         />
 
         <TextInput
@@ -33,7 +33,7 @@ const SearchBar = ({ clicked, setClicked, searchPhrase, setSearchPhrase }) => {
             name="cross"
             size={20}
             color="black"
-            style={{ padding: 1 }}
+            // style={{ padding: 1 }}
             onPress={() => {
               Keyboard.dismiss();
               setClicked(false);
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   searchBar__unclicked: {
     padding: 10,
     flexDirection: "row",
-    width: "92%",
+    width: "90%",
     backgroundColor: "#d9dbda",
     borderRadius: 15,
     alignItems: "center",
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   searchBar__clicked: {
     padding: 10,
     flexDirection: "row",
-    width: "92%",
+    width: "90%",
     backgroundColor: "#d9dbda",
     borderRadius: 15,
     alignItems: "center",
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   },
   input: {
     fontSize: 20,
-    marginLeft: 20,
-    width: "90%"
+    marginLeft: 30,
+    width: "87%"
   },
 });
