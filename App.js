@@ -6,6 +6,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import Home from "./components/Home";
 import Search from "./components/Search";
 import Messages from "./components/Messages";
+import Profile from "./components/Profile";
 
 const Tab = createBottomTabNavigator();
 export default function App() {
@@ -21,6 +22,8 @@ export default function App() {
               iconName = focused ? "search" : "search";
             } else if (route.name === "Messages") {
               iconName = focused ? "phone-portrait" : "phone-portrait-outline";
+            } else if (route.name === "Profile") {
+              iconName = focused ? "person" : "person-outline";
             }
             return <Ionicons name={iconName} size={size} color={color} />;
           },
@@ -31,6 +34,7 @@ export default function App() {
         <Tab.Screen name="Home" component={Home} />
         <Tab.Screen name="Search" component={Search} />
         <Tab.Screen name="Messages" component={Messages} />
+        <Tab.Screen name="Profile" component={Profile} />
       </Tab.Navigator>
     </NavigationContainer>
   );
