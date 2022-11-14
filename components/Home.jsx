@@ -48,6 +48,7 @@ const Home = () => {
       scrollView2: {
         backgroundColor: 'grey',
         marginHorizontal: 20,
+        marginBottom: 20,
         height: '50%',
       },
       text: {
