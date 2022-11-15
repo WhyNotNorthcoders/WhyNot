@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Text, View, StyleSheet } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import SearchTop from "./SearchTop";
 import SearchUser from "./SearchUsers";
@@ -12,36 +11,37 @@ function SearchTopTab() {
       initialRouteName="Route1"
       screenOptions={{
         tabBarIndicatorStyle: {
-          height: 3,
-          backgroundColor: "#2F3E46",
+          borderWidth: 1,
+          borderColor: "#CAD2C5",
+          height: "100%",
+          backgroundColor: "#354F52",
         },
         tabBarLabelStyle: {
           color: "#CAD2C5",
           fontSize: 14,
         },
         tabBarStyle: {
-          backgroundColor: "#354F52",
+          backgroundColor: "#2F3E46",
           borderBottomWidth: 0.5,
-          borderBottomColor: "black",
-          tabBarInactiveTintColor: "#2F3E46",
-          tabBarPressColor: "pink",
+          borderBottomColor: "gray",
+          tabBarInactiveTintColor: "#354F52",
         },
       }}
     >
       <Tab.Screen
         name="SearchTop"
         component={SearchTop}
-        options={{ tabBarLabel: "Top", tabBarPressColor: "#84A98C" }}
+        options={{ tabBarLabel: "Top"}}
       />
       <Tab.Screen
         name="SearchUser"
         component={SearchUser}
-        options={{ tabBarLabel: "User", tabBarPressColor: "#84A98C" }}
+        options={{ tabBarLabel: "User"}}
       />
       <Tab.Screen
         name="SearchEvent"
         component={SearchEvent}
-        options={{ tabBarLabel: "Events", tabBarPressColor: "#84A98C" }}
+        options={{ tabBarLabel: "Events" }}
       />
     </Tab.Navigator>
   );
