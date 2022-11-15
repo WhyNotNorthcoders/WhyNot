@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
+import { StyleSheet } from "react-native";
 import LoginScreen from "./components/LoginScreen";
 import ActivePages from "./components/ActivePages";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -20,11 +21,18 @@ export default function App() {
       <Stack.Navigator>
         {LoggedIn ? (
           <Stack.Group>
-            <Stack.Screen name="Why Not?" component={ActivePages} />
+            <Stack.Screen
+              name="Why Not?"
+              component={ActivePages}
+              options={{
+                headerStyle: { backgroundColor: "#2F3E46", height: 94 },
+                headerTintColor: "#CAD2C5",
+              }}
+            />
           </Stack.Group>
         ) : (
           <Stack.Group>
-            <Stack.Screen name="LoginScreen">
+            <Stack.Screen name="LoginScreen" options={{ headerShown: false }}>
               {(props) => <LoginScreen {...props} extraData={toggleLogIn} />}
             </Stack.Screen>
           </Stack.Group>

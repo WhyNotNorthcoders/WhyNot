@@ -29,10 +29,10 @@ const Tabbar = () => {
         tabBarInactiveTintColor: "gray",
       })}
     >
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Search" component={Search} />
-      <Tab.Screen name="Messages" component={Messages} />
-      <Tab.Screen name="Profile" component={Profile} />
+      <Tab.Screen name="Home" component={Home} options={{ headerShown: false }}/>
+      <Tab.Screen name="Search" component={Search} options={{ headerShown: false }}/>
+      <Tab.Screen name="Messages" component={Messages} options={{ headerShown: false }}/>
+      <Tab.Screen name="Profile" component={Profile} options={{ headerShown: false }}/>
     </Tab.Navigator>
   );
 };
