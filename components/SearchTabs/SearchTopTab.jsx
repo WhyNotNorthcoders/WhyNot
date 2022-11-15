@@ -12,9 +12,11 @@ function SearchTopTab() {
       initialRouteName="Route1"
       screenOptions={{
         tabBarIndicatorStyle: {
+          height: 3,
           backgroundColor: "#2F3E46",
         },
         tabBarLabelStyle: {
+          color: "#CAD2C5",
           fontSize: 14,
         },
         tabBarStyle: {
