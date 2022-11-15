@@ -1,6 +1,6 @@
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Home from "./Home";
-import Search from "./Search";
+import Search from "../screens/Search";
 import Messages from "./Messages";
 import Profile from "./Profile";
 import { NavigationContainer } from "@react-navigation/native";
