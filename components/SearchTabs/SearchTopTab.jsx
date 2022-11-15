@@ -16,7 +16,6 @@ function SearchTopTab() {
         },
         tabBarLabelStyle: {
           fontSize: 14,
-          fontFamily: "Helvetica"
         },
         tabBarStyle: {
           backgroundColor: "#A8A8A8",
