@@ -1,11 +1,7 @@
-// import { Text, View } from "react-native";
+import { Text } from "react-native";
 
-// const Header = () => {
-//   return (
-//     <View>
-//       <Text>Why Not?</Text>
-//     </View>
-//   );
-// };
+const Header = () => {
+  return <Text>Why Not</Text>;
+};
 
-// export default Header;
+export default Header;
