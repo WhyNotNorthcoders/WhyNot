@@ -25,13 +25,17 @@ const SearchTop = () => {
 
 const styles = StyleSheet.create({
   listContainer: {
-    backgroundColor: "52796F",
+    backgroundColor: "#52796F",
   },
   item: {
     textAlign: "center",
-    backgroundColor: "#52796F",
+    backgroundColor: "#84A98C",
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: "#CAD2C5",
     padding: 100,
     fontSize: 20,
+    margin: 5
   },
 });
 

@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#354F52"
   },
   searchContainer: {
-    backgroundColor: "#354F52",
+    backgroundColor: "#2F3E46",
   },
   
 });

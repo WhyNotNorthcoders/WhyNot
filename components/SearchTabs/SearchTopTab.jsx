@@ -12,16 +12,16 @@ function SearchTopTab() {
       initialRouteName="Route1"
       screenOptions={{
         tabBarIndicatorStyle: {
-          backgroundColor: "#354F52",
+          backgroundColor: "#2F3E46",
         },
         tabBarLabelStyle: {
           fontSize: 14,
         },
         tabBarStyle: {
-          backgroundColor: "#84A98C",
+          backgroundColor: "#354F52",
           borderBottomWidth: 0.5,
           borderBottomColor: "black",
-          tabBarInactiveTintColor: "#84A98C",
+          tabBarInactiveTintColor: "#2F3E46",
           tabBarPressColor: "pink",
         },
       }}
@@ -29,17 +29,17 @@ function SearchTopTab() {
       <Tab.Screen
         name="SearchTop"
         component={SearchTop}
-        options={{ tabBarLabel: "Top", tabBarPressColor: "#354F52" }}
+        options={{ tabBarLabel: "Top", tabBarPressColor: "#84A98C" }}
       />
       <Tab.Screen
         name="SearchUser"
         component={SearchUser}
-        options={{ tabBarLabel: "User", tabBarPressColor: "#354F52" }}
+        options={{ tabBarLabel: "User", tabBarPressColor: "#84A98C" }}
       />
       <Tab.Screen
         name="SearchEvent"
         component={SearchEvent}
-        options={{ tabBarLabel: "Events", tabBarPressColor: "#354F52" }}
+        options={{ tabBarLabel: "Events", tabBarPressColor: "#84A98C" }}
       />
     </Tab.Navigator>
   );
