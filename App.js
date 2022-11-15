@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useState } from "react";
-import { StyleSheet } from "react-native";
 import LoginScreen from "./components/LoginScreen";
 import ActivePages from "./components/ActivePages";
 import { createStackNavigator } from "@react-navigation/stack";

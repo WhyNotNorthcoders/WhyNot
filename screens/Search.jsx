@@ -51,11 +51,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   topTabContainer: {
-    flex:4,
+    flex:1,
     backgroundColor: "#354F52"
   },
   searchContainer: {
     backgroundColor: "#2F3E46",
+    paddingBottom: 1,
   },
   
 });
