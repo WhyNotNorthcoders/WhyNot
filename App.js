@@ -9,7 +9,7 @@ import { userContext } from "./context";
 const Stack = createStackNavigator();
 
 export default function App() {
-  const [LoggedIn, setLoggedIn] = useState(false);
+  const [LoggedIn, setLoggedIn] = useState(true);
 
   const toggleLogIn = () => {
     setLoggedIn(true);
