@@ -23,7 +23,7 @@ export const auth = getAuth();
 export const database = getFirestore(app);
 
 //collection ref
-export const colRef = collection(database, "users");
+// export const colRef = collection(database, "users");
 
 //get collection data
 // getDocs(colRef).then((snapshot) => {

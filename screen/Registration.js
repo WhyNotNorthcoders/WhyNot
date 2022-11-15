@@ -3,7 +3,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, colRef, database } from "../config/firebaseConfig";
 
 import { Button, StyleSheet, TextInput, View } from "react-native";
-import { addDoc, Firestore } from "firebase/firestore";
+import { doc, setDoc, collection, addDoc } from "firebase/firestore";
 import { FirebaseError } from "firebase/app";
 
 export default function Registration() {
@@ -19,11 +19,10 @@ export default function Registration() {
       alert();
     }
     createUserWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        const userId = auth.currentUser.uid;
-        console.log(userId);
-        const res = colRef.doc(userId);
-        addDoc(res, {
+      .then((registeredUser) => {
+        const userId = registeredUser.user.uid;
+
+        setDoc(doc(database, "users", userId), {
           username: username,
           email: email,
           location: location,
@@ -40,6 +39,12 @@ export default function Registration() {
       })
       .catch((err) => {
         alert(err.message);
+        setUsername("");
+        setEmail("");
+        setAge("");
+        setLocation("");
+        setConfirmPassword("");
+        setPassword("");
       });
   };
   return (
