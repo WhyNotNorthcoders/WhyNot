@@ -27,5 +27,5 @@ export const database = getFirestore(app);
 
 //get collection data
 // getDocs(colRef).then((snapshot) => {
-//   console.log(snapshot.docs);
+//   console. log(snapshot.docs);
 // });

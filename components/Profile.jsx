@@ -1,27 +1,46 @@
-import { FlatList ,StyleSheet, Text, SafeAreaView, StatusBar , ScrollView, View , TouchableOpacity} from 'react-native';
-import { useState } from 'react';
-
-const DATA = [
-  {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-    title: "First Item",
-  },
-  {
-    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-    title: "Second Item",
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e29d72",
-    title: "Third Item",
-  },
-];
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  SafeAreaView,
+  StatusBar,
+  ScrollView,
+  View,
+  TouchableOpacity,
+} from "react-native";
+import { useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { database } from "../config/firebaseConfig";
 
 const Profile = () => {
+  const [DATA, setData] = useState([]);
 
+  const bucketRef = collection(
+    database,
+    "users",
+    "BdmUND7DgscJUL9YKMWQprRNTrA3",
+    "bucketList"
+  );
+
+  useEffect(() => {
+    getDocs(bucketRef)
+      .then((snapshot) => {
+        let list = [];
+        snapshot.docs.forEach((doc) => {
+          list.push({ ...doc.data(), id: doc.id });
+        });
+
+        setData(list);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  }, [DATA]);
 
   const Item = ({ item, onPress, backgroundColor, textColor }) => (
     <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
-      <Text style={[styles.title, textColor]}>{item.title}</Text>
+      <Text style={[styles.titles, textColor]}>Title: {item.title}</Text>
+      <Text style={[styles.titles, textColor]}>Category: {item.category}</Text>
     </TouchableOpacity>
   );
 
@@ -29,7 +48,7 @@ const Profile = () => {
 
   const renderItem = ({ item }) => {
     const backgroundColor = item.id === selectedId ? "#CAD2C5" : "#84A98C";
-    const color = item.id === selectedId ? 'white' : 'white';
+    const color = item.id === selectedId ? "white" : "white";
 
     return (
       <Item
@@ -43,27 +62,27 @@ const Profile = () => {
 
   return (
     <>
-    <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <Text style={styles.titles}>Bucket List</Text>
         <FlatList
-        style={styles.list}
-        data={DATA}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-        extraData={selectedId}
-      />
-      <Text style={styles.titles}>Recently Completed</Text>
-      <FlatList
-        style={styles.list}
-        data={DATA}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-        extraData={selectedId}
-      />
-    </SafeAreaView>
+          style={styles.list}
+          data={DATA}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+          extraData={selectedId}
+        />
+        <Text style={styles.titles}>Recently Completed</Text>
+        <FlatList
+          style={styles.list}
+          data={DATA}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+          extraData={selectedId}
+        />
+      </SafeAreaView>
     </>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -72,22 +91,22 @@ const styles = StyleSheet.create({
   },
   list: {
     backgroundColor: "#52796F",
-    height: '100%',
+    height: "100%",
     margin: 10,
     borderRadius: 15,
-  }, 
+  },
   text: {
     color: "#CAD2C5",
     fontSize: 42,
   },
   titles: {
     color: "#CAD2C5",
-    padding:10,
-    fontSize: 25,
-    textAlign: "center"
+    padding: 10,
+    fontSize: 18,
+    textAlign: "center",
   },
   item: {
-    padding: 20,
+    padding: 10,
     marginVertical: 8,
     marginHorizontal: 16,
     borderStyle: "solid",
@@ -97,4 +116,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Profile
+export default Profile;
