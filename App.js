@@ -8,20 +8,23 @@ import ActivePages from "./components/ActivePages";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { userContext } from "./context";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./config/firebaseConfig";
 
 const Stack = createStackNavigator();
 
 export default function App() {
   const [LoggedIn, setLoggedIn] = useState(false);
 
-  const toggleLogIn = () => {
-    setLoggedIn(true);
-  };
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setLoggedIn(true);
+    } else {
+      setLoggedIn(false);
+    }
+  });
 
   return (
-    // <View style={styles.container}>
-    //   <Registration />
-    // </View>
     <userContext.Provider value={setLoggedIn}>
       <NavigationContainer>
         <Stack.Navigator>
@@ -32,7 +35,7 @@ export default function App() {
           ) : (
             <Stack.Group>
               <Stack.Screen name="LoginScreen">
-                {(props) => <LoginScreen {...props} extraData={toggleLogIn} />}
+                <LoginScreen component={LoginScreen} />
               </Stack.Screen>
             </Stack.Group>
           )}
