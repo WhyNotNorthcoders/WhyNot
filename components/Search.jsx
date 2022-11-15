@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   StatusBar,
   StyleSheet,
+  Dimensions
 } from "react-native";
 import SearchBar from "./SearchBar";
 import SearchTopTab from "./SearchTopTab";
