@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from "react-native";
 
 const SearchEvent = () => {
   const testData = [
@@ -17,7 +17,7 @@ const SearchEvent = () => {
     <View style={styles.listContainer}>
       <FlatList
         data={testData}
-        renderItem={({ item }) => <Text style={styles.item}>{item.title}</Text>}
+        renderItem={({ item }) => <TouchableOpacity><Text style={styles.item}>{item.title}</Text></TouchableOpacity>}
       />
     </View>
   );
