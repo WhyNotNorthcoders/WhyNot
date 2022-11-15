@@ -1,21 +1,19 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
-import Registration from "./screen/Registration";
+import Registration from "./screens/Registration";
 import * as React from "react";
 import { useState } from "react";
-
 import LoginScreen from "./components/LoginScreen";
 import ActivePages from "./components/ActivePages";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
-
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./config/firebaseConfig";
 
 const Stack = createStackNavigator();
 
 export default function App() {
-  const [LoggedIn, setLoggedIn] = useState(true);
+  const [LoggedIn, setLoggedIn] = useState(false);
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
