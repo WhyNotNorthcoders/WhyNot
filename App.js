@@ -1,19 +1,29 @@
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View } from "react-native";
+import Registration from "./screen/Registration";
 import * as React from "react";
 import { useState } from "react";
-import { StyleSheet } from "react-native";
+
 import LoginScreen from "./components/LoginScreen";
 import ActivePages from "./components/ActivePages";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./config/firebaseConfig";
+
 const Stack = createStackNavigator();
 
 export default function App() {
-  const [LoggedIn, setLoggedIn] = useState(false);
+  const [LoggedIn, setLoggedIn] = useState(true);
 
-  const toggleLogIn = () => {
-    setLoggedIn(true);
-  };
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setLoggedIn(true);
+    } else {
+      setLoggedIn(true);
+    }
+  });
 
   return (
     <NavigationContainer>
@@ -31,12 +41,23 @@ export default function App() {
           </Stack.Group>
         ) : (
           <Stack.Group>
-            <Stack.Screen name="LoginScreen" options={{ headerShown: false }}>
-              {(props) => <LoginScreen {...props} extraData={toggleLogIn} />}
-            </Stack.Screen>
+            <Stack.Screen
+              name="LoginScreen"
+              options={{ headerShown: false }}
+              component={LoginScreen}
+            />
           </Stack.Group>
         )}
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
