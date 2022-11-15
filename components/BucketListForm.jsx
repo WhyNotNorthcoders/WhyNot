@@ -6,20 +6,32 @@ import {
   Text,
   TextInput,
   StyleSheet,
-  Touchable,
+  Button,
   TouchableOpacity,
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
+import DatePicker from "react-native-modern-datepicker";
+import Modal from "react-native-modal";
 
 const BucketListForm = () => {
-  const [open, setOpen] = useState(false);
-  const [category, setCategory] = useState(null);
+  const [categoryOpen, setCategoryOpen] = useState(false);
+  const [category, setCategory] = useState("");
   const [items, setItems] = useState([
     { label: "Activities", value: "Activities" },
     { label: "Travel", value: "Travel" },
     { label: "Event", value: "Event" },
     { label: "Education", value: "Education" },
   ]);
+  const [title, setTitle] = useState("");
+  const [location, setLocation] = useState("");
+  const [dateOpen, setDateOpen] = useState(false);
+  const [date, setDate] = useState("");
+  const [difficulty, setDifficulty] = useState("");
+
+  const toggleDate = () => {
+    setDateOpen(!dateOpen);
+  };
+
   return (
     <View style={styles.container}>
       <Text style={{ textAlign: "center" }}> Bucket List Form </Text>
@@ -36,16 +48,38 @@ const BucketListForm = () => {
             containerStyle={{ padding: 6 }}
             textStyle={{ fontSize: 16 }}
             placeholder="--Select Category--"
-            open={open}
+            open={categoryOpen}
             value={category}
             items={items}
-            setOpen={setOpen}
+            setOpen={setCategoryOpen}
             setValue={setCategory}
             setItems={setItems}
           />
         </View>
         <TextInput style={styles.textInput} placeholder="Enter Location" />
-        <TextInput style={styles.textInput} placeholder="Enter Target Date" />
+        <View>
+          <TouchableOpacity onPress={toggleDate}>
+            <Text style={styles.textInput}>Target Date: {date}</Text>
+          </TouchableOpacity>
+          <Modal isVisible={dateOpen}>
+            <View style={{}}>
+              <DatePicker
+                mode="monthYear"
+                selectorStartingYear={2022}
+                onMonthYearChange={(selectedDate) => setDate(selectedDate)}
+                options={{
+                  backgroundColor: "#354F52",
+                  textHeaderColor: "#CAD2C5",
+                  textDefaultColor: "#CAD2C5",
+                  selectedTextColor: "#fff",
+                  mainColor: "#52796F",
+                  textSecondaryColor: "#52796F",
+                }}
+              />
+              <Button title="Hide modal" onPress={toggleDate} />
+            </View>
+          </Modal>
+        </View>
         <TextInput style={styles.textInput} placeholder="Enter Difficulty" />
       </View>
       <View style={styles.buttonContainer}>
