@@ -5,8 +5,10 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  Alert,
+  Modal,
+  Pressable,
 } from "react-native";
-import { Alert, Modal, Pressable } from "react-native";
 import { auth, database } from "../config/firebaseConfig";
 import {
   createUserWithEmailAndPassword,
