@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import Registration from "./screen/Registration";
 import * as React from "react";
 import { useState } from "react";
-import { StyleSheet } from "react-native";
+
 import LoginScreen from "./components/LoginScreen";
 import ActivePages from "./components/ActivePages";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -15,13 +15,13 @@ import { auth } from "./config/firebaseConfig";
 const Stack = createStackNavigator();
 
 export default function App() {
-  const [LoggedIn, setLoggedIn] = useState(false);
+  const [LoggedIn, setLoggedIn] = useState(true);
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
       setLoggedIn(true);
     } else {
-      setLoggedIn(false);
+      setLoggedIn(true);
     }
   });
 
@@ -41,9 +41,11 @@ export default function App() {
           </Stack.Group>
         ) : (
           <Stack.Group>
-            <Stack.Screen name="LoginScreen" options={{ headerShown: false }}>
-              <LoginScreen component={LoginScreen} />
-            </Stack.Screen>
+            <Stack.Screen
+              name="LoginScreen"
+              options={{ headerShown: false }}
+              component={LoginScreen}
+            />
           </Stack.Group>
         )}
       </Stack.Navigator>

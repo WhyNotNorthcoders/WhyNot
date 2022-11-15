@@ -14,7 +14,7 @@ import {
 } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 
-const LoginScreen = (props) => {
+const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
@@ -34,7 +34,7 @@ const LoginScreen = (props) => {
       return alert("Password cannot be empty");
     }
     signInWithEmailAndPassword(auth, email, password)
-      .then((res) => {
+      .then(() => {
         alert("User Logged In"); // remove this later
         setEmail("");
         setPassword("");
