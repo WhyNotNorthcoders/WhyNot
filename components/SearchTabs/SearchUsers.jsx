@@ -25,11 +25,11 @@ const SearchUser = () => {
 
 const styles = StyleSheet.create({
   listContainer: {
-    backgroundColor: "#D3D3D3",
+    backgroundColor: "#52796F",
   },
   item: {
     textAlign: "center",
-    backgroundColor: "#D3D3D3",
+    backgroundColor: "#52796F",
     padding: 100,
     fontSize: 20,
   },

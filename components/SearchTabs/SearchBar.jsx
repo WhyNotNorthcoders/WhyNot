@@ -14,7 +14,7 @@ const SearchBar = ({ clicked, setClicked, searchPhrase, setSearchPhrase }) => {
         <Feather
           name="search"
           size={20}
-          color="black"
+          color="#2F3E46"
           style={{ marginLeft: 15, position: "absolute" }}
         />
 
@@ -32,7 +32,7 @@ const SearchBar = ({ clicked, setClicked, searchPhrase, setSearchPhrase }) => {
           <Entypo
             name="cross"
             size={20}
-            color="black"
+            color="#2F3E46"
             // style={{ padding: 1 }}
             onPress={() => {
               Keyboard.dismiss();
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     padding: 10,
     flexDirection: "row",
     width: "92%",
-    backgroundColor: "#d9dbda",
+    backgroundColor: "#CAD2C5",
     borderRadius: 15,
     alignItems: "center",
   },
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     padding: 10,
     flexDirection: "row",
     width: "92%",
-    backgroundColor: "#d9dbda",
+    backgroundColor: "#CAD2C5",
     borderRadius: 15,
     alignItems: "center",
     justifyContent: "space-evenly",

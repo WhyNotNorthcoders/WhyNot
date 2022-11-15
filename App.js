@@ -9,36 +9,27 @@ import { SafeAreaView, StyleSheet } from "react-native";
 const Stack = createStackNavigator();
 
 export default function App() {
-  const [LoggedIn, setLoggedIn] = useState(false);
+  const [LoggedIn, setLoggedIn] = useState(true);
 
   const toggleLogIn = () => {
     setLoggedIn(true);
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <NavigationContainer>
-        <Stack.Navigator>
-          {LoggedIn ? (
-            <Stack.Group>
-              <Stack.Screen name="Why Not?" component={ActivePages} />
-            </Stack.Group>
-          ) : (
-            <Stack.Group>
-              <Stack.Screen name="LoginScreen">
-                {(props) => <LoginScreen {...props} extraData={toggleLogIn} />}
-              </Stack.Screen>
-            </Stack.Group>
-          )}
-        </Stack.Navigator>
-      </NavigationContainer>
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator>
+        {LoggedIn ? (
+          <Stack.Group>
+            <Stack.Screen name="Why Not?" component={ActivePages} />
+          </Stack.Group>
+        ) : (
+          <Stack.Group>
+            <Stack.Screen name="LoginScreen">
+              {(props) => <LoginScreen {...props} extraData={toggleLogIn} />}
+            </Stack.Screen>
+          </Stack.Group>
+        )}
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "black"
-  }
-})

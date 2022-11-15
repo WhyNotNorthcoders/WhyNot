@@ -52,10 +52,10 @@ const styles = StyleSheet.create({
   },
   topTabContainer: {
     flex:4,
-    backgroundColor: "white"
+    backgroundColor: "#354F52"
   },
   searchContainer: {
-    backgroundColor: "white",
+    backgroundColor: "#354F52",
   },
   
 });

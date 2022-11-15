@@ -25,11 +25,11 @@ const SearchEvent = () => {
 
 const styles = StyleSheet.create({
   listContainer: {
-    backgroundColor: "#f9f9f9",
+    backgroundColor: "#52796F",
   },
   item: {
     textAlign: "center",
-    backgroundColor: "#f9f9f9",
+    backgroundColor: "#52796F",
     padding: 100,
     fontSize: 20,
   },
