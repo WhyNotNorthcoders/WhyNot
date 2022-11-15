@@ -16,22 +16,20 @@ export default function App() {
   };
 
   return (
-    <userContext.Provider value={setLoggedIn}>
-      <NavigationContainer>
-        <Stack.Navigator>
-          {LoggedIn ? (
-            <Stack.Group>
-              <Stack.Screen name="Why Not?" component={ActivePages} />
-            </Stack.Group>
-          ) : (
-            <Stack.Group>
-              <Stack.Screen name="LoginScreen">
-                {(props) => <LoginScreen {...props} extraData={toggleLogIn} />}
-              </Stack.Screen>
-            </Stack.Group>
-          )}
-        </Stack.Navigator>
-      </NavigationContainer>
-    </userContext.Provider>
+    <NavigationContainer>
+      <Stack.Navigator>
+        {LoggedIn ? (
+          <Stack.Group>
+            <Stack.Screen name="Why Not?" component={ActivePages} />
+          </Stack.Group>
+        ) : (
+          <Stack.Group>
+            <Stack.Screen name="LoginScreen">
+              {(props) => <LoginScreen {...props} extraData={toggleLogIn} />}
+            </Stack.Screen>
+          </Stack.Group>
+        )}
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
