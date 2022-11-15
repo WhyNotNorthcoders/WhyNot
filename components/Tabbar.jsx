@@ -1,8 +1,8 @@
 import Ionicons from "react-native-vector-icons/Ionicons";
-import Home from "./Home";
+import Home from "../screens/Home";
 import Search from "../screens/Search";
 import Messages from "./Messages";
-import Profile from "./Profile";
+import Profile from "../screens/Profile";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
