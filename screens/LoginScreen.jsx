@@ -5,15 +5,104 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  Alert,
+  Modal,
+  Pressable,
 } from "react-native";
-import { Alert, Modal, Pressable } from "react-native";
+import { auth, database } from "../config/firebaseConfig";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 
-const LoginScreen = (props) => {
+const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
-  const handlePress = () => {
-    login(email, password);
+
+  const [regEmail, setRegEmail] = useState("");
+  const [regUsername, setRegUsername] = useState("");
+  const [regLocation, setRegLocation] = useState("");
+  const [regDOB, setRegDOB] = useState("");
+  const [regPassword, setRegPassword] = useState("");
+  const [regConfirmPassword, setRegConfirmPassword] = useState("");
+
+  const handleLogin = () => {
+    if (!email) {
+      return alert("Email cannot be empty");
+    }
+    if (!password) {
+      return alert("Password cannot be empty");
+    }
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        alert("User Logged In"); // remove this later
+        setEmail("");
+        setPassword("");
+      })
+      .catch((err) => {
+        if (
+          err.code === "auth/user-not-found" ||
+          err.code === "auth/wrong-password"
+        ) {
+          setEmail("");
+          setPassword("");
+          return alert("Email or Password incorrect");
+        } else if (err.code === "auth/email-already-in-use") {
+          return alert("An account with this email already exists");
+        } else {
+          return alert("There was a problem with your request");
+        }
+      });
+  };
+  const handleRegistration = () => {
+    if (!regEmail) {
+      return alert("Email cannot be empty");
+    }
+    if (!regUsername) {
+      return alert("Username cannot be empty");
+    }
+    if (!regLocation) {
+      return alert("Location cannot be empty");
+    }
+    if (!regDOB) {
+      return alert("DOB cannot be empty");
+    }
+    if (!regPassword) {
+      return alert("Password cannot be empty");
+    }
+    if (!regConfirmPassword) {
+      return alert("Confirm password cannot be empty");
+    }
+    if (regPassword !== regConfirmPassword) {
+      return alert("Password does not match!");
+    }
+
+    createUserWithEmailAndPassword(auth, regEmail, regPassword)
+      .then((registeredUser) => {
+        const userId = registeredUser.user.uid;
+
+        setDoc(doc(database, "users", userId), {
+          username: regUsername,
+          email: regEmail,
+          location: regLocation,
+          dob: regDOB,
+        }).then(() => {
+          setRegConfirmPassword("");
+          setRegDOB("");
+          setRegEmail("");
+          setRegLocation("");
+          setRegPassword("");
+          setRegConfirmPassword("");
+          setRegUsername("");
+          alert("Registration Successful");
+          setModalVisible(!modalVisible);
+        });
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
   };
   return (
     <View style={styles.container}>
@@ -33,15 +122,18 @@ const LoginScreen = (props) => {
               <TextInput
                 style={styles.TextInput}
                 placeholder="Email"
+                value={regEmail}
                 placeholderTextColor="#003f5c"
-                onChangeText={(email) => setEmail(email)}
+                onChangeText={(email) => setRegEmail(email)}
               />
             </View>
             <View style={styles.inputView}>
               <TextInput
                 style={styles.TextInput}
                 placeholder="Username"
+                value={regUsername}
                 placeholderTextColor="#003f5c"
+                onChangeText={(val) => setRegUsername(val)}
               />
             </View>
             <View style={styles.inputView}>
@@ -49,6 +141,8 @@ const LoginScreen = (props) => {
                 style={styles.TextInput}
                 placeholder="Location"
                 placeholderTextColor="#003f5c"
+                value={regLocation}
+                onChangeText={(val) => setRegLocation(val)}
               />
             </View>
             <View style={styles.inputView}>
@@ -56,6 +150,8 @@ const LoginScreen = (props) => {
                 style={styles.TextInput}
                 placeholder="D.O.B"
                 placeholderTextColor="#003f5c"
+                value={regDOB}
+                onChangeText={(val) => setRegDOB(val)}
               />
             </View>
             <View style={styles.inputView}>
@@ -64,7 +160,8 @@ const LoginScreen = (props) => {
                 placeholder="Password"
                 placeholderTextColor="#003f5c"
                 secureTextEntry={true}
-                onChangeText={(password) => setPassword(password)}
+                value={regPassword}
+                onChangeText={(val) => setRegPassword(val)}
               />
             </View>
             <View style={styles.inputView}>
@@ -73,14 +170,13 @@ const LoginScreen = (props) => {
                 placeholder="Confirm Password"
                 placeholderTextColor="#003f5c"
                 secureTextEntry={true}
+                value={regConfirmPassword}
+                onChangeText={(val) => setRegConfirmPassword(val)}
               />
             </View>
             <Pressable
               style={[styles.button, styles.buttonClose]}
-              onPress={() => {
-                alert("Account created, please use your details to log in");
-                setModalVisible(!modalVisible);
-              }}
+              onPress={handleRegistration}
             >
               <Text style={styles.textStyle}>Submit</Text>
             </Pressable>
@@ -94,6 +190,7 @@ const LoginScreen = (props) => {
             style={styles.TextInput}
             placeholder="Email"
             placeholderTextColor="#003f5c"
+            value={email}
             onChangeText={(email) => setEmail(email)}
           />
         </View>
@@ -104,6 +201,7 @@ const LoginScreen = (props) => {
             placeholder="Password"
             placeholderTextColor="#003f5c"
             secureTextEntry={true}
+            value={password}
             onChangeText={(password) => setPassword(password)}
           />
         </View>
@@ -113,10 +211,7 @@ const LoginScreen = (props) => {
         >
           <Text style={styles.textStyle}>Create Account</Text>
         </Pressable>
-        <TouchableOpacity
-          style={styles.loginBtn}
-          onPress={() => props.extraData()}
-        >
+        <TouchableOpacity style={styles.loginBtn} onPress={handleLogin}>
           <Text style={styles.loginText}>LogIn</Text>
         </TouchableOpacity>
       </View>
