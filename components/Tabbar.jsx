@@ -3,7 +3,6 @@ import Home from "../screens/Home";
 import Search from "../screens/Search";
 import Messages from "./Messages";
 import { NavigationContainer } from "@react-navigation/native";
-import Profile from "./Profiles/Profile";
 import Profile from "../screens/Profile";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Chat from "./Chat";
