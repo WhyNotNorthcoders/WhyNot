@@ -4,6 +4,7 @@ import Search from "../screens/Search";
 import Messages from "./Messages";
 import Profile from "../screens/Profile";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Chat from "./Chat";
 
 const Tab = createBottomTabNavigator();
 
@@ -34,26 +35,10 @@ const Tabbar = () => {
         tabBarInactiveTintColor: "#CAD2C5",
       })}
     >
-      <Tab.Screen
-        name="Home"
-        component={Home}
-        options={{ headerShown: false }}
-      />
-      <Tab.Screen
-        name="Search"
-        component={Search}
-        options={{ headerShown: false }}
-      />
-      <Tab.Screen
-        name="Messages"
-        component={Messages}
-        options={{ headerShown: false }}
-      />
-      <Tab.Screen
-        name="Profile"
-        component={Profile}
-        options={{ headerShown: false }}
-      />
+      <Tab.Screen name="Home" component={Home} options={{ headerShown: false }}/>
+      <Tab.Screen name="Search" component={Search} options={{ headerShown: false }}/>
+      <Tab.Screen name="Messages" component={Chat} options={{ headerShown: false }}/>
+      <Tab.Screen name="Profile" component={Profile} options={{ headerShown: false }}/>
     </Tab.Navigator>
   );
 };
