@@ -9,7 +9,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./config/firebaseConfig";
-
+import Chat from "./components/Chat";
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -19,7 +19,7 @@ export default function App() {
     if (user) {
       setLoggedIn(true);
     } else {
-      setLoggedIn(true);
+      setLoggedIn(false);
     }
   });
 
