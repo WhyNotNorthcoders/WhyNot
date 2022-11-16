@@ -34,19 +34,28 @@ const BucketListForm = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={{ textAlign: "center" }}> Bucket List Form </Text>
+      <Text
+        style={{
+          textAlign: "center",
+          fontSize: 20,
+          fontWeight: "bold",
+          color: "#CAD2C5",
+        }}
+      >
+        Bucket List Form
+      </Text>
       <View>
         <TextInput
           style={styles.textInput}
           placeholder="Enter Bucket List Name"
         />
-        <View>
+        <View
+          style={{
+            zIndex: 1,
+          }}
+        >
           <DropDownPicker
-            style={{
-              backgroundColor: "#CAD2C5",
-            }}
-            // containerStyle={{ padding: 6  }}
-            textStyle={{ fontSize: 16 }}
+            style={styles.textInput}
             placeholder="--Select Category--"
             open={categoryOpen}
             value={category}
@@ -54,12 +63,17 @@ const BucketListForm = () => {
             setOpen={setCategoryOpen}
             setValue={setCategory}
             setItems={setItems}
+            dropDownContainerStyle={{
+              borderStyle: "solid",
+              borderWidth: 2,
+              borderColor: "black",
+            }}
           />
         </View>
         <TextInput style={styles.textInput} placeholder="Enter Location" />
         <View>
-          <TouchableOpacity style={styles.dateInput} onPress={toggleDate}>
-            <Text>Target Date: {date}</Text>
+          <TouchableOpacity style={styles.textInput} onPress={toggleDate}>
+            <Text style={styles.targetDate}>Target Date: {date}</Text>
           </TouchableOpacity>
           <Modal isVisible={dateOpen}>
             <View>
@@ -99,8 +113,9 @@ const BucketListForm = () => {
 
 const styles = StyleSheet.create({
   container: {
-    margin: 5,
     padding: 15,
+    height: "100%",
+    width: "100%",
     backgroundColor: "#52796F",
   },
 
@@ -113,21 +128,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 5,
     paddingLeft: 11,
-    marginTop: 6,
-    marginBottom: 6,
-    // marginRight: 5,
-    marginLeft: 1,
+    marginTop: 10,
+    marginBottom: 10,
+    shadowRadius: 5,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.5,
+    shadowColor: "black",
   },
-  dateInput: {
-    height: 50,
-    color: "black",
-    backgroundColor: "#CAD2C5",
-    borderRadius: 6,
-    borderWidth: 1,
-    paddingTop: 14,
-    padding: 10,
-    marginRight: 1,
-    marginLeft: 1,
+
+  targetDate: {
+    marginTop: 12,
   },
   buttonContainer: {
     justifyContent: "center",

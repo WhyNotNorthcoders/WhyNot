@@ -2,7 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import Registration from "./screens/Registration";
 import * as React from "react";
-import 'react-native-gesture-handler';
+import "react-native-gesture-handler";
 import { useState } from "react";
 import LoginScreen from "./screens/LoginScreen";
 import ActivePages from "./components/ActivePages";
@@ -13,18 +13,17 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./config/firebaseConfig";
 import Chat from "./components/Chat";
 
-
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
 export default function App() {
-  const [LoggedIn, setLoggedIn] = useState(false);
+  const [LoggedIn, setLoggedIn] = useState(true);
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
       setLoggedIn(true);
     } else {
-      setLoggedIn(false);
+      setLoggedIn(true);
     }
   });
 
@@ -34,7 +33,7 @@ export default function App() {
         {LoggedIn ? (
           <Stack.Group>
             <Stack.Screen
-              name="Why Not?"
+              name={"Why Not?"}
               component={ActivePages}
               options={{
                 headerStyle: { backgroundColor: "#2F3E46", height: 94 },

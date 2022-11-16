@@ -3,25 +3,25 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import 'react-native-gesture-handler';
+import "react-native-gesture-handler";
 import Home from "../screens/Home";
 import Search from "../screens/Search";
 import Messages from "./Messages";
 import Profile from "../screens/Profile";
 import Chat from "./Chat";
 import BucketListForm from "./Forms/BucketListForm";
-import StoryForm from "./Forms/StoryForm"
+import StoryForm from "./Forms/StoryForm";
 
 const Tab = createBottomTabNavigator();
 
-const Drawer = createDrawerNavigator()
+const Drawer = createDrawerNavigator();
 
 function DrawerRoutes() {
   return (
-    <Drawer.Navigator initialRouteName="Profile" >
+    <Drawer.Navigator initialRouteName="Profile">
       <Drawer.Screen name="Your Profile" component={Profile} />
-      <Drawer.Screen name="Add to bucket list" component={BucketListForm}/>
-      <Drawer.Screen name="Add Story" component={StoryForm}/>
+      <Drawer.Screen name="Add to bucket list" component={BucketListForm} />
+      <Drawer.Screen name="Add Story" component={StoryForm} />
     </Drawer.Navigator>
   );
 }
@@ -53,10 +53,26 @@ const Tabbar = () => {
         tabBarInactiveTintColor: "#CAD2C5",
       })}
     >
-      <Tab.Screen name="Home" component={Home} options={{ headerShown: false }}/>
-      <Tab.Screen name="Search" component={Search} options={{ headerShown: false }}/>
-      <Tab.Screen name="Messages" component={Chat} options={{ headerShown: false }}/>
-      <Tab.Screen name="Profile" component={DrawerRoutes} options={{ headerShown: false }}/>
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="Search"
+        component={Search}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="Messages"
+        component={Chat}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={DrawerRoutes}
+        options={{ headerShown: false }}
+      />
     </Tab.Navigator>
   );
 };

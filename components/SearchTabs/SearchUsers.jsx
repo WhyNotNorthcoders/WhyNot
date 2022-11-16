@@ -1,4 +1,10 @@
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
 
 const SearchUser = () => {
   const testData = [
@@ -17,7 +23,11 @@ const SearchUser = () => {
     <View style={styles.listContainer}>
       <FlatList
         data={testData}
-        renderItem={({ item }) => <TouchableOpacity><Text style={styles.item}>{item.title}</Text></TouchableOpacity>}
+        renderItem={({ item }) => (
+          <TouchableOpacity>
+            <Text style={styles.item}>{item.title}</Text>
+          </TouchableOpacity>
+        )}
       />
     </View>
   );
@@ -35,7 +45,11 @@ const styles = StyleSheet.create({
     borderColor: "#CAD2C5",
     padding: 100,
     fontSize: 20,
-    margin: 5
+    margin: 15,
+    shadowRadius: 5,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.5,
+    shadowColor: "black",
   },
 });
 
