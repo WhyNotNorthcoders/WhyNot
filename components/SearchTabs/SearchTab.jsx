@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Text, View, StyleSheet } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import SearchTop from "./SearchTop";
 import SearchUser from "./SearchUsers";
@@ -8,7 +9,7 @@ const Tab = createMaterialTopTabNavigator();
 function SearchTopTab() {
   return (
     <Tab.Navigator
-      initialRouteName="Route1"
+      initialRouteName="SearchTop"
       screenOptions={{
         tabBarIndicatorStyle: {
           borderWidth: 1,

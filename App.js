@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import Registration from "./screens/Registration";
 import * as React from "react";
 import { useState } from "react";
-import LoginScreen from "./components/LoginScreen";
+import LoginScreen from "./screens/LoginScreen";
 import ActivePages from "./components/ActivePages";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
@@ -50,12 +50,3 @@ export default function App() {
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

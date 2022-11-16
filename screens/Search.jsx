@@ -10,7 +10,7 @@ import {
   Dimensions,
 } from "react-native";
 import SearchBar from "../components/SearchTabs/SearchBar";
-import SearchTopTab from "../components/SearchTabs/SearchTopTab";
+import SearchTopTab from "../components/SearchTabs/SearchTab";
 
 const Search = () => {
   const [searchPhrase, setSearchPhrase] = useState("");
