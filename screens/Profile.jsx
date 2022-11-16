@@ -2,11 +2,11 @@ import {
   FlatList,
   StyleSheet,
   Text,
-  SafeAreaView,
+  ScrollView,
   TouchableOpacity,
 } from "react-native";
 import { useState } from "react";
-import ProfileDetails from "./ProfileDetails";
+import ProfileDetails from "../components/Profiles/ProfileDetails";
 
 const DATA = [
   {
@@ -48,37 +48,38 @@ const Profile = () => {
 
   return (
     <>
-      <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.container} >
         <ProfileDetails />
         <Text style={styles.titles}>Bucket List</Text>
-        <FlatList
+        <FlatList nestedScrollEnabled={true}
           style={styles.list}
           data={DATA}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
           extraData={selectedId}
+          horizontal={true}
         />
         <Text style={styles.titles}>Recently Completed</Text>
-        <FlatList
+        <FlatList nestedScrollEnabled={true}
           style={styles.list}
           data={DATA}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
           extraData={selectedId}
+          horizontal={true}
         />
-      </SafeAreaView>
+      </ScrollView>
     </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: "#354F52",
   },
   list: {
     backgroundColor: "#52796F",
-    height: "100%",
+    height: 200,
     margin: 10,
     borderRadius: 15,
   },
@@ -93,6 +94,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   item: {
+    height:180,
+    width:200,
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
