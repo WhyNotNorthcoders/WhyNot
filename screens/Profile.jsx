@@ -9,6 +9,7 @@ import { useState, useEffect} from "react";
 import ProfileDetails from "../components/Profiles/ProfileDetails";
 import { collection, getDocs } from "firebase/firestore";
 import { database } from "../config/firebaseConfig";
+import 'react-native-gesture-handler';
 
 const Profile = () => {
   const [DATA, setData] = useState([]);

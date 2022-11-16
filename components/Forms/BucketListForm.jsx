@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Button,
   TouchableOpacity,
+  Pressable,
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import DatePicker from "react-native-modern-datepicker";
@@ -44,7 +45,7 @@ const BucketListForm = () => {
             style={{
               backgroundColor: "#CAD2C5",
             }}
-            containerStyle={{ padding: 6 }}
+            // containerStyle={{ padding: 6  }}
             textStyle={{ fontSize: 16 }}
             placeholder="--Select Category--"
             open={categoryOpen}
@@ -57,11 +58,11 @@ const BucketListForm = () => {
         </View>
         <TextInput style={styles.textInput} placeholder="Enter Location" />
         <View>
-          <TouchableOpacity onPress={toggleDate}>
-            <Text style={styles.textInput}>Target Date: {date}</Text>
+          <TouchableOpacity style={styles.dateInput} onPress={toggleDate}>
+            <Text>Target Date: {date}</Text>
           </TouchableOpacity>
           <Modal isVisible={dateOpen}>
-            <View style={{}}>
+            <View>
               <DatePicker
                 mode="monthYear"
                 selectorStartingYear={2022}
@@ -75,11 +76,17 @@ const BucketListForm = () => {
                   textSecondaryColor: "#52796F",
                 }}
               />
-              <Button title="Hide" onPress={toggleDate} />
+              <Pressable style={styles.button} onPress={toggleDate}>
+                <Text style={styles.buttonText}>Hide</Text>
+              </Pressable>
             </View>
           </Modal>
         </View>
-        <TextInput style={styles.textInput} placeholder="Enter Difficulty" />
+        <TextInput
+          style={styles.textInput}
+          keyboardType="numeric"
+          placeholder="Enter Difficulty"
+        />
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.bucketListButton}>
@@ -93,19 +100,35 @@ const BucketListForm = () => {
 const styles = StyleSheet.create({
   container: {
     margin: 5,
-    padding: 10,
+    padding: 15,
     backgroundColor: "#52796F",
   },
 
   textInput: {
+    height: 50,
+    width: "100%",
     color: "black",
     backgroundColor: "#CAD2C5",
     borderRadius: 6,
     borderWidth: 1,
     padding: 5,
-    margin: 6,
+    paddingLeft: 11,
+    marginTop: 6,
+    marginBottom: 6,
+    // marginRight: 5,
+    marginLeft: 1,
   },
-
+  dateInput: {
+    height: 50,
+    color: "black",
+    backgroundColor: "#CAD2C5",
+    borderRadius: 6,
+    borderWidth: 1,
+    paddingTop: 14,
+    padding: 10,
+    marginRight: 1,
+    marginLeft: 1,
+  },
   buttonContainer: {
     justifyContent: "center",
     alignItems: "center",
@@ -120,6 +143,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#2F3E46",
     backgroundColor: "#84A98C",
+  },
+  button: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 6,
+    paddingHorizontal: 16,
+    borderRadius: 4,
+    elevation: 3,
+    backgroundColor: "#84A98C",
+    marginTop: 5,
   },
 });
 
