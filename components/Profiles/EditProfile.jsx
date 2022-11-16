@@ -83,12 +83,13 @@ const styles = StyleSheet.create({
   },
   modalView: {
     height: 300,
-    width: 350,
+    width: 375,
     backgroundColor: "#84A98C",
     borderWidth: 2,
     borderColor: "#2F3E46",
     borderRadius: 20,
     padding: 20,
+    marginTop: -350,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
