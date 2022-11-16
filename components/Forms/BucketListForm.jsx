@@ -1,4 +1,3 @@
-import { BottomTabBarHeightCallbackContext } from "@react-navigation/bottom-tabs";
 import { useState } from "react";
 import {
   SafeAreaView,
@@ -76,7 +75,7 @@ const BucketListForm = () => {
                   textSecondaryColor: "#52796F",
                 }}
               />
-              <Button title="Hide modal" onPress={toggleDate} />
+              <Button title="Hide" onPress={toggleDate} />
             </View>
           </Modal>
         </View>

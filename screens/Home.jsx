@@ -1,4 +1,6 @@
 import { signOut } from "firebase/auth";
+import { Button, SafeAreaView, Text, View } from "react-native";
+import { auth, onAuthStateChanged } from "../config/firebaseConfig";
 import { Pressable, StyleSheet, Text, SafeAreaView, ScrollView, View } from 'react-native';
 import { auth } from "../config/firebaseConfig";
 
