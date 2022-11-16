@@ -14,7 +14,7 @@ const EditProfile = () => {
   const [modalVisible, setModalVisible] = useState(false);
   return (
     <SafeAreaView>
-      <Modal visible={modalVisible} transparent={true}>
+      <Modal visible={modalVisible} transparent={true} animationType="slide">
         <View style={styles.container}>
           <View style={styles.modalView}>
             <Text style={styles.modalText}>Edit Details</Text>

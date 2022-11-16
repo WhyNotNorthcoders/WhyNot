@@ -12,6 +12,7 @@
     "@react-native-community/datetimepicker": "6.5.2",
     "@react-navigation/bottom-tabs": "^6.4.0",
     "@react-navigation/material-top-tabs": "^6.3.0",
+    "@react-navigation/native": "^6.0.13",
     "@react-navigation/stack": "^6.3.4",
     "dotenv": "^16.0.3",
     "expo": "~47.0.3",
@@ -27,9 +28,12 @@
     "react-native-image-picker": "^4.10.1",
     "react-native-modal": "^13.0.1",
     "react-native-modern-datepicker": "^1.0.0-beta.91",
+    "react-native-gifted-chat": "^1.0.4",
     "react-native-pager-view": "^6.0.1",
     "react-native-ratings": "^8.1.0",
-    "react-native-tab-view": "^3.3.0"
+    "react-native-tab-view": "^3.3.0",
+    "react-navigation": "^4.4.4",
+    "vector-icons": "^0.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

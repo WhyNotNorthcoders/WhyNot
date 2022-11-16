@@ -1,21 +1,10 @@
-import { signOut } from "firebase/auth";
-import { Button, SafeAreaView, Text, View } from "react-native";
-import { auth, onAuthStateChanged } from "../config/firebaseConfig";
-import { Pressable, StyleSheet, Text, SafeAreaView, ScrollView, View } from 'react-native';
-import { auth } from "../config/firebaseConfig";
+import { StyleSheet, Text, SafeAreaView, ScrollView, StatusBar, View } from 'react-native';
 
-const Home = ({ navigation }) => {
-  const handleLogout = () => {
-    signOut(auth);
-    navigation.navigate("LoginScreen");
-  };
-  return (
-      <SafeAreaView style={styles.container}>
-       <Pressable onPress={handleLogout} style={styles.logout}>
-        <Text>Log Out</Text>
-       </Pressable>
+const Home = () => {
+    return (
+        <SafeAreaView style={styles.container}>
             <Text style={styles.titles}>Latest</Text>
-          <ScrollView style={styles.scrollView}>
+          <ScrollView style={styles.scrollView1}>
             <View>
             <Text style={styles.text}>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -29,7 +18,7 @@ const Home = ({ navigation }) => {
             </View>
           </ScrollView>
           <Text style={styles.titles}>Suggested</Text>
-          <ScrollView style={styles.scrollView}>
+          <ScrollView style={styles.scrollView2}>
             <View>
             <Text style={styles.text}>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -43,43 +32,32 @@ const Home = ({ navigation }) => {
           </View>
           </ScrollView>
         </SafeAreaView>
-  );
-};
+      );
+    }
+    
+    const styles = StyleSheet.create({
+      container: {
+        flex: 1,
+      },
+      scrollView1: {
+        backgroundColor: 'grey',
+        marginHorizontal: 20,
+        marginBottom: 20,
+        height: '50%',
+      },  
+      scrollView2: {
+        backgroundColor: 'grey',
+        marginHorizontal: 20,
+        marginBottom: 20,
+        height: '50%',
+      },
+      text: {
+        fontSize: 42,
+      },
+      titles: {
+        fontSize: 25,
+        textAlign: "center"
+      },
+    });
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#354F52",
-  },
-  logout: {
-    backgroundColor: "#CAD2C5",
-    width: 80,
-    marginLeft: 300,
-    height: 50,
-    marginTop: 5,
-    borderWidth: 2,
-    borderColor: "#2F3E46",
-    padding: 13,
-    borderRadius:20,
-  },
-  scrollView: {
-    backgroundColor: '#52796F',
-    height: 200,
-    margin: 10,
-    borderRadius: 10,
-    borderWidth: 3,
-    borderColor: "#CAD2C5",
-  },  
-  text: {
-    color: "#CAD2C5",
-    padding: 10,
-    fontSize: 30,
-  },
-  titles: {
-    color: "#CAD2C5",
-    fontSize: 25,
-    textAlign: "center"
-  },
-});
-
-export default Home;
+export default Home

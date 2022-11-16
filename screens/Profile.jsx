@@ -2,31 +2,43 @@ import {
   FlatList,
   StyleSheet,
   Text,
-  SafeAreaView,
+  ScrollView,
   TouchableOpacity,
 } from "react-native";
-import { useState } from "react";
-import ProfileDetails from "./ProfileDetails";
-
-const DATA = [
-  {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-    title: "First Item",
-  },
-  {
-    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-    title: "Second Item",
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e29d72",
-    title: "Third Item",
-  },
-];
+import { useState, useEffect} from "react";
+import ProfileDetails from "../components/Profiles/ProfileDetails";
+import { collection, getDocs } from "firebase/firestore";
+import { database } from "../config/firebaseConfig";
 
 const Profile = () => {
+  const [DATA, setData] = useState([]);
+
+  const bucketRef = collection(
+    database,
+    "users",
+    "BdmUND7DgscJUL9YKMWQprRNTrA3",
+    "bucketList"
+  );
+
+  useEffect(() => {
+    getDocs(bucketRef)
+      .then((snapshot) => {
+        let list = [];
+        snapshot.docs.forEach((doc) => {
+          list.push({ ...doc.data(), id: doc.id });
+        });
+
+        setData(list);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  }, [DATA]);
+
   const Item = ({ item, onPress, backgroundColor, textColor }) => (
     <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
-      <Text style={[styles.title, textColor]}>{item.title}</Text>
+      <Text style={[styles.titles, textColor]}>Title: {item.title}</Text>
+      <Text style={[styles.titles, textColor]}>Category: {item.category}</Text>
     </TouchableOpacity>
   );
 
@@ -48,37 +60,38 @@ const Profile = () => {
 
   return (
     <>
-      <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.container} >
         <ProfileDetails />
         <Text style={styles.titles}>Bucket List</Text>
-        <FlatList
+        <FlatList nestedScrollEnabled={true}
           style={styles.list}
           data={DATA}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
           extraData={selectedId}
+          horizontal={true}
         />
         <Text style={styles.titles}>Recently Completed</Text>
-        <FlatList
+        <FlatList nestedScrollEnabled={true}
           style={styles.list}
           data={DATA}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
           extraData={selectedId}
+          horizontal={true}
         />
-      </SafeAreaView>
+      </ScrollView>
     </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: "#354F52",
   },
   list: {
     backgroundColor: "#52796F",
-    height: "100%",
+    height: 200,
     margin: 10,
     borderRadius: 15,
   },
@@ -93,7 +106,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   item: {
-    padding: 20,
+    height:180,
+    width:200,
+    padding: 10,
     marginVertical: 8,
     marginHorizontal: 16,
     borderStyle: "solid",
