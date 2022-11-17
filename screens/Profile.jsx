@@ -6,20 +6,23 @@ import {
   TouchableOpacity,
   Button,
 } from "react-native";
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import ProfileDetails from "../components/Profiles/ProfileDetails";
-import { collection, getDocs, doc, query, documentId, where } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  doc,
+  query,
+  documentId,
+  where,
+} from "firebase/firestore";
 import { database, auth } from "../config/firebaseConfig";
-
+import { getAdditionalUserInfo } from "firebase/auth";
 
 const Profile = () => {
-  const [DATA, setData] = useState([]);
- 
-
-
-
-    
-    
+  const [data, setData] = useState([]);
+  // const { userData } = useContext(userContext);
+  // console.log(userData)
   const bucketRef = collection(
     database,
     "users",
@@ -66,19 +69,21 @@ const Profile = () => {
 
   return (
     <>
-      <ScrollView style={styles.container} >
+      <ScrollView style={styles.container}>
         <ProfileDetails />
         <Text style={styles.titles}>Bucket List</Text>
-        <FlatList nestedScrollEnabled={true}
+        <FlatList
+          nestedScrollEnabled={true}
           style={styles.list}
-          data={DATA}
+          data={data}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
           extraData={selectedId}
           horizontal={true}
         />
         <Text style={styles.titles}>Recently Completed</Text>
-        <FlatList nestedScrollEnabled={true}
+        <FlatList
+          nestedScrollEnabled={true}
           style={styles.list}
           //data={}
           renderItem={renderItem}
@@ -112,8 +117,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   item: {
-    height:180,
-    width:200,
+    height: 180,
+    width: 200,
     padding: 10,
     marginVertical: 8,
     marginHorizontal: 16,
