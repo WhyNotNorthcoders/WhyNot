@@ -7,24 +7,42 @@ import LoginScreen from "./screens/LoginScreen";
 import ActivePages from "./components/ActivePages";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./config/firebaseConfig";
+import { getAdditionalUserInfo, onAuthStateChanged } from "firebase/auth";
+import { auth, database } from "./config/firebaseConfig";
 import Chat from "./components/Chat";
+import { collection, getDocs } from "firebase/firestore";
+import { userContext } from "./context";
+
 const Stack = createStackNavigator();
 
 export default function App() {
   const [LoggedIn, setLoggedIn] = useState(false);
+  const[userData, setUserData]= useState({})
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
       setLoggedIn(true);
+      getUser()
     } else {
       setLoggedIn(false);
     }
   });
 
+  const getUser = () => {
+  const colRef = collection(database, "users");
+  getDocs(colRef).then((snapshot) => {
+  let users1 = []
+  snapshot.docs.forEach((doc) => {
+    users1.push({ ...doc.data(), id: doc.id });
+  });
+  
+  setUserData(users1[0])
+  })
+  
+  
+  }
   return (
-    
+    <userContext.Provider value = {userData}>
     <NavigationContainer>
       <Stack.Navigator>
         {LoggedIn ? (
@@ -49,5 +67,6 @@ export default function App() {
         )}
       </Stack.Navigator>
     </NavigationContainer>
+    </userContext.Provider>
   );
 }

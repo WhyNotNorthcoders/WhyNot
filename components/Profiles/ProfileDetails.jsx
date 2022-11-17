@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import {
   SafeAreaView,
   Text,
@@ -9,13 +10,16 @@ import {
   TextInput,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { userContext } from "../../context";
 import EditProfile from "./EditProfile";
 
-const ProfileDetails = (props) => {
+const ProfileDetails = () => {
+const {userData} = useContext(userContext)
+console.log(userData)
   return (
     <SafeAreaView style={styles.profileDetails}>
       <EditProfile style={styles.modal} />
-      <Text style={styles.username}>{props.userdata}</Text>
+      <Text style={styles.username}>Nabeel</Text>
       <Ionicons name={"person-outline"} size={40} style={styles.ionicons} />
     </SafeAreaView>
   );

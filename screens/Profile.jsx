@@ -14,22 +14,10 @@ import { database, auth } from "../config/firebaseConfig";
 
 const Profile = () => {
   const [DATA, setData] = useState([]);
-  const[userData, setUserData]= useState({})
+ 
 
 
-const getUser = () => {
-const colRef = collection(database, "users");
-getDocs(colRef).then((snapshot) => {
-let users1 = []
-snapshot.docs.forEach((doc) => {
-  users1.push({ ...doc.data(), id: doc.id });
-});
-console.log(users1)
-setUserData(users1[0])
-})
 
-
-}
     
     
   const bucketRef = collection(
@@ -40,7 +28,6 @@ setUserData(users1[0])
   );
 
   useEffect(() => {
-    getUser();
     getDocs(bucketRef)
       .then((snapshot) => {
         let list = [];
@@ -80,9 +67,8 @@ setUserData(users1[0])
   return (
     <>
       <ScrollView style={styles.container} >
-        <ProfileDetails userData={userData.username} />
-        {/* <Text style={styles.titles}>Bucket List</Text> */}
-        <Button title="getUsers" onPress={getUser}/>
+        <ProfileDetails />
+        <Text style={styles.titles}>Bucket List</Text>
         <FlatList nestedScrollEnabled={true}
           style={styles.list}
           data={DATA}
