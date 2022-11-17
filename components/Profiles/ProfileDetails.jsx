@@ -1,20 +1,9 @@
-import {
-  SafeAreaView,
-  Text,
-  StyleSheet,
-  Modal,
-  Pressable,
-  Alert,
-  View,
-  TextInput,
-} from "react-native";
+import { SafeAreaView, Text, StyleSheet } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import EditProfile from "./EditProfile";
 
 const ProfileDetails = () => {
   return (
     <SafeAreaView style={styles.profileDetails}>
-      <EditProfile style={styles.modal} />
       <Text style={styles.username}>Nabeel</Text>
       <Ionicons name={"person-outline"} size={40} style={styles.ionicons} />
     </SafeAreaView>
@@ -25,28 +14,28 @@ const styles = StyleSheet.create({
   profileDetails: {
     borderStyle: "solid",
     borderColor: "#CAD2C5",
-    borderRadius: 20,
+    borderRadius: 15,
     borderWidth: 2,
     height: 120,
     marginHorizontal: 10,
     marginVertical: 10,
+    backgroundColor: "#6667AB",
   },
-  modal: {},
   ionicons: {
-    color: "#CAD2C5",
+    color: "white",
     borderRadius: 40,
     padding: 17,
     width: 80,
     height: 80,
     borderWidth: 2,
-    borderColor: "#CAD2C5",
-    marginTop: -45,
+    marginTop: -20,
+    borderColor: "white",
     marginLeft: 20,
   },
   username: {
-    color: "#CAD2C5",
+    color: "white",
     marginLeft: 120,
-    marginTop: -10,
+    marginTop: 20,
     fontSize: 18,
   },
 });

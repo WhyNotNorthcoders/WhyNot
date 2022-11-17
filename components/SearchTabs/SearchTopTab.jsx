@@ -11,17 +11,17 @@ function SearchTopTab() {
       initialRouteName="Route1"
       screenOptions={{
         tabBarIndicatorStyle: {
-          borderWidth: 1,
-          borderColor: "#CAD2C5",
+          borderWidth: 2,
+          borderColor: "black",
           height: "100%",
           backgroundColor: "#354F52",
         },
         tabBarLabelStyle: {
           color: "#CAD2C5",
-          fontSize: 14,
+          fontSize: 20,
         },
         tabBarStyle: {
-          backgroundColor: "#2F3E46",
+          backgroundColor: "white",
           borderBottomWidth: 0.5,
           borderBottomColor: "gray",
           tabBarInactiveTintColor: "#354F52",
@@ -31,12 +31,12 @@ function SearchTopTab() {
       <Tab.Screen
         name="SearchTop"
         component={SearchTop}
-        options={{ tabBarLabel: "Top"}}
+        options={{ tabBarLabel: "Top" }}
       />
       <Tab.Screen
         name="SearchUser"
         component={SearchUser}
-        options={{ tabBarLabel: "User"}}
+        options={{ tabBarLabel: "User" }}
       />
       <Tab.Screen
         name="SearchEvent"

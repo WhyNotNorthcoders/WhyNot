@@ -32,14 +32,7 @@ const EventsCard = ({ item }) => {
         </Text>
         <Text>{item.date.when}</Text>
         <View style={styles.imageContainer}></View>
-        <Text
-          style={{ color: "blue" }}
-          onPress={() => {
-            Linking.openURL(item.link);
-          }}
-        >
-          More About This Event
-        </Text>
+        <Text>Click on the post to see more about event </Text>
       </View>
       <Modal
         animationType="slide"
@@ -63,7 +56,14 @@ const EventsCard = ({ item }) => {
               </Text>
               <Text>{item.date.when}</Text>
               <View style={styles.imageContainer}></View>
-              <Text>Click to see more about this event</Text>
+              <Text
+                style={{ color: "blue" }}
+                onPress={() => {
+                  Linking.openURL(item.link);
+                }}
+              >
+                More About This Event
+              </Text>
             </View>
             <Pressable
               style={[styles.button, styles.buttonClose]}
@@ -84,14 +84,18 @@ export default EventsCard;
 
 const styles = StyleSheet.create({
   item: {
+    padding: 10,
     textAlign: "center",
-    backgroundColor: "#84A98C",
-    borderRadius: 10,
-    borderWidth: 2,
-    borderColor: "#CAD2C5",
-    padding: 50,
+    backgroundColor: "white",
+    borderRadius: 15,
+    borderWidth: 4,
+    borderColor: "#6667AB",
     fontSize: 20,
-    margin: 5,
+    margin: 15,
+    shadowRadius: 5,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.5,
+    shadowColor: "black",
   },
   centeredView: {
     flex: 1,

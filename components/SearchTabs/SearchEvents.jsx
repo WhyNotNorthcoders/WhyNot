@@ -38,7 +38,7 @@ const SearchEvent = () => {
 
 const styles = StyleSheet.create({
   listContainer: {
-    backgroundColor: "#52796F",
+    backgroundColor: "white",
   },
 });
 

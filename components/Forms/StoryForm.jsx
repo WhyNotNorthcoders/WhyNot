@@ -56,21 +56,19 @@ const StoryForm = () => {
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={{ textAlign: "center" }}>Complete Story Form</Text>
+      {/* <Text style={{ textAlign: "center" }}>Complete Story Form</Text> */}
       <View>
         <TextInput
           style={styles.textInput}
+          placeholderTextColor={"lightgrey"}
           placeholder="Enter Story Title"
           onChange={setStoryTitle}
         />
-        <View>
+        <View style={{ zIndex: 1 }}>
           <DropDownPicker
-            style={{
-              backgroundColor: "#CAD2C5",
-            }}
-            containerStyle={{ padding: 6 }}
-            textStyle={{ fontSize: 16 }}
+            style={styles.textInput}
             placeholder="--Select Category--"
+            placeholderTextColor={"white"}
             open={categoryOpen}
             value={category}
             items={items}
@@ -80,12 +78,17 @@ const StoryForm = () => {
           />
         </View>
         <TextInput
-          style={styles.description}
+          style={styles.textInput}
           multiline={true}
           placeholder="Enter Your Experience"
+          placeholderTextColor={"white"}
           onChange={setDescription}
         ></TextInput>
-        <TextInput style={styles.textInput} placeholder="Enter Location" />
+        <TextInput
+          style={styles.textInput}
+          placeholderTextColor={"white"}
+          placeholder="Enter Location"
+        />
         <View>
           <TouchableOpacity onPress={toggleDate}>
             <Text style={styles.textInput}>Complete Date: {date}</Text>
@@ -97,11 +100,11 @@ const StoryForm = () => {
                 selectorStartingYear={2022}
                 onMonthYearChange={(selectedDate) => setDate(selectedDate)}
                 options={{
-                  backgroundColor: "#354F52",
-                  textHeaderColor: "#CAD2C5",
-                  textDefaultColor: "#CAD2C5",
-                  selectedTextColor: "#fff",
-                  mainColor: "#52796F",
+                  backgroundColor: "#6667AB",
+                  textHeaderColor: "white",
+                  textDefaultColor: "white",
+                  selectedTextColor: "black",
+                  mainColor: "white",
                   textSecondaryColor: "#52796F",
                 }}
               />
@@ -132,12 +135,12 @@ const StoryForm = () => {
         </View>
         {/* <AirbnbRating defaultRating={1} size={30} reviewSize={20}  reviewColor={"#CAD2C5"} reviews={["Rating:","Rating:","Rating:","Rating:","Rating:"]} onFinishRating={setRating} /> */}
         <View style={styles.ratingContainer}>
-          <Text style={{ color: "#CAD2C5" }}>Rating: </Text>
+          <Text style={{ color: "black" }}>Rating: </Text>
           <Rating
             style={styles.rating}
             type={"custom"}
             ratingColor={"#FFF36D"}
-            tintColor={"#354F52"}
+            tintColor={"white"}
             ratingBackgroundColor={"#CAD2C5"}
             minValue={0}
             ratingCount={5}
@@ -149,7 +152,7 @@ const StoryForm = () => {
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.completeStoryButton}>
-          <Text style={{ textAlign: "center", color: "#CAD2C5" }}>
+          <Text style={{ textAlign: "center", color: "white" }}>
             Complete Story
           </Text>
         </TouchableOpacity>
@@ -160,28 +163,19 @@ const StoryForm = () => {
 
 const styles = StyleSheet.create({
   container: {
-    margin: 5,
     padding: 25,
     borderRadius: 25,
-    backgroundColor: "#52796F",
+    backgroundColor: "white",
   },
-
-  description: {
-    color: "black",
-    backgroundColor: "#CAD2C5",
-    borderRadius: 6,
-    borderWidth: 1,
-    padding: 5,
-    margin: 6,
-  },
-
   textInput: {
-    color: "black",
-    backgroundColor: "#CAD2C5",
+    color: "white",
+    backgroundColor: "#6667AB",
     borderRadius: 6,
-    borderWidth: 1,
+    borderColor: "#6667AB",
+    borderWidth: 2,
     padding: 5,
-    margin: 6,
+    marginBottom: 10,
+    width: "100%",
   },
 
   buttonContainer: {
@@ -200,7 +194,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     borderWidth: 1,
     borderColor: "#2F3E46",
-    backgroundColor: "#84A98C",
+    backgroundColor: "#6667AB",
   },
   button: {
     alignItems: "center",
@@ -209,21 +203,27 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderRadius: 4,
     elevation: 3,
-    backgroundColor: "#84A98C",
+    backgroundColor: "#6667AB",
     marginTop: 5,
+    color: "white",
+    borderStyle: "solid",
+    borderWidth: 2,
+    borderColor: "#BF07F7",
   },
   buttonText: {
-    color: "#CAD2C5",
+    color: "white",
   },
   imageContainer: {
-    width: 202,
-    height: 202,
+    width: 200,
+    height: 200,
+    borderRadius: 5,
     borderWidth: 2,
     borderColor: "#2F3E46",
   },
 
   ratingContainer: {
     justifyContent: "center",
+    color: "#6667AB",
     alignitems: "center",
     alignSelf: "center",
     marginBottom: 15,
@@ -233,7 +233,10 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     paddingRight: 40,
     paddingLeft: 40,
-    backgroundColor: "#354F52",
+    borderColor: "#6667AB",
+    borderWidth: 2,
+    borderRadius: 5,
+    backgroundColor: "white",
   },
 });
 

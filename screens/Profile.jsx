@@ -5,40 +5,55 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import ProfileDetails from "../components/Profiles/ProfileDetails";
 import { collection, getDocs } from "firebase/firestore";
 import { database } from "../config/firebaseConfig";
+import "react-native-gesture-handler";
 
 const Profile = () => {
-  const [DATA, setData] = useState([]);
+  const DATA = [
+    {
+      id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
+      title: "First Item",
+    },
+    {
+      id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
+      title: "Second Item",
+    },
+    {
+      id: "58694a0f-3da1-471f-bd96-145571e29d72",
+      title: "Third Item",
+    },
+  ];
+  // const bucketRef = collection(
+  //   database,
+  //   "users",
+  //   "BdmUND7DgscJUL9YKMWQprRNTrA3",
+  //   "bucketList"
+  // );
 
-  const bucketRef = collection(
-    database,
-    "users",
-    "BdmUND7DgscJUL9YKMWQprRNTrA3",
-    "bucketList"
-  );
+  // useEffect(() => {
+  //   getDocs(bucketRef)
+  //     .then((snapshot) => {
+  //       let list = [];
+  //       snapshot.docs.forEach((doc) => {
+  //         list.push({ ...doc.data(), id: doc.id });
+  //       });
 
-  useEffect(() => {
-    getDocs(bucketRef)
-      .then((snapshot) => {
-        let list = [];
-        snapshot.docs.forEach((doc) => {
-          list.push({ ...doc.data(), id: doc.id });
-        });
+  //       setData(list);
+  //     })
+  //     .catch((err) => {
+  //       alert(err.message);
+  //     });
+  // }, [DATA]);
 
-        setData(list);
-      })
-      .catch((err) => {
-        alert(err.message);
-      });
-  }, [DATA]);
-
-  const Item = ({ item, onPress, backgroundColor, textColor }) => (
-    <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
-      <Text style={[styles.titles, textColor]}>Title: {item.title}</Text>
-      <Text style={[styles.titles, textColor]}>Category: {item.category}</Text>
+  const Item = ({ item, onPress }) => (
+    <TouchableOpacity onPress={onPress} style={styles.item}>
+      <Text style={styles.titles}>{item.title}</Text>
+      <Text style={styles.text}>Category{item.category}</Text>
+      <Text style={styles.text}>rating</Text>
+      <Text style={styles.text}>description</Text>
     </TouchableOpacity>
   );
 
@@ -60,19 +75,20 @@ const Profile = () => {
 
   return (
     <>
-      <ScrollView style={styles.container} >
+      <ScrollView style={styles.container}>
         <ProfileDetails />
-        <Text style={styles.titles}>Bucket List</Text>
-        <FlatList nestedScrollEnabled={true}
+        <Text style={styles.header}>Bucket List</Text>
+        <FlatList
+          nestedScrollEnabled={true}
           style={styles.list}
           data={DATA}
-          renderItem={renderItem}
           keyExtractor={(item) => item.id}
           extraData={selectedId}
           horizontal={true}
         />
-        <Text style={styles.titles}>Recently Completed</Text>
-        <FlatList nestedScrollEnabled={true}
+        <Text style={styles.header}>Recently Completed</Text>
+        <FlatList
+          nestedScrollEnabled={true}
           style={styles.list}
           data={DATA}
           renderItem={renderItem}
@@ -87,33 +103,44 @@ const Profile = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#354F52",
+    backgroundColor: "white",
   },
   list: {
-    backgroundColor: "#52796F",
+    backgroundColor: "white",
+    borderColor: "#6667AB",
+    borderWidth: 2,
+    borderStyle: "solid",
+    padding: 2,
     height: 200,
     margin: 10,
     borderRadius: 15,
+    shadowRadius: 5,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.5,
+    shadowColor: "black",
   },
-  text: {
-    color: "#CAD2C5",
-    fontSize: 42,
+
+  header: {
+    alignSelf: "center",
+    fontSize: 20,
+    color: "#6667AB",
   },
   titles: {
-    color: "#CAD2C5",
+    color: "white",
     padding: 10,
     fontSize: 25,
     textAlign: "center",
   },
+  text: {
+    color: "white",
+    fontSize: 20,
+  },
   item: {
-    height:180,
-    width:200,
+    backgroundColor: "#6667AB",
+    height: 180,
+    width: 200,
     padding: 10,
-    marginVertical: 8,
-    marginHorizontal: 16,
-    borderStyle: "solid",
-    borderColor: "#CAD2C5",
-    borderWidth: 2,
+    margin: 5,
     borderRadius: 15,
   },
 });
