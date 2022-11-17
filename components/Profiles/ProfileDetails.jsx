@@ -11,11 +11,11 @@ import {
 import Ionicons from "react-native-vector-icons/Ionicons";
 import EditProfile from "./EditProfile";
 
-const ProfileDetails = () => {
+const ProfileDetails = (props) => {
   return (
     <SafeAreaView style={styles.profileDetails}>
       <EditProfile style={styles.modal} />
-      <Text style={styles.username}>Nabeel</Text>
+      <Text style={styles.username}>{props.userdata}</Text>
       <Ionicons name={"person-outline"} size={40} style={styles.ionicons} />
     </SafeAreaView>
   );
