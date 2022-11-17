@@ -13,6 +13,7 @@ import {
 
 const EventsCard = ({ item }) => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   return (
     <TouchableOpacity
@@ -62,14 +63,7 @@ const EventsCard = ({ item }) => {
               </Text>
               <Text>{item.date.when}</Text>
               <View style={styles.imageContainer}></View>
-              <Text
-                style={{ color: "blue" }}
-                onPress={() => {
-                  Linking.openURL(item.link);
-                }}
-              >
-                More About This Event
-              </Text>
+              <Text>Click to see more about this event</Text>
             </View>
             <Pressable
               style={[styles.button, styles.buttonClose]}

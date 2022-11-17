@@ -14,7 +14,6 @@ import EventsCard from "./EventsCard";
 
 const SearchEvent = () => {
   const [events, setEvents] = useState([]);
-  const [modalVisible, setModalVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
