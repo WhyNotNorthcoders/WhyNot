@@ -3,7 +3,6 @@ import { getAuth } from "firebase/auth";
 
 import { getFirestore, collection, getDocs, addDoc } from "firebase/firestore";
 
-import Constants from "expo-constants";
 
 // const firebaseConfig = {
 //   apiKey: "AIzaSyDR5rsBC215JB0FUm4_QTStNdb_Wc3aS8c",

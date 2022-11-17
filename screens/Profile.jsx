@@ -4,36 +4,51 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
+  Button,
 } from "react-native";
 import { useState, useEffect} from "react";
 import ProfileDetails from "../components/Profiles/ProfileDetails";
-import { collection, getDocs } from "firebase/firestore";
-import { database } from "../config/firebaseConfig";
+import { collection, getDocs, doc, query, documentId, where } from "firebase/firestore";
+import { database, auth } from "../config/firebaseConfig";
+
 
 const Profile = () => {
   const [DATA, setData] = useState([]);
 
+
+
+const getUser = () => {
+const colRef = collection(database, "users");
+
+//get collection data
+getDocs(colRef).then((snapshot) => {
+console. log(snapshot.docs);
+});
+
+}
+    
+    
   const bucketRef = collection(
     database,
     "users",
-    "BdmUND7DgscJUL9YKMWQprRNTrA3",
-    "bucketList"
+    auth.currentUser.uid,
+    "Bucket_list"
   );
 
   useEffect(() => {
+    
     getDocs(bucketRef)
       .then((snapshot) => {
         let list = [];
         snapshot.docs.forEach((doc) => {
           list.push({ ...doc.data(), id: doc.id });
         });
-
         setData(list);
       })
       .catch((err) => {
         alert(err.message);
       });
-  }, [DATA]);
+  }, []);
 
   const Item = ({ item, onPress, backgroundColor, textColor }) => (
     <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
@@ -62,7 +77,8 @@ const Profile = () => {
     <>
       <ScrollView style={styles.container} >
         <ProfileDetails />
-        <Text style={styles.titles}>Bucket List</Text>
+        {/* <Text style={styles.titles}>Bucket List</Text> */}
+        <Button title="getUsers" onPress={getUser}/>
         <FlatList nestedScrollEnabled={true}
           style={styles.list}
           data={DATA}
@@ -74,7 +90,7 @@ const Profile = () => {
         <Text style={styles.titles}>Recently Completed</Text>
         <FlatList nestedScrollEnabled={true}
           style={styles.list}
-          data={DATA}
+          //data={}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
           extraData={selectedId}

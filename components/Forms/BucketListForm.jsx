@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { auth, database } from "../config/firebaseConfig";
 import {
   SafeAreaView,
   View,
@@ -11,6 +12,9 @@ import {
 import DropDownPicker from "react-native-dropdown-picker";
 import DatePicker from "react-native-modern-datepicker";
 import Modal from "react-native-modal";
+import { addDoc, collection } from "firebase/firestore";
+
+
 
 const BucketListForm = () => {
   const [categoryOpen, setCategoryOpen] = useState(false);
@@ -30,6 +34,16 @@ const BucketListForm = () => {
   const toggleDate = () => {
     setDateOpen(!dateOpen);
   };
+  const handleSubmit =()=>{
+    
+    const bucketRef = collection(database, "users", auth.currentUser.uid, "Bucket_list")
+    const bucketItem = {title: title, category: category, location: location, targetDate: date, difficulty: difficulty}
+    addDoc(bucketRef, bucketItem).then(()=>{
+      alert("Item has been added successfully")
+    }).catch((err)=>{
+      alert(err.message)
+    })
+  }
 
   return (
     <View style={styles.container}>
@@ -38,6 +52,7 @@ const BucketListForm = () => {
         <TextInput
           style={styles.textInput}
           placeholder="Enter Bucket List Name"
+          onChangeText={(val)=>setTitle(val)}
         />
         <View>
           <DropDownPicker
@@ -55,10 +70,10 @@ const BucketListForm = () => {
             setItems={setItems}
           />
         </View>
-        <TextInput style={styles.textInput} placeholder="Enter Location" />
+        <TextInput style={styles.textInput} placeholder="Enter Location"  onChangeText={(val)=>setLocation(val)}/>
         <View>
           <TouchableOpacity onPress={toggleDate}>
-            <Text style={styles.textInput}>Target Date: {date}</Text>
+            <Text style={styles.textInput}>{date}</Text>
           </TouchableOpacity>
           <Modal isVisible={dateOpen}>
             <View style={{}}>
@@ -79,10 +94,10 @@ const BucketListForm = () => {
             </View>
           </Modal>
         </View>
-        <TextInput style={styles.textInput} placeholder="Enter Difficulty" />
+        <TextInput style={styles.textInput} placeholder="Enter Difficulty"  onChangeText={(val)=>setDifficulty(val)} />
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.bucketListButton}>
+        <TouchableOpacity style={styles.bucketListButton} onPress={handleSubmit}>
           <Text style={{ textAlign: "center" }}>Add Bucket List Item</Text>
         </TouchableOpacity>
       </View>
