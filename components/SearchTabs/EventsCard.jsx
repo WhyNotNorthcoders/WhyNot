@@ -16,67 +16,71 @@ const EventsCard = ({ item }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   return (
-    <TouchableOpacity
-      onPress={() => {
-        setModalVisible(true);
-      }}
-    >
-      <View style={styles.item}>
-        <Text>Title: {item.title}</Text>
-        <Image
-          style={{ height: 100, width: 100, borderRadius: 50 }}
-          source={{ uri: item.image }}
-        />
-        <Text>
-          Address: {item.address[0]}, {item.address[1]}
-        </Text>
-        <Text>{item.date.when}</Text>
-        <View style={styles.imageContainer}></View>
-        <Text>Click on the post to see more about event </Text>
-      </View>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
+    <View style={styles.eventCard}>
+      <Pressable
+        onPress={() => {
+          setModalVisible(true);
         }}
       >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <View>
-              <Text>Title: {item.title}</Text>
-              <Image
-                style={{ height: 100, width: 100, borderRadius: 50 }}
-                source={{ uri: item.image }}
-              />
-              <Text>Description: {item.description}</Text>
-              <Text>
-                Address: {item.address[0]}, {item.address[1]}
-              </Text>
-              <Text>{item.date.when}</Text>
-              <View style={styles.imageContainer}></View>
-              <Text
-                style={{ color: "blue" }}
+        <View style={styles.item}>
+          <Text style={styles.eventInformation}>Title: {item.title}</Text>
+          <Image
+            style={{ height: 150, width: "100%", borderRadius: 15 }}
+            source={{ uri: item.image }}
+          />
+          <Text style={styles.eventInformation}>
+            Address: {item.address[0]}, {item.address[1]}
+          </Text>
+          <Text style={styles.eventInformation}>{item.date.when}</Text>
+          <Text style={styles.eventInformation}>
+            Click on the post to see more about event
+          </Text>
+          <View style={styles.imageContainer}></View>
+        </View>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <View>
+                <Text style={styles.eventInformation}>Title: {item.title}</Text>
+                <Image
+                  style={{ height: 100, width: 100, borderRadius: 10 }}
+                  source={{ uri: item.image }}
+                />
+                <Text style={styles.eventInformation}>Description: {item.description}</Text>
+                <Text style={styles.eventInformation}>
+                  Address: {item.address[0]}, {item.address[1]}
+                </Text>
+                <Text style={styles.eventInformation}>{item.date.when}</Text>
+                <View style={styles.imageContainer}></View>
+                <Text
+                  style={{ color: "blue" }}
+                  onPress={() => {
+                    Linking.openURL(item.link);
+                  }}
+                >
+                  More About This Event
+                </Text>
+              </View>
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
                 onPress={() => {
-                  Linking.openURL(item.link);
+                  setModalVisible(!modalVisible);
                 }}
               >
-                More About This Event
-              </Text>
+                <Text style={{ color: "white" }}>close</Text>
+              </Pressable>
             </View>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => {
-                setModalVisible(!modalVisible);
-              }}
-            >
-              <Text style={{ color: "white" }}>close</Text>
-            </Pressable>
           </View>
-        </View>
-      </Modal>
-    </TouchableOpacity>
+        </Modal>
+      </Pressable>
+    </View>
   );
 };
 
@@ -85,7 +89,6 @@ export default EventsCard;
 const styles = StyleSheet.create({
   item: {
     padding: 10,
-    textAlign: "center",
     backgroundColor: "white",
     borderRadius: 15,
     borderWidth: 4,
@@ -126,5 +129,8 @@ const styles = StyleSheet.create({
   buttonClose: {
     padding: 10,
     backgroundColor: "#6667AB",
+  },
+  eventInformation: {
+    margin: 5,
   },
 });
