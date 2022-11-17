@@ -15,29 +15,28 @@ function SearchTopTab() {
           borderWidth: 1,
           borderColor: "#CAD2C5",
           height: "100%",
-          backgroundColor: "#354F52",
+          backgroundColor: "#6667AB",
         },
-        tabBarLabelStyle: {
-          color: "#CAD2C5",
+        tabBarActiveLabelStyle: {
+          color: "black",
           fontSize: 14,
         },
         tabBarStyle: {
-          backgroundColor: "#2F3E46",
+          backgroundColor: "white",
           borderBottomWidth: 0.5,
           borderBottomColor: "gray",
-          tabBarInactiveTintColor: "#354F52",
         },
       }}
     >
       <Tab.Screen
         name="SearchTop"
         component={SearchTop}
-        options={{ tabBarLabel: "Top"}}
+        options={{ tabBarLabel: "Top" }}
       />
       <Tab.Screen
         name="SearchUser"
         component={SearchUser}
-        options={{ tabBarLabel: "User"}}
+        options={{ tabBarLabel: "User" }}
       />
       <Tab.Screen
         name="SearchEvent"
