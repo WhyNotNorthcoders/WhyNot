@@ -34,29 +34,32 @@ const BucketListForm = () => {
 
   return (
     <View style={styles.container}>
-      <Text
+      {/* <Text
         style={{
           textAlign: "center",
           fontSize: 20,
           fontWeight: "bold",
-          color: "#CAD2C5",
+          color: "#6667AB",
         }}
       >
         Bucket List Form
-      </Text>
+      </Text> */}
       <View>
         <TextInput
           style={styles.textInput}
           placeholder="Enter Bucket List Name"
+          placeholderTextColor={"lightgrey"}
         />
         <View
           style={{
             zIndex: 1,
+            color: "white",
           }}
         >
           <DropDownPicker
             style={styles.textInput}
             placeholder="--Select Category--"
+            placeholderTextColor={"white"}
             open={categoryOpen}
             value={category}
             items={items}
@@ -70,7 +73,11 @@ const BucketListForm = () => {
             }}
           />
         </View>
-        <TextInput style={styles.textInput} placeholder="Enter Location" />
+        <TextInput
+          style={styles.textInput}
+          placeholder="Enter Location"
+          placeholderTextColor={"lightgrey"}
+        />
         <View>
           <TouchableOpacity style={styles.textInput} onPress={toggleDate}>
             <Text style={styles.targetDate}>Target Date: {date}</Text>
@@ -82,11 +89,11 @@ const BucketListForm = () => {
                 selectorStartingYear={2022}
                 onMonthYearChange={(selectedDate) => setDate(selectedDate)}
                 options={{
-                  backgroundColor: "#354F52",
-                  textHeaderColor: "#CAD2C5",
-                  textDefaultColor: "#CAD2C5",
-                  selectedTextColor: "#fff",
-                  mainColor: "#52796F",
+                  backgroundColor: "#6667AB",
+                  textHeaderColor: "white",
+                  textDefaultColor: "white",
+                  selectedTextColor: "black",
+                  mainColor: "white",
                   textSecondaryColor: "#52796F",
                 }}
               />
@@ -99,12 +106,15 @@ const BucketListForm = () => {
         <TextInput
           style={styles.textInput}
           keyboardType="numeric"
+          placeholderTextColor={"lightgrey"}
           placeholder="Enter Difficulty"
         />
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.bucketListButton}>
-          <Text style={{ textAlign: "center" }}>Add Bucket List Item</Text>
+          <Text style={{ textAlign: "center", color: "white" }}>
+            Add Bucket List Item
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -116,14 +126,14 @@ const styles = StyleSheet.create({
     padding: 15,
     height: "100%",
     width: "100%",
-    backgroundColor: "#52796F",
+    backgroundColor: "white",
   },
 
   textInput: {
     height: 50,
     width: "100%",
-    color: "black",
-    backgroundColor: "#CAD2C5",
+    color: "white",
+    backgroundColor: "#6667AB",
     borderRadius: 6,
     borderWidth: 1,
     padding: 5,
@@ -138,6 +148,7 @@ const styles = StyleSheet.create({
 
   targetDate: {
     marginTop: 12,
+    color: "white",
   },
   buttonContainer: {
     justifyContent: "center",
@@ -161,8 +172,37 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderRadius: 4,
     elevation: 3,
-    backgroundColor: "#84A98C",
+    backgroundColor: "#6667AB",
     marginTop: 5,
+    color: "white",
+    borderStyle: "solid",
+    borderWidth: 2,
+    borderColor: "#BF07F7",
+    shadowRadius: 5,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.75,
+    shadowColor: "#6667AB",
+  },
+  bucketListButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 6,
+    paddingHorizontal: 16,
+    borderRadius: 4,
+    elevation: 3,
+    backgroundColor: "#6667AB",
+    marginTop: 5,
+    color: "white",
+    borderStyle: "solid",
+    borderWidth: 2,
+    borderRadius: 15,
+    borderColor: "#BF07F7",
+    width: "60%",
+    height: 40,
+    shadowRadius: 5,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.75,
+    shadowColor: "#6667AB",
   },
 });
 

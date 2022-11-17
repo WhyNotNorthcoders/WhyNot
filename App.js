@@ -11,7 +11,6 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./config/firebaseConfig";
-import Chat from "./components/Chat";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -36,8 +35,8 @@ export default function App() {
               name={"Why Not?"}
               component={ActivePages}
               options={{
-                headerStyle: { backgroundColor: "#2F3E46", height: 94 },
-                headerTintColor: "#CAD2C5",
+                headerStyle: { backgroundColor: "#6667AB", height: 94 },
+                headerTintColor: "white",
               }}
             />
           </Stack.Group>

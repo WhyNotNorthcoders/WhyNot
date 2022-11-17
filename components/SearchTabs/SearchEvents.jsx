@@ -35,15 +35,16 @@ const SearchEvent = () => {
 
 const styles = StyleSheet.create({
   listContainer: {
-    backgroundColor: "#52796F",
+    backgroundColor: "white",
   },
   item: {
+    padding: 10,
     textAlign: "center",
-    backgroundColor: "#84A98C",
-    borderRadius: 10,
-    borderWidth: 2,
-    borderColor: "#CAD2C5",
-    padding: 100,
+    backgroundColor: "white",
+    borderRadius: 15,
+    borderWidth: 4,
+    borderColor: "#6667AB",
+    height: 200,
     fontSize: 20,
     margin: 15,
     shadowRadius: 5,
