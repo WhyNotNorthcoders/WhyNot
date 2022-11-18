@@ -48,7 +48,6 @@ const BucketListCard = ({ item, itemID }) => {
   };
 
   const BucketItem = ({ title, location, category, setComplete }) => {
-
     const navigation = useNavigation();
 
     return (
@@ -93,52 +92,52 @@ const BucketListCard = ({ item, itemID }) => {
         <View style={styles.textData}>
           <Text>Title: </Text>
           <TextInput
+            value={title}
             onChangeText={(val) => {
-              setTitle(val);
+              setTitleInput(val);
             }}
-          >
-            {title}
-          </TextInput>
+            onEndEditing={setTitle(titleInput)}
+          ></TextInput>
         </View>
         <View style={styles.textData}>
           <Text>Category: </Text>
           <TextInput
+            value={category}
             onChangeText={(val) => {
-              setCategory(val);
+              setCategoryInput(val);
             }}
-          >
-            {category}
-          </TextInput>
+            onEndEditing={setCategory(categoryInput)}
+          ></TextInput>
         </View>
         <View style={styles.textData}>
           <Text>Location: </Text>
           <TextInput
+            value={location}
             onChangeText={(val) => {
-              setLocation(val);
+              setLocationInput(val);
             }}
-          >
-            {location}
-          </TextInput>
+            onEndEditing={setLocation(locationInput)}
+          ></TextInput>
         </View>
         <View style={styles.textData}>
           <Text>Target Date: </Text>
           <TextInput
+            value={targetDate}
             onChangeText={(val) => {
-              setTargetDate(val);
+              setTargetDateInput(val);
             }}
-          >
-            {targetDate}
-          </TextInput>
+            onEndEditing={setTargetDate(targetDateInput)}
+          ></TextInput>
         </View>
         <View style={styles.textData}>
           <Text>Difficulty: </Text>
           <TextInput
+            value={difficulty}
             onChangeText={(val) => {
-              setDifficulty(val);
+              setDifficultyInput(val);
             }}
-          >
-            {difficulty}
-          </TextInput>
+            onEndEditing={setDifficulty(difficultyInput)}
+          ></TextInput>
         </View>
         <Pressable onPress={onEditSubmit} style={styles.button}>
           <Text>Submit Edit</Text>
@@ -249,6 +248,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   textData: {
+    width: 250,
+    margin: 5,
     padding: 5,
     borderWidth: 2,
     borderColor: "black",

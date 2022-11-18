@@ -48,16 +48,6 @@ const BucketListForm = () => {
 
   return (
     <View style={styles.container}>
-      {/* <Text
-        style={{
-          textAlign: "center",
-          fontSize: 20,
-          fontWeight: "bold",
-          color: "#6667AB",
-        }}
-      >
-        Bucket List Form
-      </Text> */}
       <View>
         <TextInput
           style={styles.textInput}
