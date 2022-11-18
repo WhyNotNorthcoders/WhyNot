@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { auth, database } from "../../config/firebaseConfig";
 import {
   SafeAreaView,
   View,
@@ -12,6 +13,9 @@ import {
 import DropDownPicker from "react-native-dropdown-picker";
 import DatePicker from "react-native-modern-datepicker";
 import Modal from "react-native-modal";
+import { addDoc, collection } from "firebase/firestore";
+
+
 
 const BucketListForm = () => {
   const [categoryOpen, setCategoryOpen] = useState(false);
@@ -31,6 +35,16 @@ const BucketListForm = () => {
   const toggleDate = () => {
     setDateOpen(!dateOpen);
   };
+  const handleSubmit =()=>{
+    
+    const bucketRef = collection(database, "users", auth.currentUser.uid, "Bucket_list")
+    const bucketItem = {title: title, category: category, location: location, targetDate: date, difficulty: difficulty}
+    addDoc(bucketRef, bucketItem).then(()=>{
+      alert("Item has been added successfully")
+    }).catch((err)=>{
+      alert(err.message)
+    })
+  }
 
   return (
     <View style={styles.container}>
@@ -48,8 +62,9 @@ const BucketListForm = () => {
         <TextInput
           style={styles.textInput}
           placeholder="Enter Bucket List Name"
-          placeholderTextColor={"lightgrey"}
+          onChangeText={(val)=>setTitle(val)}
         />
+        </View>
         <View
           style={{
             zIndex: 1,
@@ -73,15 +88,12 @@ const BucketListForm = () => {
             }}
           />
         </View>
-        <TextInput
-          style={styles.textInput}
-          placeholder="Enter Location"
-          placeholderTextColor={"lightgrey"}
-        />
+        <TextInput style={styles.textInput} placeholder="Enter Location"  onChangeText={(val)=>setLocation(val)}/>
         <View>
-          <TouchableOpacity style={styles.textInput} onPress={toggleDate}>
-            <Text style={styles.targetDate}>Target Date: {date}</Text>
+          <TouchableOpacity onPress={toggleDate}>
+            <Text style={styles.textInput}>{date}</Text>
           </TouchableOpacity>
+          </View>
           <Modal isVisible={dateOpen}>
             <View>
               <DatePicker
@@ -96,22 +108,24 @@ const BucketListForm = () => {
                   mainColor: "white",
                   textSecondaryColor: "#52796F",
                 }}
-              />
+                />
+                
               <Pressable style={styles.button} onPress={toggleDate}>
                 <Text style={styles.buttonText}>Hide</Text>
               </Pressable>
             </View>
           </Modal>
-        </View>
+      <View style={styles.buttonContainer}>
         <TextInput
           style={styles.textInput}
           keyboardType="numeric"
           placeholderTextColor={"lightgrey"}
           placeholder="Enter Difficulty"
+          onChangeText={(val)=>setDifficulty(val)}
         />
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.bucketListButton}>
+        <TouchableOpacity style={styles.bucketListButton} onPress={handleSubmit}>
           <Text style={{ textAlign: "center", color: "white" }}>
             Add Bucket List Item
           </Text>
