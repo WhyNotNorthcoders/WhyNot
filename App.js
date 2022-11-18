@@ -20,7 +20,6 @@ export default function App() {
   const [userData, setUserData] = useState({});
 
   onAuthStateChanged(auth, (user) => {
-    console;
     if (user) {
       setUserData(user);
       setLoggedIn(true);
