@@ -11,8 +11,6 @@ import {
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { auth, database } from "../config/firebaseConfig";
-import Profile from "../screens/Profile";
-import StoryForm from "./Forms/StoryForm";
 
 const BucketListCard = ({ item, itemID }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -86,66 +84,6 @@ const BucketListCard = ({ item, itemID }) => {
     );
   };
 
-  const EditModal = () => {
-    return (
-      <>
-        <View style={styles.textData}>
-          <Text>Title: </Text>
-          <TextInput
-            value={title}
-            onChangeText={(val) => {
-              setTitleInput(val);
-            }}
-            onEndEditing={setTitle(titleInput)}
-          ></TextInput>
-        </View>
-        <View style={styles.textData}>
-          <Text>Category: </Text>
-          <TextInput
-            value={category}
-            onChangeText={(val) => {
-              setCategoryInput(val);
-            }}
-            onEndEditing={setCategory(categoryInput)}
-          ></TextInput>
-        </View>
-        <View style={styles.textData}>
-          <Text>Location: </Text>
-          <TextInput
-            value={location}
-            onChangeText={(val) => {
-              setLocationInput(val);
-            }}
-            onEndEditing={setLocation(locationInput)}
-          ></TextInput>
-        </View>
-        <View style={styles.textData}>
-          <Text>Target Date: </Text>
-          <TextInput
-            value={targetDate}
-            onChangeText={(val) => {
-              setTargetDateInput(val);
-            }}
-            onEndEditing={setTargetDate(targetDateInput)}
-          ></TextInput>
-        </View>
-        <View style={styles.textData}>
-          <Text>Difficulty: </Text>
-          <TextInput
-            value={difficulty}
-            onChangeText={(val) => {
-              setDifficultyInput(val);
-            }}
-            onEndEditing={setDifficulty(difficultyInput)}
-          ></TextInput>
-        </View>
-        <Pressable onPress={onEditSubmit} style={styles.button}>
-          <Text>Submit Edit</Text>
-        </Pressable>
-      </>
-    );
-  };
-
   return (
     <>
       <TouchableOpacity
@@ -173,7 +111,61 @@ const BucketListCard = ({ item, itemID }) => {
             <View style={styles.modalView}>
               <View>
                 {edit ? (
-                  <EditModal />
+                  <>
+                    <View style={styles.textData}>
+                      <Text>Title: </Text>
+                      <TextInput
+                        defaultValue={title}
+                        onChangeText={(val) => {
+                          setTitle(val);
+                        }}
+                        editable={true}
+                      ></TextInput>
+                    </View>
+                    <View style={styles.textData}>
+                      <Text>Category: </Text>
+                      <TextInput
+                        onChangeText={(val) => {
+                          setCategory(val);
+                        }}
+                        editable={true}
+                        defaultValue={category}
+                      ></TextInput>
+                    </View>
+                    <View style={styles.textData}>
+                      <Text>Location: </Text>
+                      <TextInput
+                        defaultValue={location}
+                        onChangeText={(val) => {
+                          setLocation(val);
+                        }}
+                        editable={true}
+                      ></TextInput>
+                    </View>
+                    <View style={styles.textData}>
+                      <Text>Target Date: </Text>
+                      <TextInput
+                        defaultValue={targetDate}
+                        onChangeText={(val) => {
+                          setTargetDate(val);
+                        }}
+                        editable={true}
+                      ></TextInput>
+                    </View>
+                    <View style={styles.textData}>
+                      <Text>Difficulty: </Text>
+                      <TextInput
+                        editable={true}
+                        defaultValue={difficulty}
+                        onChangeText={(val) => {
+                          setDifficulty(val);
+                        }}
+                      ></TextInput>
+                    </View>
+                    <Pressable onPress={onEditSubmit} style={styles.button}>
+                      <Text>Submit Edit</Text>
+                    </Pressable>
+                  </>
                 ) : (
                   <BucketItem
                     title={title}

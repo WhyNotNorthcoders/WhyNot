@@ -36,7 +36,6 @@ const BucketListForm = () => {
     setDateOpen(!dateOpen);
   };
   const handleSubmit =()=>{
-    
     const bucketRef = collection(database, "users", auth.currentUser.uid, "Bucket_list")
     const bucketItem = {title: title, category: category, location: location, targetDate: date, difficulty: difficulty}
     addDoc(bucketRef, bucketItem).then(()=>{
@@ -81,7 +80,7 @@ const BucketListForm = () => {
         <TextInput style={styles.textInput} placeholder="Enter Location"  onChangeText={(val)=>setLocation(val)}/>
         <View>
           <TouchableOpacity onPress={toggleDate}>
-            <Text style={styles.textInput}>{date}</Text>
+            <Text style={styles.textInput}>Target Date: {date}</Text>
           </TouchableOpacity>
           </View>
           <Modal isVisible={dateOpen}>
