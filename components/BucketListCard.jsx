@@ -57,11 +57,11 @@ const BucketListCard = ({ item, data, itemID }) => {
         }}
         style={styles.item}
       >
-        <Text style={styles.titles}>{item.title}: </Text>
-        <Text style={styles.text}>Category: {item.category}</Text>
-        <Text style={styles.text}>Location: {item.location}</Text>
-        <Text style={styles.text}>Target Date: {item.targetDate}</Text>
-        <Text style={styles.text}>Difficulty: {item.difficulty}</Text>
+        <Text style={styles.titles}>{title}: </Text>
+        <Text style={styles.text}>Category: {category}</Text>
+        <Text style={styles.text}>Location: {location}</Text>
+        <Text style={styles.text}>Target Date: {targetDate}</Text>
+        <Text style={styles.text}>Difficulty: {difficulty}</Text>
       </TouchableOpacity>
       <View>
         <Modal
@@ -84,7 +84,7 @@ const BucketListCard = ({ item, data, itemID }) => {
                           setTitle(val);
                         }}
                       >
-                        {item.title}
+                        {title}
                       </TextInput>
                     </View>
                     <View style={styles.textData}>
@@ -94,7 +94,7 @@ const BucketListCard = ({ item, data, itemID }) => {
                           setCategory(val);
                         }}
                       >
-                        {item.category}
+                        {category}
                       </TextInput>
                     </View>
                     <View style={styles.textData}>
@@ -104,7 +104,7 @@ const BucketListCard = ({ item, data, itemID }) => {
                           setLocation(val);
                         }}
                       >
-                        {item.location}
+                        {location}
                       </TextInput>
                     </View>
                     <View style={styles.textData}>
@@ -114,7 +114,7 @@ const BucketListCard = ({ item, data, itemID }) => {
                           setTargetDate(val);
                         }}
                       >
-                        {item.targetDate}
+                        {targetDate}
                       </TextInput>
                     </View>
                     <View style={styles.textData}>
@@ -124,7 +124,7 @@ const BucketListCard = ({ item, data, itemID }) => {
                           setDifficulty(val);
                         }}
                       >
-                        {item.difficulty}
+                        {difficulty}
                       </TextInput>
                     </View>
                     <Pressable onPress={onEditSubmit} style={styles.button}>
@@ -133,11 +133,11 @@ const BucketListCard = ({ item, data, itemID }) => {
                   </>
                 ) : (
                   <>
-                    <Text>Title: {item.title}</Text>
-                    <Text>Category: {item.category}</Text>
-                    <Text>Location: {item.location}</Text>
-                    <Text>Target Date: {item.targetDate}</Text>
-                    <Text>Difficulty: {item.difficulty}</Text>
+                    <Text>Title: {title}</Text>
+                    <Text>Category: {category}</Text>
+                    <Text>Location: {location}</Text>
+                    <Text>Target Date: {targetDate}</Text>
+                    <Text>Difficulty: {difficulty}</Text>
                     <Pressable
                       onPress={() => {
                         setEdit(true);
