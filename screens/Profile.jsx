@@ -38,7 +38,6 @@ const Profile = () => {
           list.push({ ...doc.data(), id: doc.id });
         });
         setData(list);
-        console.log(data)
       })
       .catch((err) => {
         alert(err.message);
