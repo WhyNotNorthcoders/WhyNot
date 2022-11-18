@@ -15,8 +15,8 @@ import { TextInput } from "react-native-gesture-handler";
 import { diff } from "react-native-reanimated";
 import { auth, database } from "../config/firebaseConfig";
 
-const BucketListCard = ({ item, data, itemID }) => {
-  const [bucketItem, setBucketItem] = useState([]);
+const BucketListCard = ({ item, itemID }) => {
+
   const [modalVisible, setModalVisible] = useState(false);
   const [edit, setEdit] = useState(false);
   const [title, setTitle] = useState(item.title);

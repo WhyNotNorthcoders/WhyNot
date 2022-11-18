@@ -79,7 +79,7 @@ const Profile = () => {
         <FlatList
           nestedScrollEnabled={true}
           style={styles.list}
-          renderItem={({ item }) => <BucketListCard item={item} data={data} itemID={item.id} />}
+          renderItem={({ item }) => <BucketListCard item={item} itemID={item.id} />}
           data={data}
           // keyExtractor={(item) => item.id}
           // extraData={selectedId}
