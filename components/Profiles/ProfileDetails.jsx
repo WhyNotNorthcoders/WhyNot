@@ -4,18 +4,18 @@ import {
   SafeAreaView,
   Text,
   StyleSheet,
-  Modal,
-  Pressable,
-  Alert,
   View,
-  TextInput,
+  Pressable,
+  Image,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { auth, database } from "../../config/firebaseConfig";
 import { userContext } from "../../context";
-import EditProfile from "./EditProfile";
+import * as ImagePicker from "expo-image-picker";
 
 const ProfileDetails = () => {
+  const [image, setImage] = useState("");
+  const [imageSelected, setImageSelected] = useState(false);
   const { userData } = useContext(userContext);
   const [userInfo, setUserInfo] = useState({});
 
@@ -26,10 +26,35 @@ const ProfileDetails = () => {
     });
   }, [userData]);
 
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+      setImageSelected(true);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.profileDetails}>
       <Text style={styles.username}>{userInfo.username}</Text>
-      <Ionicons name={"person-outline"} size={40} style={styles.ionicons} />
+
+      {imageSelected ? (
+        <Pressable onPress={pickImage}>
+          <View>
+            {image && <Image source={{ uri: image }} style={styles.ionicons} />}
+          </View>
+        </Pressable>
+      ) : (
+        <Pressable onPress={pickImage}>
+          <Ionicons name={"person-outline"} style={styles.ionicons} />
+        </Pressable>
+      )}
     </SafeAreaView>
   );
 };
@@ -52,7 +77,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderWidth: 2,
-    marginTop: -20,
+    marginTop: -25,
     borderColor: "white",
     marginLeft: 20,
   },

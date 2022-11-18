@@ -25,7 +25,7 @@ export default function App() {
       setUserData(user);
       setLoggedIn(true);
     } else {
-      setLoggedIn(true);
+      setLoggedIn(false);
     }
   });
 
