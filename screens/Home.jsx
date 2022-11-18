@@ -1,74 +1,119 @@
 import {
-  Pressable,
+  FlatList,
   StyleSheet,
   Text,
   SafeAreaView,
-  ScrollView,
-  View,
+  TouchableOpacity
 } from "react-native";
+import { useState } from "react";
 
+const DATA = [
+  {
+    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
+    title: "First Item",
+  },
+  {
+    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
+    title: "Second Item",
+  },
+  {
+    id: "58694a0f-3da1-471f-bd96-145571e29d72",
+    title: "Third Item",
+  },
+];
 const Home = () => {
-  return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.titles}>Latest</Text>
-      <ScrollView style={styles.scrollView}>
-        <View>
-          <Text style={styles.text}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </Text>
-        </View>
-      </ScrollView>
-      <Text style={styles.titles}>Suggested</Text>
-      <ScrollView style={styles.scrollView}>
-        <View>
-          <Text style={styles.text}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </Text>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+  const Item = ({ item, onPress }) => (
+    <TouchableOpacity onPress={onPress} style={styles.item}>
+      <Text style={styles.titles}>{item.title}</Text>
+      <Text style={styles.text}>Category{item.category}</Text>
+      <Text style={styles.text}>rating</Text>
+      <Text style={styles.text}>description</Text>
+    </TouchableOpacity>
   );
+  const [selectedId, setSelectedId] = useState(null);
+
+  const renderItem = ({ item }) => {
+    const backgroundColor = item.id === selectedId ? "#CAD2C5" : "#84A98C";
+    const color = item.id === selectedId ? "white" : "white";
+
+    return (
+      <Item
+        item={item}
+        onPress={() => setSelectedId(item.id)}
+        backgroundColor={{ backgroundColor }}
+        textColor={{ color }}
+      />
+    );
+  };
+
+  return (
+    <>
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.header}>Stories</Text>
+        <FlatList
+          style={styles.list}
+          data={DATA}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+          extraData={selectedId}
+          horizontal={true}
+        />
+        <Text style={styles.header}>Suggested</Text>
+        <FlatList
+          style={styles.list}
+          data={DATA}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+          extraData={selectedId}
+          horizontal={true}
+        />
+      </SafeAreaView>
+    </>
+  );
+
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: "white",
   },
-  scrollView: {
+  list: {
     backgroundColor: "white",
-    borderWidth: 2,
     borderColor: "#6667AB",
-    height: 200,
+    borderWidth: 2,
+    borderStyle: "solid",
+    padding: 6,
+    height: 270,
     margin: 10,
     borderRadius: 15,
-    shadowRadius: 15,
+    shadowRadius: 5,
     shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 1,
+    shadowOpacity: 0.5,
     shadowColor: "black",
-    padding: 20,
   },
-  text: {
-    color: "#6667AB",
+
+  header: {
+    alignSelf: "center",
     fontSize: 20,
+    color: "#6667AB",
   },
   titles: {
-    marginTop: 10,
-    color: "#6667AB",
+    color: "white",
+    padding: 10,
     fontSize: 25,
     textAlign: "center",
+  },
+  text: {
+    color: "white",
+    fontSize: 20,
+  },
+  item: {
+    backgroundColor: "#6667AB",
+    height: 240,
+    width: 200,
+    padding: 10,
+    margin: 5,
+    borderRadius: 15,
   },
 });
 

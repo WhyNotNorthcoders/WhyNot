@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { doc, getDoc } from "firebase/firestore";
+import { useContext, useEffect, useState } from "react";
 import {
   SafeAreaView,
   Text,
@@ -8,14 +9,24 @@ import {
   Image,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { auth, database } from "../../config/firebaseConfig";
+import { userContext } from "../../context";
 import * as ImagePicker from "expo-image-picker";
 
 const ProfileDetails = () => {
   const [image, setImage] = useState("");
   const [imageSelected, setImageSelected] = useState(false);
+  const { userData } = useContext(userContext);
+  const [userInfo, setUserInfo] = useState({});
+
+  useEffect(() => {
+    const colRef = doc(database, "users", auth.currentUser.uid);
+    getDoc(colRef).then((snapshot) => {
+      setUserInfo(snapshot.data());
+    });
+  }, [userData]);
 
   const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -31,7 +42,7 @@ const ProfileDetails = () => {
 
   return (
     <SafeAreaView style={styles.profileDetails}>
-      <Text style={styles.username}>Nabeel</Text>
+      <Text style={styles.username}>{userInfo.username}</Text>
 
       {imageSelected ? (
         <Pressable onPress={pickImage}>
