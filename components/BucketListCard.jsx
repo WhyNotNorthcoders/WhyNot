@@ -1,24 +1,23 @@
+import { useNavigation } from "@react-navigation/native";
 import { collection, doc, updateDoc } from "firebase/firestore";
 import { useState } from "react";
 import {
-  FlatList,
   StyleSheet,
   Text,
-  ScrollView,
   TouchableOpacity,
   Pressable,
   Modal,
   View,
-  Image,
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
-import { diff } from "react-native-reanimated";
 import { auth, database } from "../config/firebaseConfig";
+import Profile from "../screens/Profile";
+import StoryForm from "./Forms/StoryForm";
 
 const BucketListCard = ({ item, itemID }) => {
-
   const [modalVisible, setModalVisible] = useState(false);
   const [edit, setEdit] = useState(false);
+  const [complete, setComplete] = useState(false);
   const [title, setTitle] = useState(item.title);
   const [category, setCategory] = useState(item.category);
   const [location, setLocation] = useState(item.location);
@@ -40,13 +39,112 @@ const BucketListCard = ({ item, itemID }) => {
       targetDate: targetDate,
       difficulty: difficulty,
     };
-
     setEdit(false);
     setModalVisible(false);
     const itemRef = doc(bucketRef, itemID);
     updateDoc(itemRef, data)
       .then(alert("item has been updated"))
       .catch((err) => alert(err.message));
+  };
+
+  const BucketItem = ({ title, location, category, setComplete }) => {
+
+    const navigation = useNavigation();
+
+    return (
+      <>
+        <Text>Title: {title}</Text>
+        <Text>Category: {category}</Text>
+        <Text>Location: {location}</Text>
+        <Text>Target Date: {targetDate}</Text>
+        <Text>Difficulty: {difficulty}</Text>
+        <Pressable
+          onPress={() => {
+            setComplete(false);
+            setEdit(true);
+          }}
+          style={styles.button}
+        >
+          <Text>Edit</Text>
+        </Pressable>
+        <Pressable
+          onPress={() => {
+            setModalVisible(false);
+            setEdit(false);
+            navigation.navigate("Add to Story", {
+              setComplete: setComplete,
+              title: title,
+              category: category,
+              location: location,
+              bucketItemId: itemID,
+            });
+          }}
+          style={styles.button}
+        >
+          <Text>Complete</Text>
+        </Pressable>
+      </>
+    );
+  };
+
+  const EditModal = () => {
+    return (
+      <>
+        <View style={styles.textData}>
+          <Text>Title: </Text>
+          <TextInput
+            onChangeText={(val) => {
+              setTitle(val);
+            }}
+          >
+            {title}
+          </TextInput>
+        </View>
+        <View style={styles.textData}>
+          <Text>Category: </Text>
+          <TextInput
+            onChangeText={(val) => {
+              setCategory(val);
+            }}
+          >
+            {category}
+          </TextInput>
+        </View>
+        <View style={styles.textData}>
+          <Text>Location: </Text>
+          <TextInput
+            onChangeText={(val) => {
+              setLocation(val);
+            }}
+          >
+            {location}
+          </TextInput>
+        </View>
+        <View style={styles.textData}>
+          <Text>Target Date: </Text>
+          <TextInput
+            onChangeText={(val) => {
+              setTargetDate(val);
+            }}
+          >
+            {targetDate}
+          </TextInput>
+        </View>
+        <View style={styles.textData}>
+          <Text>Difficulty: </Text>
+          <TextInput
+            onChangeText={(val) => {
+              setDifficulty(val);
+            }}
+          >
+            {difficulty}
+          </TextInput>
+        </View>
+        <Pressable onPress={onEditSubmit} style={styles.button}>
+          <Text>Submit Edit</Text>
+        </Pressable>
+      </>
+    );
   };
 
   return (
@@ -76,84 +174,22 @@ const BucketListCard = ({ item, itemID }) => {
             <View style={styles.modalView}>
               <View>
                 {edit ? (
-                  <>
-                    <View style={styles.textData}>
-                      <Text>Title: </Text>
-                      <TextInput
-                        onChangeText={(val) => {
-                          setTitle(val);
-                        }}
-                      >
-                        {title}
-                      </TextInput>
-                    </View>
-                    <View style={styles.textData}>
-                      <Text>Category: </Text>
-                      <TextInput
-                        onChangeText={(val) => {
-                          setCategory(val);
-                        }}
-                      >
-                        {category}
-                      </TextInput>
-                    </View>
-                    <View style={styles.textData}>
-                      <Text>Location: </Text>
-                      <TextInput
-                        onChangeText={(val) => {
-                          setLocation(val);
-                        }}
-                      >
-                        {location}
-                      </TextInput>
-                    </View>
-                    <View style={styles.textData}>
-                      <Text>Target Date: </Text>
-                      <TextInput
-                        onChangeText={(val) => {
-                          setTargetDate(val);
-                        }}
-                      >
-                        {targetDate}
-                      </TextInput>
-                    </View>
-                    <View style={styles.textData}>
-                      <Text>Difficulty: </Text>
-                      <TextInput
-                        onChangeText={(val) => {
-                          setDifficulty(val);
-                        }}
-                      >
-                        {difficulty}
-                      </TextInput>
-                    </View>
-                    <Pressable onPress={onEditSubmit} style={styles.button}>
-                      <Text>Submit Edit</Text>
-                    </Pressable>
-                  </>
+                  <EditModal />
                 ) : (
-                  <>
-                    <Text>Title: {title}</Text>
-                    <Text>Category: {category}</Text>
-                    <Text>Location: {location}</Text>
-                    <Text>Target Date: {targetDate}</Text>
-                    <Text>Difficulty: {difficulty}</Text>
-                    <Pressable
-                      onPress={() => {
-                        setEdit(true);
-                      }}
-                      style={styles.button}
-                    >
-                      <Text>Edit</Text>
-                    </Pressable>
-                  </>
+                  <BucketItem
+                    title={title}
+                    location={location}
+                    category={category}
+                    setComplete={setComplete}
+                  />
                 )}
               </View>
               <Pressable
                 style={styles.buttonClose}
                 onPress={() => {
                   setEdit(false);
-                  setModalVisible(!modalVisible);
+                  setModalVisible(false);
+                  setComplete(false);
                 }}
               >
                 <Text style={{ color: "white" }}>close</Text>

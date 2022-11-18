@@ -26,13 +26,17 @@ function DrawerRoutes({ navigation }) {
     <Drawer.Navigator initialRouteName="Profile">
       <Drawer.Screen name="Your Profile" component={Profile} />
       <Drawer.Screen name="Add to bucket list" component={BucketListForm} />
-      <Drawer.Screen name="Add to Story" component={StoryForm} />
       <Drawer.Screen
         name="Edit profile"
         component={EditProfile}
         options={{ backgroundColor: "#FAF9F6" }}
       />
       <Drawer.Screen name="Logout" component={LoginScreen} />
+      <Drawer.Screen
+        name="Add to Story"
+        component={StoryForm}
+        options={{ drawerLabel: () => null }}
+      />
     </Drawer.Navigator>
   );
 }
@@ -53,10 +57,9 @@ const Tabbar = () => {
             iconName = focused ? "home" : "home-outline";
           } else if (route.name === "Search") {
             iconName = focused ? "search" : "search-outline";
-            } else if (route.name === "Messages") {
-              iconName = focused ? "phone-portrait" : "phone-portrait-outline";
-            }
-           else if (route.name === "Profile") {
+          } else if (route.name === "Messages") {
+            iconName = focused ? "phone-portrait" : "phone-portrait-outline";
+          } else if (route.name === "Profile") {
             iconName = focused ? "person" : "person-outline";
           }
           return <Ionicons name={iconName} size={size} color={color} />;

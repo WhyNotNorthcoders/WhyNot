@@ -3,9 +3,11 @@ import {
   StyleSheet,
   Text,
   SafeAreaView,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import { useState } from "react";
+import { collection, documentId, getDocs } from "firebase/firestore";
+import { database } from "../config/firebaseConfig";
 
 const DATA = [
   {
@@ -30,6 +32,11 @@ const Home = () => {
       <Text style={styles.text}>description</Text>
     </TouchableOpacity>
   );
+
+  // const allbuckets = collection(database, "users", "Bucket_list", documentId);
+
+  // const output = getDocs(allbuckets);
+
   const [selectedId, setSelectedId] = useState(null);
 
   const renderItem = ({ item }) => {
@@ -70,7 +77,6 @@ const Home = () => {
       </SafeAreaView>
     </>
   );
-
 };
 
 const styles = StyleSheet.create({
