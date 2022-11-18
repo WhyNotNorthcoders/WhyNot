@@ -3,7 +3,6 @@ import { StyleSheet, TextInput, View, Keyboard } from "react-native";
 import { Feather, Entypo } from "@expo/vector-icons";
 
 const SearchBar = ({ clicked, setClicked, searchPhrase, setSearchPhrase }) => {
-
   return (
     <View style={styles.container}>
       <View
@@ -60,7 +59,7 @@ const styles = StyleSheet.create({
     padding: 10,
     flexDirection: "row",
     width: "92%",
-    backgroundColor: "#CAD2C5",
+    backgroundColor: "white",
     borderRadius: 15,
     alignItems: "center",
   },
@@ -68,7 +67,7 @@ const styles = StyleSheet.create({
     padding: 10,
     flexDirection: "row",
     width: "92%",
-    backgroundColor: "#CAD2C5",
+    backgroundColor: "white",
     borderRadius: 15,
     alignItems: "center",
     justifyContent: "space-evenly",
@@ -76,6 +75,6 @@ const styles = StyleSheet.create({
   input: {
     fontSize: 20,
     marginLeft: 30,
-    width: "87%"
+    width: "87%",
   },
 });

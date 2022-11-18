@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { auth, database } from "../config/firebaseConfig";
+import { auth, database } from "../../config/firebaseConfig";
 import {
   SafeAreaView,
   View,
@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Button,
   TouchableOpacity,
+  Pressable,
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import DatePicker from "react-native-modern-datepicker";
@@ -47,27 +48,44 @@ const BucketListForm = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={{ textAlign: "center" }}> Bucket List Form </Text>
+      {/* <Text
+        style={{
+          textAlign: "center",
+          fontSize: 20,
+          fontWeight: "bold",
+          color: "#6667AB",
+        }}
+      >
+        Bucket List Form
+      </Text> */}
       <View>
         <TextInput
           style={styles.textInput}
           placeholder="Enter Bucket List Name"
           onChangeText={(val)=>setTitle(val)}
         />
-        <View>
+        </View>
+        <View
+          style={{
+            zIndex: 1,
+            color: "white",
+          }}
+        >
           <DropDownPicker
-            style={{
-              backgroundColor: "#CAD2C5",
-            }}
-            containerStyle={{ padding: 6 }}
-            textStyle={{ fontSize: 16 }}
+            style={styles.textInput}
             placeholder="--Select Category--"
+            placeholderTextColor={"white"}
             open={categoryOpen}
             value={category}
             items={items}
             setOpen={setCategoryOpen}
             setValue={setCategory}
             setItems={setItems}
+            dropDownContainerStyle={{
+              borderStyle: "solid",
+              borderWidth: 2,
+              borderColor: "black",
+            }}
           />
         </View>
         <TextInput style={styles.textInput} placeholder="Enter Location"  onChangeText={(val)=>setLocation(val)}/>
@@ -75,30 +93,42 @@ const BucketListForm = () => {
           <TouchableOpacity onPress={toggleDate}>
             <Text style={styles.textInput}>{date}</Text>
           </TouchableOpacity>
+          </View>
           <Modal isVisible={dateOpen}>
-            <View style={{}}>
+            <View>
               <DatePicker
                 mode="monthYear"
                 selectorStartingYear={2022}
                 onMonthYearChange={(selectedDate) => setDate(selectedDate)}
                 options={{
-                  backgroundColor: "#354F52",
-                  textHeaderColor: "#CAD2C5",
-                  textDefaultColor: "#CAD2C5",
-                  selectedTextColor: "#fff",
-                  mainColor: "#52796F",
+                  backgroundColor: "#6667AB",
+                  textHeaderColor: "white",
+                  textDefaultColor: "white",
+                  selectedTextColor: "black",
+                  mainColor: "white",
                   textSecondaryColor: "#52796F",
                 }}
-              />
-              <Button title="Hide" onPress={toggleDate} />
+                />
+                
+              <Pressable style={styles.button} onPress={toggleDate}>
+                <Text style={styles.buttonText}>Hide</Text>
+              </Pressable>
             </View>
           </Modal>
-        </View>
-        <TextInput style={styles.textInput} placeholder="Enter Difficulty"  onChangeText={(val)=>setDifficulty(val)} />
+      <View style={styles.buttonContainer}>
+        <TextInput
+          style={styles.textInput}
+          keyboardType="numeric"
+          placeholderTextColor={"lightgrey"}
+          placeholder="Enter Difficulty"
+          onChangeText={(val)=>setDifficulty(val)}
+        />
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.bucketListButton} onPress={handleSubmit}>
-          <Text style={{ textAlign: "center" }}>Add Bucket List Item</Text>
+          <Text style={{ textAlign: "center", color: "white" }}>
+            Add Bucket List Item
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -107,20 +137,33 @@ const BucketListForm = () => {
 
 const styles = StyleSheet.create({
   container: {
-    margin: 5,
-    padding: 10,
-    backgroundColor: "#52796F",
+    padding: 15,
+    height: "100%",
+    width: "100%",
+    backgroundColor: "white",
   },
 
   textInput: {
-    color: "black",
-    backgroundColor: "#CAD2C5",
+    height: 50,
+    width: "100%",
+    color: "white",
+    backgroundColor: "#6667AB",
     borderRadius: 6,
     borderWidth: 1,
     padding: 5,
-    margin: 6,
+    paddingLeft: 11,
+    marginTop: 10,
+    marginBottom: 10,
+    shadowRadius: 5,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.5,
+    shadowColor: "black",
   },
 
+  targetDate: {
+    marginTop: 12,
+    color: "white",
+  },
   buttonContainer: {
     justifyContent: "center",
     alignItems: "center",
@@ -135,6 +178,45 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#2F3E46",
     backgroundColor: "#84A98C",
+  },
+  button: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 6,
+    paddingHorizontal: 16,
+    borderRadius: 4,
+    elevation: 3,
+    backgroundColor: "#6667AB",
+    marginTop: 5,
+    color: "white",
+    borderStyle: "solid",
+    borderWidth: 2,
+    borderColor: "#BF07F7",
+    shadowRadius: 5,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.75,
+    shadowColor: "#6667AB",
+  },
+  bucketListButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 6,
+    paddingHorizontal: 16,
+    borderRadius: 4,
+    elevation: 3,
+    backgroundColor: "#6667AB",
+    marginTop: 5,
+    color: "white",
+    borderStyle: "solid",
+    borderWidth: 2,
+    borderRadius: 15,
+    borderColor: "#BF07F7",
+    width: "60%",
+    height: 40,
+    shadowRadius: 5,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.75,
+    shadowColor: "#6667AB",
   },
 });
 

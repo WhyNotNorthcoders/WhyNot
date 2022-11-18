@@ -19,31 +19,29 @@ import { auth, database } from "../config/firebaseConfig";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 
-export default function Chat() {
+export default function Chat({navigation}) {
   const [messages, setMessages] = useState([]);
-    const navigation = useNavigation();
 
   const onSignOut = () => {
     signOut(auth).catch((err) => {
-    console.log(err)
+      console.log(err);
     });
-    navigation.navigate("LoginScreen");
   };
 
-    useLayoutEffect(() => {
-      navigation.setOptions({
-        headerRight: () => (
-          <TouchableOpacity style={{ marginRight: 10 }} onPress={onSignOut}>
-            <AntDesign
-              name="logout"
-              size={24}
-              color="white"
-              style={{ marginRight: 10 }}
-            />
-          </TouchableOpacity>
-        ),
-      });
-    }, [navigation]);
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity style={{ marginRight: 10 }} onPress={onSignOut}>
+          <AntDesign
+            name="logout"
+            size={24}
+            color="#C5C5C7"
+            style={{ marginRight: 10 }}
+          />
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
 
   useLayoutEffect(() => {
     const collectionRef = collection(database, "Chats");
