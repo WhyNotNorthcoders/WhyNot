@@ -4,56 +4,54 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
+  Button,
 } from "react-native";
 import { useState, useEffect } from "react";
 import ProfileDetails from "../components/Profiles/ProfileDetails";
-import { collection, getDocs } from "firebase/firestore";
-import { database } from "../config/firebaseConfig";
-import "react-native-gesture-handler";
+import {
+  collection,
+  getDocs,
+  doc,
+  query,
+  documentId,
+  where,
+} from "firebase/firestore";
+import { database, auth } from "../config/firebaseConfig";
+import { getAdditionalUserInfo } from "firebase/auth";
 
 const Profile = () => {
-  const DATA = [
-    {
-      id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-      title: "First Item",
-    },
-    {
-      id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-      title: "Second Item",
-    },
-    {
-      id: "58694a0f-3da1-471f-bd96-145571e29d72",
-      title: "Third Item",
-    },
-  ];
-  // const bucketRef = collection(
-  //   database,
-  //   "users",
-  //   "BdmUND7DgscJUL9YKMWQprRNTrA3",
-  //   "bucketList"
-  // );
+  const [data, setData] = useState([]);
+  // const { userData } = useContext(userContext);
+  // console.log(userData)
+  const bucketRef = collection(
+    database,
+    "users",
+    auth.currentUser.uid,
+    "Bucket_list"
+  );
 
-  // useEffect(() => {
-  //   getDocs(bucketRef)
-  //     .then((snapshot) => {
-  //       let list = [];
-  //       snapshot.docs.forEach((doc) => {
-  //         list.push({ ...doc.data(), id: doc.id });
-  //       });
-
-  //       setData(list);
-  //     })
-  //     .catch((err) => {
-  //       alert(err.message);
-  //     });
-  // }, [DATA]);
+  useEffect(() => {
+    getDocs(bucketRef)
+      .then((snapshot) => {
+        let list = [];
+        snapshot.docs.forEach((doc) => {
+          list.push({ ...doc.data(), id: doc.id });
+        });
+        setData(list);
+        console.log(data)
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  }, []);
 
   const Item = ({ item, onPress }) => (
     <TouchableOpacity onPress={onPress} style={styles.item}>
-      <Text style={styles.titles}>{item.title}</Text>
-      <Text style={styles.text}>Category{item.category}</Text>
-      <Text style={styles.text}>rating</Text>
-      <Text style={styles.text}>description</Text>
+      <Text style={styles.titles}>{item.title}: </Text>
+      <Text style={styles.text}>Category: {item.category}</Text>
+      <Text style={styles.text}>Location: {item.location}</Text>
+      <Text style={styles.text}>Target Date: {item.targetDate}</Text>
+      <Text style={styles.text}>Difficulty: {item.difficulty}</Text>
     </TouchableOpacity>
   );
 
@@ -81,7 +79,8 @@ const Profile = () => {
         <FlatList
           nestedScrollEnabled={true}
           style={styles.list}
-          data={DATA}
+          renderItem={renderItem}
+          data={data}
           keyExtractor={(item) => item.id}
           extraData={selectedId}
           horizontal={true}
@@ -90,7 +89,7 @@ const Profile = () => {
         <FlatList
           nestedScrollEnabled={true}
           style={styles.list}
-          data={DATA}
+          //data={}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
           extraData={selectedId}

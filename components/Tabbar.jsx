@@ -5,7 +5,7 @@ import "react-native-gesture-handler";
 import Home from "../screens/Home";
 import Search from "../screens/Search";
 import Profile from "../screens/Profile";
-// import Chat from "./Chat";
+import Chat from "./Chat";
 import BucketListForm from "./Forms/BucketListForm";
 import StoryForm from "./Forms/StoryForm";
 import { signOut } from "firebase/auth";
@@ -53,10 +53,10 @@ const Tabbar = () => {
             iconName = focused ? "home" : "home-outline";
           } else if (route.name === "Search") {
             iconName = focused ? "search" : "search-outline";
-            // } else if (route.name === "Messages") {
-            //   iconName = focused ? "phone-portrait" : "phone-portrait-outline";
-            // }
-          } else if (route.name === "Profile") {
+            } else if (route.name === "Messages") {
+              iconName = focused ? "phone-portrait" : "phone-portrait-outline";
+            }
+           else if (route.name === "Profile") {
             iconName = focused ? "person" : "person-outline";
           }
           return <Ionicons name={iconName} size={size} color={color} />;
@@ -75,11 +75,11 @@ const Tabbar = () => {
         component={Search}
         options={{ headerShown: false }}
       />
-      {/* <Tab.Screen
+      <Tab.Screen
         name="Messages"
         component={Chat}
         options={{ headerShown: false }}
-      /> */}
+      />
       <Tab.Screen
         name="Profile"
         component={DrawerRoutes}
