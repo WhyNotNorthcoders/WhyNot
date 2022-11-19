@@ -19,9 +19,11 @@ import {
 import { database, auth } from "../config/firebaseConfig";
 import { getAdditionalUserInfo } from "firebase/auth";
 import BucketListCard from "../components/BucketListCard";
+import StoryCard from '../components/StoryCard'
 
 const Profile = () => {
-  const [data, setData] = useState([]);
+  const [bucketListData, setBucketListData] = useState([]);
+  const [storyData, setStoryData] = useState([]);
   // const { userData } = useContext(userContext);
   // console.log(userData)
   const bucketRef = collection(
@@ -36,16 +38,27 @@ const Profile = () => {
     "users",
     auth.currentUser.uid,
     "Story_list"
-  )
+  );
 
   useEffect(() => {
     getDocs(bucketRef)
       .then((snapshot) => {
-        let list = [];
+        let bucketList = [];
         snapshot.docs.forEach((doc) => {
-          list.push({ ...doc.data(), id: doc.id });
+          bucketList.push({ ...doc.data(), id: doc.id });
         });
-        setData(list);
+        setBucketListData(bucketList);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+    getDocs(storyRef)
+      .then((snapshot) => {
+        let storyList = [];
+        snapshot.docs.forEach((doc) => {
+          storyList.push({ ...doc.data(), id: doc.id });
+        });
+        setStoryData(storyList);
       })
       .catch((err) => {
         alert(err.message);
@@ -86,8 +99,10 @@ const Profile = () => {
         <FlatList
           nestedScrollEnabled={true}
           style={styles.list}
-          renderItem={({ item }) => <BucketListCard item={item} itemID={item.id} />}
-          data={data}
+          data={bucketListData}
+          renderItem={({ item }) => (
+            <BucketListCard item={item} itemID={item.id} />
+          )}
           // keyExtractor={(item) => item.id}
           // extraData={selectedId}
           horizontal={true}
@@ -96,8 +111,10 @@ const Profile = () => {
         <FlatList
           nestedScrollEnabled={true}
           style={styles.list}
-          data={data}
-          // renderItem={renderItem}
+          data={storyData}
+          renderItem={({ item }) => (
+            <StoryCard item={item} itemID={item.id} />
+          )}
           // keyExtractor={(item) => item.id}
           // extraData={selectedId}
           horizontal={true}
