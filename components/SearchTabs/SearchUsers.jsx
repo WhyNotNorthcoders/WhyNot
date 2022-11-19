@@ -1,3 +1,5 @@
+import { collection, getDocs } from "firebase/firestore";
+import { useContext, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -5,27 +7,38 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
+import { auth, database } from "../../config/firebaseConfig";
+import { userContext } from "../../context";
 
-const SearchUser = () => {
-  const testData = [
-    { title: "User1" },
-    { title: "User2" },
-    { title: "User3" },
-    { title: "User4" },
-    { title: "User5" },
-    { title: "User6" },
-    { title: "User7" },
-    { title: "User8" },
-    { title: "User9" },
-  ];
+const SearchUser = ({navigation}) => {
+  const { userData } = useContext(userContext);
+  const [users, setUsers] = useState({});
+
+  useEffect(() => {
+    const Ref = collection(database, "users");
+    getDocs(Ref)
+      .then((snapshot) => {
+        let list = [];
+        snapshot.docs.forEach((doc) => {
+          list.push({ ...doc.data(), id: doc.id });
+        });
+        setUsers(list)
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  }, []);
 
   return (
     <View style={styles.listContainer}>
       <FlatList
-        data={testData}
+        data={users}
         renderItem={({ item }) => (
-          <TouchableOpacity>
-            <Text style={styles.item}>{item.title}</Text>
+          <TouchableOpacity onPress={()=>{navigation.navigate("UserPage", {user: item})}}>
+            <View style={styles.item}>
+            <Text style={styles.itemText}>Username: {item.username} </Text>
+            <Text style={styles.itemText}>Location: {item.location}</Text>
+            </View>
           </TouchableOpacity>
         )}
       />
@@ -51,6 +64,12 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 4, height: 4 },
     shadowOpacity: 0.5,
     shadowColor: "black",
+  },
+  itemText: {
+    padding:10,
+    textAlign: "center",
+    fontSize: 20,
+    margin: 15,
   },
 });
 

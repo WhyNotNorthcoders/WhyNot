@@ -10,11 +10,12 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./config/firebaseConfig";
 import { userContext } from "./context";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import UserPage from "./components/Profiles/UserPage";
 
 const Stack = createStackNavigator();
 
 export default function App() {
-  const [LoggedIn, setLoggedIn] = useState(true);
+  const [LoggedIn, setLoggedIn] = useState(false);
   const [userData, setUserData] = useState({});
 
   const handleLogout = () => {
@@ -26,7 +27,7 @@ export default function App() {
       setUserData(user);
       setLoggedIn(true);
     } else {
-      setLoggedIn(true);
+      setLoggedIn(false);
     }
   });
 
@@ -39,6 +40,22 @@ export default function App() {
               <Stack.Screen
                 name={"Why Not?"}
                 component={ActivePages}
+                options={{
+                  headerStyle: { backgroundColor: "#6667AB", height: 94 },
+                  headerTintColor: "white",
+                  headerRight: () => (
+                    <Pressable onPress={handleLogout}>
+                      <Ionicons
+                        name="log-out-outline"
+                        style={styles.ionicons}
+                      ></Ionicons>
+                    </Pressable>
+                  ),
+                }}
+              />
+              <Stack.Screen
+                name="UserPage"
+                component={UserPage}
                 options={{
                   headerStyle: { backgroundColor: "#6667AB", height: 94 },
                   headerTintColor: "white",
