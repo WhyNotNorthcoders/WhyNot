@@ -1,11 +1,9 @@
 import { useState } from "react";
 import {
-  SafeAreaView,
   View,
   Text,
   TextInput,
   StyleSheet,
-  Button,
   TouchableOpacity,
   Image,
   Pressable,
@@ -15,14 +13,19 @@ import DropDownPicker from "react-native-dropdown-picker";
 import DatePicker from "react-native-modern-datepicker";
 import Modal from "react-native-modal";
 import * as ImagePicker from "expo-image-picker";
-import { Rating, AirbnbRating } from "react-native-ratings";
+import { Rating } from "react-native-ratings";
+import { doc, addDoc, collection, deleteDoc } from "firebase/firestore";
+import { auth, database } from "../../config/firebaseConfig";
+import { useNavigation } from "@react-navigation/native";
 
-const StoryForm = () => {
-  const [storyTitle, setStoryTitle] = useState("");
+const StoryForm = ({ route }) => {
+  const { title, location, setComplete, category, bucketItemId } = route.params;
+
+  const [storyTitle, setStoryTitle] = useState(title);
   const [description, setDescription] = useState("");
-  const [location, setLocation] = useState("");
+  const [storyLocation, setStoryLocation] = useState(location);
   const [categoryOpen, setCategoryOpen] = useState(false);
-  const [category, setCategory] = useState("");
+  const [storyCategory, setStoryCategory] = useState(category);
   const [items, setItems] = useState([
     { label: "Activities", value: "Activities" },
     { label: "Travel", value: "Travel" },
@@ -35,6 +38,8 @@ const StoryForm = () => {
   );
   const [rating, setRating] = useState(1);
   const [image, setImage] = useState("");
+
+  const navigation = useNavigation();
 
   const toggleDate = () => {
     setDateOpen(!dateOpen);
@@ -54,14 +59,50 @@ const StoryForm = () => {
     }
   };
 
+  const submitStory = () => {
+    const bucketRef = collection(
+      database,
+      "users",
+      auth.currentUser.uid,
+      "Bucket_list"
+    );
+
+    const storyRef = collection(
+      database,
+      "users",
+      auth.currentUser.uid,
+      "Story_list"
+    );
+
+    const itemRef = doc(bucketRef, bucketItemId);
+
+    const storyItem = {
+      title: storyTitle,
+      category: storyCategory,
+      description: description,
+      location: storyLocation,
+      Complete: date,
+      rating: rating,
+    };
+    addDoc(storyRef, storyItem)
+      .then(() => {
+        deleteDoc(itemRef);
+        alert("Story has been posted");
+        setComplete(true);
+        navigation.navigate("Your Profile");
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
+
   return (
     <ScrollView style={styles.container}>
-      {/* <Text style={{ textAlign: "center" }}>Complete Story Form</Text> */}
       <View>
         <TextInput
           style={styles.textInput}
           placeholderTextColor={"lightgrey"}
-          placeholder="Enter Story Title"
+          value={storyTitle}
           onChange={setStoryTitle}
         />
         <View style={{ zIndex: 1 }}>
@@ -70,10 +111,10 @@ const StoryForm = () => {
             placeholder="--Select Category--"
             placeholderTextColor={"white"}
             open={categoryOpen}
-            value={category}
+            value={storyCategory}
             items={items}
             setOpen={setCategoryOpen}
-            setValue={setCategory}
+            setValue={setStoryCategory}
             setItems={setItems}
           />
         </View>
@@ -82,12 +123,14 @@ const StoryForm = () => {
           multiline={true}
           placeholder="Enter Your Experience"
           placeholderTextColor={"white"}
-          onChange={setDescription}
+          onChangeText={(val) => {
+            setDescription(val);
+          }}
         ></TextInput>
         <TextInput
           style={styles.textInput}
           placeholderTextColor={"white"}
-          placeholder="Enter Location"
+          value={storyLocation}
         />
         <View>
           <TouchableOpacity onPress={toggleDate}>
@@ -133,7 +176,6 @@ const StoryForm = () => {
             <Text style={styles.buttonText}>Select Image</Text>
           </Pressable>
         </View>
-        {/* <AirbnbRating defaultRating={1} size={30} reviewSize={20}  reviewColor={"#CAD2C5"} reviews={["Rating:","Rating:","Rating:","Rating:","Rating:"]} onFinishRating={setRating} /> */}
         <View style={styles.ratingContainer}>
           <Text style={{ color: "black" }}>Rating: </Text>
           <Rating
@@ -151,7 +193,10 @@ const StoryForm = () => {
         </View>
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.completeStoryButton}>
+        <TouchableOpacity
+          onPress={submitStory}
+          style={styles.completeStoryButton}
+        >
           <Text style={{ textAlign: "center", color: "white" }}>
             Complete Story
           </Text>

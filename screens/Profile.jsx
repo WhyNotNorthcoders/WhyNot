@@ -18,6 +18,7 @@ import {
 } from "firebase/firestore";
 import { database, auth } from "../config/firebaseConfig";
 import { getAdditionalUserInfo } from "firebase/auth";
+import BucketListCard from "../components/BucketListCard";
 
 const Profile = () => {
   const [data, setData] = useState([]);
@@ -29,6 +30,13 @@ const Profile = () => {
     auth.currentUser.uid,
     "Bucket_list"
   );
+
+  const storyRef = collection(
+    database,
+    "users",
+    auth.currentUser.uid,
+    "Story_list"
+  )
 
   useEffect(() => {
     getDocs(bucketRef)
@@ -44,31 +52,31 @@ const Profile = () => {
       });
   }, []);
 
-  const Item = ({ item, onPress }) => (
-    <TouchableOpacity onPress={onPress} style={styles.item}>
-      <Text style={styles.titles}>{item.title}: </Text>
-      <Text style={styles.text}>Category: {item.category}</Text>
-      <Text style={styles.text}>Location: {item.location}</Text>
-      <Text style={styles.text}>Target Date: {item.targetDate}</Text>
-      <Text style={styles.text}>Difficulty: {item.difficulty}</Text>
-    </TouchableOpacity>
-  );
+  // const Item = ({ item, onPress }) => (
+  //   <TouchableOpacity onPress={onPress} style={styles.item}>
+  //     <Text style={styles.titles}>{item.title}: </Text>
+  //     <Text style={styles.text}>Category: {item.category}</Text>
+  //     <Text style={styles.text}>Location: {item.location}</Text>
+  //     <Text style={styles.text}>Target Date: {item.targetDate}</Text>
+  //     <Text style={styles.text}>Difficulty: {item.difficulty}</Text>
+  //   </TouchableOpacity>
+  // );
 
-  const [selectedId, setSelectedId] = useState(null);
+  // const [selectedId, setSelectedId] = useState(null);
 
-  const renderItem = ({ item }) => {
-    const backgroundColor = item.id === selectedId ? "#CAD2C5" : "#84A98C";
-    const color = item.id === selectedId ? "white" : "white";
+  // const renderItem = ({ item }) => {
+  //   const backgroundColor = item.id === selectedId ? "#CAD2C5" : "#84A98C";
+  //   const color = item.id === selectedId ? "white" : "white";
 
-    return (
-      <Item
-        item={item}
-        onPress={() => setSelectedId(item.id)}
-        backgroundColor={{ backgroundColor }}
-        textColor={{ color }}
-      />
-    );
-  };
+  //   return (
+  //     <Item
+  //       item={item}
+  //       onPress={() => setSelectedId(item.id)}
+  //       backgroundColor={{ backgroundColor }}
+  //       textColor={{ color }}
+  //     />
+  //   );
+  // };
 
   return (
     <>
@@ -78,20 +86,20 @@ const Profile = () => {
         <FlatList
           nestedScrollEnabled={true}
           style={styles.list}
-          renderItem={renderItem}
+          renderItem={({ item }) => <BucketListCard item={item} itemID={item.id} />}
           data={data}
-          keyExtractor={(item) => item.id}
-          extraData={selectedId}
+          // keyExtractor={(item) => item.id}
+          // extraData={selectedId}
           horizontal={true}
         />
         <Text style={styles.header}>Recently Completed</Text>
         <FlatList
           nestedScrollEnabled={true}
           style={styles.list}
-          //data={}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          extraData={selectedId}
+          data={data}
+          // renderItem={renderItem}
+          // keyExtractor={(item) => item.id}
+          // extraData={selectedId}
           horizontal={true}
         />
       </ScrollView>
