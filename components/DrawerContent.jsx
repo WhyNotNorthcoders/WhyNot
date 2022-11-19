@@ -12,12 +12,26 @@ import {
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import ProfileAvatar from "./images/profile.jpg";
-import { auth } from "../config/firebaseConfig";
+import { auth, database } from "../config/firebaseConfig";
+import { useContext, useEffect, useState } from "react";
+import { doc, getDoc } from "firebase/firestore";
+import { userContext } from "../context";
 
 const DrawerContent = (props) => {
+  const { userData } = useContext(userContext);
+  const [user, setUser] = useState({});
+
   const handleLogout = () => {
     auth.signOut();
   };
+
+  useEffect(() => {
+    const colRef = doc(database, "users", auth.currentUser.uid);
+    getDoc(colRef).then((snapshot) => {
+      setUser(snapshot.data());
+    });
+  }, [userData]);
+
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
@@ -38,7 +52,7 @@ const DrawerContent = (props) => {
                   props.navigation.navigate("Your Profile");
                 }}
               >
-                <Title style={styles.title}>Profile Name</Title>
+                <Title style={styles.title}>{user.username}</Title>
               </Pressable>
               <Caption style={styles.caption}>User Caption</Caption>
             </View>

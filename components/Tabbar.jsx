@@ -19,7 +19,6 @@ const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 
 function DrawerRoutes({ navigation }) {
-
   return (
     <Drawer.Navigator
       initialRouteName="Profile"
