@@ -12,18 +12,19 @@ import { signOut } from "firebase/auth";
 import { auth } from "../config/firebaseConfig";
 import LoginScreen from "../screens/LoginScreen";
 import EditProfile from "./Profiles/EditProfile";
+import DrawerContent from "./DrawerContent";
 
 const Tab = createBottomTabNavigator();
 
 const Drawer = createDrawerNavigator();
 
 function DrawerRoutes({ navigation }) {
-  const handleLogout = () => {
-    signOut(auth);
-    navigation.navigate("LoginScreen");
-  };
+
   return (
-    <Drawer.Navigator initialRouteName="Profile">
+    <Drawer.Navigator
+      initialRouteName="Profile"
+      drawerContent={(props) => <DrawerContent {...props} />}
+    >
       <Drawer.Screen name="Your Profile" component={Profile} />
       <Drawer.Screen name="Add to bucket list" component={BucketListForm} />
       <Drawer.Screen name="Add to Story" component={StoryForm} />
