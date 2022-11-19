@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { auth, database } from "../../config/firebaseConfig";
 import {
-  SafeAreaView,
   View,
   Text,
   TextInput,
   StyleSheet,
-  Button,
   TouchableOpacity,
   Pressable,
 } from "react-native";
