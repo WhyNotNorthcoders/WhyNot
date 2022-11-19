@@ -66,7 +66,7 @@ export default function App() {
                         style={styles.ionicons}
                       ></Ionicons>
                     </Pressable>
-                  ),
+                  )
                 }}
               />
             </Stack.Group>

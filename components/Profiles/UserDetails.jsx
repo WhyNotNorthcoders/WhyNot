@@ -3,44 +3,20 @@ import {
   SafeAreaView,
   Text,
   StyleSheet,
-  View,
-  Pressable,
-  Image,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import * as ImagePicker from "expo-image-picker";
 
 const UserDetails = (props) => {
-  const [image, setImage] = useState("");
   const [userInfo, setUserInfo] = useState({});
   
   useEffect(()=>{
   setUserInfo(props.user)
   },[])
 
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
-      setImageSelected(true);
-    }
-  };
-
   return (
     <SafeAreaView style={styles.profileDetails}>
-      <Text style={styles.username}>{userInfo.username}</Text>
-          <View>
-            {image && <Image source={{ uri: image }} style={styles.ionicons} />}
-          </View>
-        <Pressable onPress={pickImage}>
-          <Ionicons name={"person-outline"} style={styles.ionicons} />
-        </Pressable>
+    <Text style={styles.username}>{userInfo.username}</Text>
+    <Ionicons name={"person-outline"} style={styles.ionicons} />
     </SafeAreaView>
   );
 };
