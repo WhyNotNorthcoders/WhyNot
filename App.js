@@ -10,7 +10,6 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./config/firebaseConfig";
 import { userContext } from "./context";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import UserPage from "./components/Profiles/UserPage";
 
 const Stack = createStackNavigator();
 
@@ -51,22 +50,6 @@ export default function App() {
                       ></Ionicons>
                     </Pressable>
                   ),
-                }}
-              />
-              <Stack.Screen
-                name="UserPage"
-                component={UserPage}
-                options={{
-                  headerStyle: { backgroundColor: "#6667AB", height: 94 },
-                  headerTintColor: "white",
-                  headerRight: () => (
-                    <Pressable onPress={handleLogout}>
-                      <Ionicons
-                        name="log-out-outline"
-                        style={styles.ionicons}
-                      ></Ionicons>
-                    </Pressable>
-                  )
                 }}
               />
             </Stack.Group>

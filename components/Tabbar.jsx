@@ -12,10 +12,12 @@ import { signOut } from "firebase/auth";
 import { auth } from "../config/firebaseConfig";
 import LoginScreen from "../screens/LoginScreen";
 import EditProfile from "./Profiles/EditProfile";
+import UserPage from "./Profiles/UserPage";
 
 const Tab = createBottomTabNavigator();
 
 const Drawer = createDrawerNavigator();
+const Drawer2 = createDrawerNavigator();
 
 function DrawerRoutes({ navigation }) {
   const handleLogout = () => {
@@ -33,6 +35,14 @@ function DrawerRoutes({ navigation }) {
         options={{ backgroundColor: "#FAF9F6" }}
       />
       <Drawer.Screen name="Logout" component={LoginScreen} />
+    </Drawer.Navigator>
+  );
+}
+function DrawerRoutes2() {
+  return (
+    <Drawer.Navigator initialRouteName="Search" screenOptions={{headerShown: false}}>
+      <Drawer.Screen name="SearchPage" component={Search} />
+      <Drawer.Screen name="UserPage" component={UserPage} />
     </Drawer.Navigator>
   );
 }
@@ -71,7 +81,7 @@ const Tabbar = () => {
       />
       <Tab.Screen
         name="Search"
-        component={Search}
+        component={DrawerRoutes2}
         options={{ headerShown: false }}
       />
       <Tab.Screen
