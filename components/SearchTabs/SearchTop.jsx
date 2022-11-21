@@ -1,15 +1,10 @@
 import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import {
-  View,
-  StyleSheet,
-  FlatList,
-} from "react-native";
+import { View, StyleSheet, FlatList } from "react-native";
 import { database } from "../../config/firebaseConfig";
 import TopStoriesCard from "./TopStoriesCard";
 
 const SearchTop = () => {
-
   const [stories, setStories] = useState([]);
 
   useEffect(() => {
@@ -22,7 +17,8 @@ const SearchTop = () => {
           stories.forEach((story) => {
             storyList.push({ ...story.data(), id: story.id });
           });
-          setStories(storyList);
+          const sorted = storyList.sort((a, b) => b.rating - a.rating)
+          setStories(sorted);
         });
       });
     });
