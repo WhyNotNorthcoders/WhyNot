@@ -14,7 +14,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 const Stack = createStackNavigator();
 
 export default function App() {
-  const [LoggedIn, setLoggedIn] = useState(true);
+  const [LoggedIn, setLoggedIn] = useState(false);
   const [userData, setUserData] = useState({});
 
   const handleLogout = () => {
@@ -26,7 +26,7 @@ export default function App() {
       setUserData(user);
       setLoggedIn(true);
     } else {
-      setLoggedIn(true);
+      setLoggedIn(false);
     }
   });
 
