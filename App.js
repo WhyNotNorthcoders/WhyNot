@@ -1,31 +1,32 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-import Registration from "./screens/Registration";
+import { StyleSheet, Text, View, Button, Pressable } from "react-native";
 import * as React from "react";
 import "react-native-gesture-handler";
 import { useState } from "react";
 import LoginScreen from "./screens/LoginScreen";
 import ActivePages from "./components/ActivePages";
 import { createStackNavigator } from "@react-navigation/stack";
-import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./config/firebaseConfig";
 import { userContext } from "./context";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
-const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
 export default function App() {
   const [LoggedIn, setLoggedIn] = useState(true);
   const [userData, setUserData] = useState({});
 
+  const handleLogout = () => {
+    auth.signOut();
+  };
+
   onAuthStateChanged(auth, (user) => {
     if (user) {
       setUserData(user);
       setLoggedIn(true);
     } else {
-      setLoggedIn(false);
+      setLoggedIn(true);
     }
   });
 
@@ -41,6 +42,14 @@ export default function App() {
                 options={{
                   headerStyle: { backgroundColor: "#6667AB", height: 94 },
                   headerTintColor: "white",
+                  headerRight: () => (
+                    <Pressable onPress={handleLogout}>
+                      <Ionicons
+                        name="log-out-outline"
+                        style={styles.ionicons}
+                      ></Ionicons>
+                    </Pressable>
+                  ),
                 }}
               />
             </Stack.Group>
@@ -58,3 +67,12 @@ export default function App() {
     </userContext.Provider>
   );
 }
+
+const styles = StyleSheet.create({
+  ionicons: {
+    fontSize: 35,
+    height: 55,
+    marginRight: 10,
+    color: "white",
+  },
+});

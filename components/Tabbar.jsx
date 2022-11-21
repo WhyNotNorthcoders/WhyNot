@@ -2,7 +2,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import "react-native-gesture-handler";
-import Home from "../screens/Home";
+import Home from "../screens/Home/Home";
 import Search from "../screens/Search";
 import Profile from "../screens/Profile";
 import Chat from "./Chat";
