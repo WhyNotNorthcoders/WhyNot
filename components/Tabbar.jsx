@@ -13,6 +13,7 @@ import { auth } from "../config/firebaseConfig";
 import LoginScreen from "../screens/LoginScreen";
 import EditProfile from "./Profiles/EditProfile";
 import UserPage from "./Profiles/UserPage";
+import DrawerContent from "./DrawerContent";
 
 const Tab = createBottomTabNavigator();
 
@@ -20,21 +21,24 @@ const Drawer = createDrawerNavigator();
 const Drawer2 = createDrawerNavigator();
 
 function DrawerRoutes({ navigation }) {
-  const handleLogout = () => {
-    signOut(auth);
-    navigation.navigate("LoginScreen");
-  };
   return (
-    <Drawer.Navigator initialRouteName="Profile">
+    <Drawer.Navigator
+      initialRouteName="Profile"
+      drawerContent={(props) => <DrawerContent {...props} />}
+    >
       <Drawer.Screen name="Your Profile" component={Profile} />
       <Drawer.Screen name="Add to bucket list" component={BucketListForm} />
-      <Drawer.Screen name="Add to Story" component={StoryForm} />
       <Drawer.Screen
         name="Edit profile"
         component={EditProfile}
         options={{ backgroundColor: "#FAF9F6" }}
       />
       <Drawer.Screen name="Logout" component={LoginScreen} />
+      <Drawer.Screen
+        name="Add to Story"
+        component={StoryForm}
+        options={{ drawerLabel: () => null }}
+      />
     </Drawer.Navigator>
   );
 }
