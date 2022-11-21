@@ -1,32 +1,47 @@
+import { collection, getDocs } from "firebase/firestore";
+import { useEffect, useState } from "react";
 import {
   View,
-  Text,
   StyleSheet,
   FlatList,
-  TouchableOpacity,
 } from "react-native";
+import { database } from "../../config/firebaseConfig";
+import TopStoriesCard from "./TopStoriesCard";
 
 const SearchTop = () => {
-  const testData = [
-    { title: "Top1" },
-    { title: "Top2" },
-    { title: "Top3" },
-    { title: "Top4" },
-    { title: "Top5" },
-    { title: "Top6" },
-    { title: "Top7" },
-    { title: "Top8" },
-    { title: "Top9" },
-  ];
+
+  const [stories, setStories] = useState([]);
+
+  useEffect(() => {
+    const users = collection(database, "users");
+    let storyList = [];
+    getDocs(users).then((users) => {
+      users.forEach((user) => {
+        const stories = collection(database, "users", user.id, "Story_list");
+        getDocs(stories).then((stories) => {
+          stories.forEach((story) => {
+            storyList.push({ ...story.data(), id: story.id });
+          });
+          setStories(storyList);
+        });
+      });
+    });
+  }, []);
 
   return (
     <View style={styles.listContainer}>
       <FlatList
-        data={testData}
+        data={stories}
         renderItem={({ item }) => (
-          <TouchableOpacity>
-            <Text style={styles.item}>{item.title}</Text>
-          </TouchableOpacity>
+          <TopStoriesCard
+            story_id={item.id}
+            title={item.title}
+            description={item.description}
+            category={item.category}
+            location={item.location}
+            rating={item.rating}
+            completeDate={item.completeDate}
+          />
         )}
       />
     </View>
