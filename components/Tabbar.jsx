@@ -44,7 +44,10 @@ function DrawerRoutes({ navigation }) {
 }
 function DrawerRoutes2() {
   return (
-    <Drawer.Navigator initialRouteName="Search" screenOptions={{headerShown: false}}>
+    <Drawer.Navigator
+      initialRouteName="Search"
+      screenOptions={{ headerShown: false }}
+    >
       <Drawer.Screen name="SearchPage" component={Search} />
       <Drawer.Screen name="UserPage" component={UserPage} />
     </Drawer.Navigator>
