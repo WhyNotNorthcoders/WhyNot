@@ -77,7 +77,6 @@ const BucketListCard = ({ item, itemID }) => {
             setModalVisible(false);
             setEdit(false);
             navigation.navigate("Add to Story", {
-              setComplete: setComplete,
               title: title,
               category: category,
               location: location,

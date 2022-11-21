@@ -55,7 +55,7 @@ const StoryForm = ({ route }) => {
     });
 
     if (!result.canceled) {
-      const imageRef = ref(storage, `images/${bucketItemId + "story.jpeg"}`);
+      const imageRef = ref(storage, `images/${bucketItemId + "-story.jpeg"}`);
       const img = await fetch(result.assets[0].uri);
       const bytes = await img.blob();
       uploadBytes(imageRef, bytes).then(() => {
@@ -97,7 +97,6 @@ const StoryForm = ({ route }) => {
       .then(() => {
         deleteDoc(itemRef);
         alert("Story has been posted");
-        setComplete(true);
         setImage(null);
         navigation.navigate("Your Profile");
       })
@@ -105,8 +104,6 @@ const StoryForm = ({ route }) => {
         alert(err.message);
       });
   };
-
-  console.log(image);
 
   return (
     <ScrollView style={styles.container}>
