@@ -34,7 +34,7 @@ const UserPage = ({route}) => {
         .catch((err) => {
           alert(err.message);
         });
-    }, []);
+    }, [route.params.user.id]);
   
     const Item = ({ item, onPress }) => (
       <TouchableOpacity onPress={onPress} style={styles.item}>

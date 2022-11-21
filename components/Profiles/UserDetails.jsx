@@ -11,12 +11,12 @@ const UserDetails = (props) => {
   
   useEffect(()=>{
   setUserInfo(props.user)
-  },[])
+  },[props.user])
 
   return (
     <SafeAreaView style={styles.profileDetails}>
     <Text style={styles.username}>{userInfo.username}</Text>
-    <Ionicons name={"person-outline"} style={styles.ionicons} />
+    <Ionicons name={"person-outline"} size={40} style={styles.ionicons} />
     </SafeAreaView>
   );
 };
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   ionicons: {
     color: "white",
     borderRadius: 40,
-    padding: 17,
+    padding: 20,
     width: 80,
     height: 80,
     borderWidth: 2,
