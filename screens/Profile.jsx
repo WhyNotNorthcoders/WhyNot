@@ -42,7 +42,10 @@ const Profile = () => {
         snapshot.docs.forEach((doc) => {
           storyList.push({ ...doc.data(), id: doc.id });
         });
-        setStoryData(storyList);
+        const sortedStory = storyList.sort(
+          (a, b) => (b.completeDate.split(" ").join("")) - (a.completeDate.split(" ").join(""))
+        );
+        setStoryData(sortedStory);
       })
       .catch((err) => {
         alert(err.message);
