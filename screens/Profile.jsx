@@ -52,7 +52,7 @@ const Profile = () => {
       .catch((err) => {
         alert(err.message);
       });
-    getDocs(storyRef)
+      getDocs(storyRef)
       .then((snapshot) => {
         let storyList = [];
         snapshot.docs.forEach((doc) => {

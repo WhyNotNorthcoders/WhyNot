@@ -20,7 +20,9 @@ const SearchUser = ({navigation}) => {
       .then((snapshot) => {
         let list = [];
         snapshot.docs.forEach((doc) => {
+          if (doc.id !== auth.currentUser.uid){
           list.push({ ...doc.data(), id: doc.id });
+          }
         });
         setUsers(list)
       })
@@ -57,7 +59,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     borderWidth: 4,
     borderColor: "#6667AB",
-    height: 200,
+    height: 170,
     fontSize: 20,
     margin: 15,
     shadowRadius: 5,
@@ -69,7 +71,7 @@ const styles = StyleSheet.create({
     padding:10,
     textAlign: "center",
     fontSize: 20,
-    margin: 15,
+    margin: 10,
   },
 });
 
