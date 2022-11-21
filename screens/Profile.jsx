@@ -47,7 +47,7 @@ const Profile = () => {
       .catch((err) => {
         alert(err.message);
       });
-  }, [bucketListData.length]);
+  }, [bucketListData.length, storyData.length]);
 
   return (
     <>

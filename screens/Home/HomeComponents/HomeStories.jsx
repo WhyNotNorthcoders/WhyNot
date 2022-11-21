@@ -15,7 +15,7 @@ const HomeStories = ({ item }) => {
           <Text style={styles.eventInformationTitle}>{item.title}</Text>
           <Image
             style={{ height: 150, width: "100%", borderRadius: 15 }}
-            source={{ uri: item.image_url }}
+            source={{ uri: item.storyImage }}
           />
           <Text style={styles.eventInformation}>Location: {item.location}</Text>
           <Text style={styles.eventInformation}>
@@ -40,7 +40,7 @@ const HomeStories = ({ item }) => {
                 <Text style={styles.eventInformationTitle}>{item.title}</Text>
                 <Image
                   style={{ height: 150, width: "100%", borderRadius: 15 }}
-                  source={{ uri: item.image_url }}
+                  source={{ uri: item.storyImage }}
                 />
                 <Text style={styles.eventInformation}>
                   Location: {item.location}

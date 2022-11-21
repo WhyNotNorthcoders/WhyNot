@@ -37,6 +37,7 @@ const SearchTop = () => {
             location={item.location}
             rating={item.rating}
             completeDate={item.completeDate}
+            storyImage={item.storyImage}
           />
         )}
       />
