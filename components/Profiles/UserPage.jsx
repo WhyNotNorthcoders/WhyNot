@@ -15,11 +15,20 @@ import {
 
 const UserPage = ({route}) => {
     const [data, setData] = useState([]);
+    const [storyData, setStoryData] = useState([]);
+
     const bucketRef = collection(
       database,
       "users",
       route.params.user.id,
       "Bucket_list"
+    );
+
+    const storyRef = collection(
+      database,
+      "users",
+      route.params.user.id,
+      "Story_list"
     );
   
     useEffect(() => {
@@ -30,6 +39,18 @@ const UserPage = ({route}) => {
             list.push({ ...doc.data(), id: doc.id });
           });
           setData(list);
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
+
+        getDocs(storyRef)
+        .then((snapshot) => {
+          let storyList = [];
+          snapshot.docs.forEach((doc) => {
+            storyList.push({ ...doc.data(), id: doc.id });
+          });
+          setStoryData(storyList);
         })
         .catch((err) => {
           alert(err.message);
@@ -80,7 +101,7 @@ const UserPage = ({route}) => {
           <FlatList
             nestedScrollEnabled={true}
             style={styles.list}
-            //data={}
+            data={storyData}
             renderItem={renderItem}
             keyExtractor={(item) => item.id}
             extraData={selectedId}

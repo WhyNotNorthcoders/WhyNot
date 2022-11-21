@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { database } from "../../config/firebaseConfig";
 import HomeSuggested from "./HomeComponents/HomeSuggested";
 import HomeStories from "./HomeComponents/HomeStories";
+import { ScrollView } from "react-native-gesture-handler";
 
 const Home = () => {
   const [Suggested, setSuggested] = useState([]);
@@ -41,7 +42,7 @@ const Home = () => {
 
   return (
     <>
-      <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.container}>
         <Text style={styles.header}>Stories</Text>
         <FlatList
           data={DATA}
@@ -54,7 +55,7 @@ const Home = () => {
           horizontal={true}
           renderItem={({ item }) => <HomeSuggested item={item} />}
         />
-      </SafeAreaView>
+      </ScrollView>
     </>
   );
 };
