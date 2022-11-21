@@ -81,7 +81,7 @@ const StoryForm = ({ route }) => {
       category: storyCategory,
       description: description,
       location: storyLocation,
-      Complete: date,
+      completeDate: date,
       rating: rating,
     };
     addDoc(storyRef, storyItem)
@@ -182,7 +182,7 @@ const StoryForm = ({ route }) => {
             style={styles.rating}
             type={"custom"}
             ratingColor={"#FFF36D"}
-            tintColor={"white"}
+            tintColor={"#6667AB"}
             ratingBackgroundColor={"#CAD2C5"}
             minValue={0}
             ratingCount={5}
