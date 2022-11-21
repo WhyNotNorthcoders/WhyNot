@@ -12,10 +12,11 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { auth, database } from "../../config/firebaseConfig";
 import { userContext } from "../../context";
 import * as ImagePicker from "expo-image-picker";
+import { storage } from "../../config/firebaseConfig";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const ProfileDetails = () => {
-  const [image, setImage] = useState("");
-  const [imageSelected, setImageSelected] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
   const { userData } = useContext(userContext);
   const [userInfo, setUserInfo] = useState({});
 
@@ -23,6 +24,18 @@ const ProfileDetails = () => {
     const colRef = doc(database, "users", auth.currentUser.uid);
     getDoc(colRef).then((snapshot) => {
       setUserInfo(snapshot.data());
+    });
+
+    const imageRef = ref(
+      storage,
+      `images/${auth.currentUser.uid + "profile.jpeg"}`
+    );
+    getDownloadURL(imageRef).then((url) => {
+      if (!url) {
+        return;
+      } else {
+        setImageUrl(url);
+      }
     });
   }, [userData]);
 
@@ -35,24 +48,32 @@ const ProfileDetails = () => {
     });
 
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
-      setImageSelected(true);
+      const imageRef = ref(
+        storage,
+        `images/${auth.currentUser.uid + "profile.jpeg"}`
+      );
+      const img = await fetch(result.assets[0].uri);
+      const bytes = await img.blob();
+      uploadBytes(imageRef, bytes).then(() => {
+        getDownloadURL(imageRef).then((url) => {
+          setImageUrl(url);
+        });
+      });
     }
   };
 
   return (
     <SafeAreaView style={styles.profileDetails}>
       <Text style={styles.username}>{userInfo.username}</Text>
-
-      {imageSelected ? (
+      {imageUrl ? (
         <Pressable onPress={pickImage}>
           <View>
-            {image && <Image source={{ uri: image }} style={styles.ionicons} />}
+            <Image source={{ uri: imageUrl }} style={styles.ionicons} />
           </View>
         </Pressable>
       ) : (
         <Pressable onPress={pickImage}>
-          <Ionicons name={"person-outline"} style={styles.ionicons} />
+          <Ionicons name={"person-outline"} size={40} style={styles.ionicons} />
         </Pressable>
       )}
     </SafeAreaView>
