@@ -1,15 +1,23 @@
 import { FlatList, StyleSheet, Text, SafeAreaView } from "react-native";
 import { collection, getDocs } from "firebase/firestore";
 import { useState, useEffect } from "react";
-import { database } from "../../config/firebaseConfig";
+import { auth, database } from "../../config/firebaseConfig";
 import HomeSuggested from "./HomeComponents/HomeSuggested";
 import HomeStories from "./HomeComponents/HomeStories";
 import { ScrollView } from "react-native-gesture-handler";
 
 const Home = () => {
   const [Suggested, setSuggested] = useState([]);
+  const [StoryData, setStoryData] = useState([]);
 
   const bucketRef = collection(database, "HomeSuggested");
+
+  const storyRef = collection(
+    database,
+    "users",
+    auth.currentUser.uid,
+    "Story_list"
+  );
 
   useEffect(() => {
     getDocs(bucketRef)
@@ -23,29 +31,25 @@ const Home = () => {
       .catch((err) => {
         alert(err.message);
       });
+    getDocs(storyRef)
+      .then((snapshot) => {
+        let storyList = [];
+        snapshot.docs.forEach((doc) => {
+          storyList.push({ ...doc.data(), id: doc.id });
+        });
+        setStoryData(storyList);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
   }, []);
-
-  const DATA = [
-    {
-      id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-      title: "First Item",
-    },
-    {
-      id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-      title: "Second Item",
-    },
-    {
-      id: "58694a0f-3da1-471f-bd96-145571e29d72",
-      title: "Third Item",
-    },
-  ];
 
   return (
     <>
       <ScrollView style={styles.container}>
         <Text style={styles.header}>Stories</Text>
         <FlatList
-          data={DATA}
+          data={StoryData}
           horizontal={true}
           renderItem={({ item }) => <HomeStories item={item} />}
         />

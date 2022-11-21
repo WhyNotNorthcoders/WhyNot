@@ -63,6 +63,7 @@ const Profile = () => {
       .catch((err) => {
         alert(err.message);
       });
+      
   }, []);
 
   // const Item = ({ item, onPress }) => (

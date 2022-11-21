@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { View, Text, StyleSheet, Image, Modal, Pressable } from "react-native";
+import { Caption } from 'react-native-paper'
 
 const HomeStories = ({ item }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -11,18 +12,18 @@ const HomeStories = ({ item }) => {
         }}
       >
         <View style={styles.item}>
-          <Text style={styles.eventInformationTitle}>Title{item.Title}</Text>
+          <Text style={styles.eventInformationTitle}>{item.title}</Text>
           <Image
             style={{ height: 150, width: "100%", borderRadius: 15 }}
             source={{ uri: item.image_url }}
           />
-          <Text style={styles.eventInformation}>Location: {item.Location}</Text>
+          <Text style={styles.eventInformation}>Location: {item.location}</Text>
           <Text style={styles.eventInformation}>
-            Difficulty: {item.Difficulty}
+            Rating: {item.rating} / 5
           </Text>
-          <Text style={styles.eventInformation}>
+          <Caption style={styles.eventInformation}>
             Click on the item to add to your Bucket List
-          </Text>
+          </Caption>
           <View style={styles.imageContainer}></View>
         </View>
         <Modal
@@ -36,18 +37,16 @@ const HomeStories = ({ item }) => {
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <View>
-                <Text style={styles.eventInformationTitle}>
-                  Title{item.Title}
-                </Text>
+                <Text style={styles.eventInformationTitle}>{item.title}</Text>
                 <Image
                   style={{ height: 150, width: "100%", borderRadius: 15 }}
                   source={{ uri: item.image_url }}
                 />
                 <Text style={styles.eventInformation}>
-                  Location: {item.Location}
+                  Location: {item.location}
                 </Text>
                 <Text style={styles.eventInformation}>
-                  Difficulty: {item.Difficulty}
+                  Difficulty: {item.difficulty}
                 </Text>
                 <View style={styles.imageContainer}></View>
               </View>
