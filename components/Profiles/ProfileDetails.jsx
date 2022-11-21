@@ -14,8 +14,6 @@ import { userContext } from "../../context";
 import * as ImagePicker from "expo-image-picker";
 import { storage } from "../../config/firebaseConfig";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { setStatusBarStyle } from "expo-status-bar";
-import { v4 } from "uuid";
 
 const ProfileDetails = () => {
   const [imageUrl, setImageUrl] = useState("");
@@ -33,11 +31,13 @@ const ProfileDetails = () => {
       `images/${auth.currentUser.uid + "profile.jpeg"}`
     );
     getDownloadURL(imageRef).then((url) => {
-      setImageUrl(url);
+      if (!url) {
+        return;
+      } else {
+        setImageUrl(url);
+      }
     });
-
   }, [userData]);
-
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -54,7 +54,11 @@ const ProfileDetails = () => {
       );
       const img = await fetch(result.assets[0].uri);
       const bytes = await img.blob();
-      uploadBytes(imageRef, bytes);
+      uploadBytes(imageRef, bytes).then(() => {
+        getDownloadURL(imageRef).then((url) => {
+          setImageUrl(url);
+        });
+      });
     }
   };
 
