@@ -1,7 +1,11 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import firebase from 'firebase/compat/app'
+import 'firebase/compat/storage'
+;
 
-import { getFirestore, collection, getDocs, addDoc } from "firebase/firestore";
+import { getFirestore, collection, getDocs, addDoc} from "firebase/firestore";
+import {getStorage} from "firebase/storage"
 
 const firebaseConfig = {
   apiKey: "AIzaSyDR5rsBC215JB0FUm4_QTStNdb_Wc3aS8c",
@@ -30,6 +34,12 @@ export const auth = getAuth();
 //init servic
 export const database = getFirestore(app);
 
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig)
+}
+export const storage = getStorage(app);
+
 //collection ref
 // export const colRef = collection(database, "users");
 
@@ -37,3 +47,4 @@ export const database = getFirestore(app);
 // getDocs(colRef).then((snapshot) => {
 //   console. log(snapshot.docs);
 // });
+export { app, firebase}
