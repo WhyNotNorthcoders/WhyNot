@@ -9,6 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@firebase/storage": "^0.9.14",
     "@react-native-community/datetimepicker": "6.5.2",
     "@react-navigation/bottom-tabs": "^6.4.0",
     "@react-navigation/drawer": "^6.5.0",
@@ -38,6 +39,7 @@
     "react-native-reanimated": "~2.12.0",
     "react-native-tab-view": "^3.3.0",
     "react-navigation": "^4.4.4",
+    "uuid": "^9.0.0",
     "vector-icons": "^0.1.0"
   },
   "devDependencies": {
