@@ -13,19 +13,22 @@ function SearchTopTab() {
       screenOptions={{
         tabBarIndicatorStyle: {
           borderWidth: 1,
-          borderColor: "#CAD2C5",
+          borderColor: "black",
           height: "100%",
-          backgroundColor: "#6667AB",
+          backgroundColor: "#9f86c0",
         },
         tabBarActiveLabelStyle: {
           color: "black",
           fontSize: 14,
         },
         tabBarStyle: {
-          backgroundColor: "white",
+          borderWidth:1,
+          backgroundColor: "#6667AB",
           borderBottomWidth: 0.5,
           borderBottomColor: "gray",
         },
+        tabBarActiveTintColor: "white",
+        tabBarInactiveTintColor: "white",
       }}
     >
       <Tab.Screen
