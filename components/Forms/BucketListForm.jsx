@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { auth, database } from "../../config/firebaseConfig";
 import {
-  SafeAreaView,
   View,
   Text,
   TextInput,
   StyleSheet,
-  Button,
   TouchableOpacity,
   Pressable,
 } from "react-native";
@@ -36,7 +34,6 @@ const BucketListForm = () => {
     setDateOpen(!dateOpen);
   };
   const handleSubmit =()=>{
-    
     const bucketRef = collection(database, "users", auth.currentUser.uid, "Bucket_list")
     const bucketItem = {title: title, category: category, location: location, targetDate: date, difficulty: difficulty}
     addDoc(bucketRef, bucketItem).then(()=>{
@@ -48,16 +45,6 @@ const BucketListForm = () => {
 
   return (
     <View style={styles.container}>
-      {/* <Text
-        style={{
-          textAlign: "center",
-          fontSize: 20,
-          fontWeight: "bold",
-          color: "#6667AB",
-        }}
-      >
-        Bucket List Form
-      </Text> */}
       <View>
         <TextInput
           style={styles.textInput}
@@ -91,7 +78,7 @@ const BucketListForm = () => {
         <TextInput style={styles.textInput} placeholder="Enter Location"  onChangeText={(val)=>setLocation(val)}/>
         <View>
           <TouchableOpacity onPress={toggleDate}>
-            <Text style={styles.textInput}>{date}</Text>
+            <Text style={styles.textInput}>Target Date: {date}</Text>
           </TouchableOpacity>
           </View>
           <Modal isVisible={dateOpen}>
