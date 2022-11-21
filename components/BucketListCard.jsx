@@ -50,19 +50,27 @@ const BucketListCard = ({ item, itemID }) => {
 
     return (
       <>
-        <Text>Title: {title}</Text>
-        <Text>Category: {category}</Text>
-        <Text>Location: {location}</Text>
-        <Text>Target Date: {targetDate}</Text>
-        <Text>Difficulty: {difficulty}</Text>
+        <Text style={styles.modaltitle}>{title}</Text>
+        <Text style={styles.textData}>Category: {category}</Text>
+        <Text style={styles.textData}>Location: {location}</Text>
+        <Text style={styles.textData}>Target Date: {targetDate}</Text>
+        <Text style={styles.textData}>Difficulty: {difficulty}</Text>
         <Pressable
           onPress={() => {
             setComplete(false);
             setEdit(true);
           }}
-          style={styles.button}
+          style={styles.editButton}
         >
-          <Text>Edit</Text>
+          <Text
+            style={{
+              color: "#6667AB",
+              fontWeight: "bold",
+              textAlign: "center",
+            }}
+          >
+            Edit
+          </Text>
         </Pressable>
         <Pressable
           onPress={() => {
@@ -76,9 +84,13 @@ const BucketListCard = ({ item, itemID }) => {
               bucketItemId: itemID,
             });
           }}
-          style={styles.button}
+          style={styles.completeButton}
         >
-          <Text>Complete</Text>
+          <Text
+            style={{ color: "white", textAlign: "center", fontWeight: "bold" }}
+          >
+            Complete
+          </Text>
         </Pressable>
       </>
     );
@@ -92,7 +104,7 @@ const BucketListCard = ({ item, itemID }) => {
         }}
         style={styles.item}
       >
-        <Text style={styles.titles}>{title}: </Text>
+        <Text style={styles.titles}>{title}</Text>
         <Text style={styles.text}>Category: {category}</Text>
         <Text style={styles.text}>Location: {location}</Text>
         <Text style={styles.text}>Target Date: {targetDate}</Text>
@@ -112,8 +124,8 @@ const BucketListCard = ({ item, itemID }) => {
               <View>
                 {edit ? (
                   <>
-                    <View style={styles.textData}>
-                      <Text>Title: </Text>
+                    <View style={styles.editData}>
+                      <Text style={styles.editTitle}>Title: </Text>
                       <TextInput
                         defaultValue={title}
                         onChangeText={(val) => {
@@ -122,8 +134,8 @@ const BucketListCard = ({ item, itemID }) => {
                         editable={true}
                       ></TextInput>
                     </View>
-                    <View style={styles.textData}>
-                      <Text>Category: </Text>
+                    <View style={styles.editData}>
+                      <Text style={styles.editTitle}>Category: </Text>
                       <TextInput
                         onChangeText={(val) => {
                           setCategory(val);
@@ -132,8 +144,8 @@ const BucketListCard = ({ item, itemID }) => {
                         defaultValue={category}
                       ></TextInput>
                     </View>
-                    <View style={styles.textData}>
-                      <Text>Location: </Text>
+                    <View style={styles.editData}>
+                      <Text style={styles.editTitle}>Location: </Text>
                       <TextInput
                         defaultValue={location}
                         onChangeText={(val) => {
@@ -142,8 +154,8 @@ const BucketListCard = ({ item, itemID }) => {
                         editable={true}
                       ></TextInput>
                     </View>
-                    <View style={styles.textData}>
-                      <Text>Target Date: </Text>
+                    <View style={styles.editData}>
+                      <Text style={styles.editTitle}>Target Date: </Text>
                       <TextInput
                         defaultValue={targetDate}
                         onChangeText={(val) => {
@@ -152,8 +164,8 @@ const BucketListCard = ({ item, itemID }) => {
                         editable={true}
                       ></TextInput>
                     </View>
-                    <View style={styles.textData}>
-                      <Text>Difficulty: </Text>
+                    <View style={styles.editData}>
+                      <Text style={styles.editTitle}>Difficulty: </Text>
                       <TextInput
                         editable={true}
                         defaultValue={difficulty}
@@ -162,7 +174,10 @@ const BucketListCard = ({ item, itemID }) => {
                         }}
                       ></TextInput>
                     </View>
-                    <Pressable onPress={onEditSubmit} style={styles.button}>
+                    <Pressable
+                      onPress={onEditSubmit}
+                      style={styles.editcompleteButton}
+                    >
                       <Text>Submit Edit</Text>
                     </Pressable>
                   </>
@@ -183,7 +198,11 @@ const BucketListCard = ({ item, itemID }) => {
                   setComplete(false);
                 }}
               >
-                <Text style={{ color: "white" }}>close</Text>
+                <Text
+                  style={{ color: "white", fontWeight: "bold", fontSize: 10 }}
+                >
+                  X
+                </Text>
               </Pressable>
             </View>
           </View>
@@ -201,11 +220,15 @@ const styles = StyleSheet.create({
     marginTop: 22,
   },
   modalView: {
+    borderWidth: 2,
+    borderColor: "#6667AB",
     margin: 20,
-    backgroundColor: "#faf9f6",
+    width: "95%",
+    marginTop: 215,
+    height: "55%",
+    backgroundColor: "#6667AB",
     borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
+    padding: 15,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -215,36 +238,90 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-  button: {
-    padding: 5,
-    borderRadius: 10,
-    backgroundColor: "#6667AB",
-    elevation: 2,
+  editButton: {
+    padding: 10,
+    marginTop: 10,
+    backgroundColor: "white",
+    alignSelf: "flex-start",
+    borderRadius: 15,
+    marginTop: 175,
+    height: 40,
+    width: 100,
+  },
+  completeButton: {
+    padding: 10,
+    backgroundColor: "green",
+    alignSelf: "center",
+    marginTop: -40,
+    borderRadius: 15,
+    height: 40,
+    width: 100,
   },
   buttonClose: {
-    borderRadius: 10,
-    elevation: 2,
-    padding: 5,
-    backgroundColor: "#6667AB",
-  },
-  text: {
-    color: "white",
-    fontSize: 20,
+    padding: 10,
+    borderRadius: 15,
+    backgroundColor: "red",
+    alignSelf: "flex-end",
+    marginTop: -36,
+    marginRight: -10,
   },
   item: {
-    backgroundColor: "#6667AB",
-    height: 180,
-    width: 200,
     padding: 10,
-    margin: 5,
-    borderRadius: 10,
+    width: 250,
+    backgroundColor: "white",
+    borderRadius: 15,
+    borderWidth: 4,
+    borderColor: "#6667AB",
+    fontSize: 20,
+    margin: 10,
+    shadowRadius: 5,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.5,
+    shadowColor: "black",
+  },
+  titles: {
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  text: {
+    color: "black",
+    fontSize: 16,
+    marginTop: 4,
+  },
+  modaltitle: {
+    color: "white",
+    fontSize: 25,
+    textAlign: "center",
+    fontWeight: "bold",
   },
   textData: {
+    color: "white",
+    fontSize: 20,
     width: 250,
     margin: 5,
     padding: 5,
-    borderWidth: 2,
-    borderColor: "black",
+  },
+  editData: {
+    backgroundColor: "white",
+    borderRadius: 5,
+    height: 40,
+    marginTop: 5,
+    marginBottom: 20,
+  },
+  editTitle: {
+    marginTop: -20,
+    marginBottom: 15,
+    color: "white",
+  },
+  editcompleteButton: {
+    padding: 10,
+    backgroundColor: "green",
+    alignSelf: "center",
+    marginTop: 0,
+    borderRadius: 15,
+    height: 40,
+    width: 100,
   },
 });
 
