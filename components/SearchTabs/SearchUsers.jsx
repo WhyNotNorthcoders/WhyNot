@@ -1,5 +1,6 @@
 import { collection, getDocs } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
+import { createFilter } from "react-native-search-filter";
 import {
   View,
   Text,
@@ -11,7 +12,7 @@ import {
 import { auth, database } from "../../config/firebaseConfig";
 import { userContext } from "../../context";
 
-const SearchUser = ({ navigation }) => {
+const SearchUser = (props) => {
   const { userData } = useContext(userContext);
   const [users, setUsers] = useState({});
 
@@ -32,14 +33,21 @@ const SearchUser = ({ navigation }) => {
       });
   }, []);
 
+  let filteredUsers;
+  if (users.length > 0) {
+    filteredUsers = users.filter(
+      createFilter(props.searchPhrase, ["username", "location"])
+    );
+  }
+
   return (
     <View style={styles.listContainer}>
       <FlatList
-        data={users}
+        data={filteredUsers}
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("UserPage", { user: item });
+              props.navigation.navigate("UserPage", { user: item });
             }}
           >
             <View style={styles.item}>

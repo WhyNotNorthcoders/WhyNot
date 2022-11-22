@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { View, Text, StyleSheet, Image, Modal, Pressable } from "react-native";
+import { Caption } from "react-native-paper"
 
 const HomeSuggested = ({ item }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -20,10 +21,9 @@ const HomeSuggested = ({ item }) => {
           <Text style={styles.eventInformation}>
             Difficulty: {item.Difficulty}
           </Text>
-          {/* <Text style={styles.eventInformation}>Target Date: {item.Date}</Text> */}
-          <Text style={styles.eventInformation}>
+          <Caption style={styles.eventInformation}>
             Click on the item to add to your Bucket List
-          </Text>
+          </Caption>
           <View style={styles.imageContainer}></View>
         </View>
         <Modal

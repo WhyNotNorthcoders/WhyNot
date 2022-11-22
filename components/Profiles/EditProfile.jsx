@@ -15,14 +15,28 @@ const EditProfile = () => {
         <View style={styles.inputView}>
           <TextInput
             style={styles.TextInput}
-            placeholder="New Username"
+            placeholder="Change my Username"
             placeholderTextColor="#003f5c"
           />
         </View>
         <View style={styles.inputView}>
           <TextInput
             style={styles.TextInput}
-            placeholder="New Location"
+            placeholder="Update my Location"
+            placeholderTextColor="#003f5c"
+          />
+        </View>
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.TextInput}
+            placeholder="Change my About"
+            placeholderTextColor="#003f5c"
+          />
+        </View>
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.TextInput}
+            placeholder="Change my D.O.B"
             placeholderTextColor="#003f5c"
           />
         </View>
