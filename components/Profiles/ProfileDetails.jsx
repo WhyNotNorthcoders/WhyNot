@@ -1,4 +1,4 @@
-import { doc, getDoc } from "firebase/firestore";
+import { collection, doc, getDoc, updateDoc } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import {
   SafeAreaView,
@@ -55,12 +55,57 @@ const ProfileDetails = () => {
       const img = await fetch(result.assets[0].uri);
       const bytes = await img.blob();
       uploadBytes(imageRef, bytes).then(() => {
-        getDownloadURL(imageRef).then((url) => {
-          setImageUrl(url);
-        });
+        getDownloadURL(imageRef)
+          .then((url) => {
+            const userRef = collection(database, "users");
+            const data = {
+              profile_picture: url,
+            };
+            const itemRef = doc(userRef, auth.currentUser.uid);
+            updateDoc(itemRef, data)
+              .then(alert("Profile photo uploaded"))
+              .catch((err) => console.log(err.message));
+            setImageUrl(url);
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
       });
     }
   };
+
+  //   if (!result.canceled) {
+  //     setImageSelected(true);
+
+  //     setImage(result.assets[0].uri);
+  //     const imageRef = ref(
+  //       storage,
+  //       "images/",
+  //       `${auth.currentUser.uid}+ "profile.jpeg`
+  //     );
+
+  //     const img = await fetch(result.assets[0].uri);
+  //     const bytes = await img.blob();
+  //     // console.log(source.uri);
+  //     await uploadBytes(imageRef, bytes).then((snapshot) => {
+  //       getDownloadURL(imageRef)
+  //         .then((url) => {
+  //           console.log(url);
+  //           const userRef = collection(database, "users");
+  //           const data = {
+  //             profile_picture: url,
+  //           };
+  //           const itemRef = doc(userRef, auth.currentUser.uid);
+  //           updateDoc(itemRef, data)
+  //             .then(alert("Profile pics has been updated!"))
+  //             .catch((err) => console.log(err.message));
+  //         })
+  //         .catch((err) => {
+  //           console.log(err.msg);
+  //         });
+  //     });
+  //   }
+  // };
 
   return (
     <SafeAreaView style={styles.profileDetails}>

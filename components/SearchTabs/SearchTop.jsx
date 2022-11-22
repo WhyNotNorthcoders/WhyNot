@@ -5,8 +5,9 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
+import { createFilter } from "react-native-search-filter";
 
-const SearchTop = () => {
+const SearchTop = (props) => {
   const testData = [
     { title: "Top1" },
     { title: "Top2" },
@@ -19,10 +20,14 @@ const SearchTop = () => {
     { title: "Top9" },
   ];
 
+  const filterItems = testData.filter(
+    createFilter(props.searchPhrase, ["title"])
+  );
+
   return (
     <View style={styles.listContainer}>
       <FlatList
-        data={testData}
+        data={filterItems}
         renderItem={({ item }) => (
           <TouchableOpacity>
             <Text style={styles.item}>{item.title}</Text>

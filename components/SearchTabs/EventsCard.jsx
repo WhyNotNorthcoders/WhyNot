@@ -31,7 +31,7 @@ const EventsCard = ({ item }) => {
           <Text style={styles.eventInformation}>
             Address: {item.address[0]}, {item.address[1]}
           </Text>
-          <Text style={styles.eventInformation}>{item.date.when}</Text>
+          <Text style={styles.eventInformation}>Date: {item.date.when}</Text>
           <Text style={styles.eventInformation}>
             Click on the post to see more about event
           </Text>
@@ -53,7 +53,9 @@ const EventsCard = ({ item }) => {
                   style={{ height: 100, width: 100, borderRadius: 10 }}
                   source={{ uri: item.image }}
                 />
-                <Text style={styles.eventInformation}>Description: {item.description}</Text>
+                <Text style={styles.eventInformation}>
+                  Description: {item.description}
+                </Text>
                 <Text style={styles.eventInformation}>
                   Address: {item.address[0]}, {item.address[1]}
                 </Text>

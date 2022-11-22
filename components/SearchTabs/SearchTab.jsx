@@ -6,7 +6,7 @@ import SearchUser from "./SearchUsers";
 import SearchEvent from "./SearchEvents";
 
 const Tab = createMaterialTopTabNavigator();
-function SearchTopTab() {
+function SearchTopTab({ searchPhrase }) {
   return (
     <Tab.Navigator
       initialRouteName="SearchTop"
@@ -30,17 +30,17 @@ function SearchTopTab() {
     >
       <Tab.Screen
         name="SearchTop"
-        component={SearchTop}
+        children={() => <SearchTop searchPhrase={searchPhrase} />}
         options={{ tabBarLabel: "Top" }}
       />
       <Tab.Screen
         name="SearchUser"
-        component={SearchUser}
+        children={() => <SearchUser searchPhrase={searchPhrase} />}
         options={{ tabBarLabel: "User" }}
       />
       <Tab.Screen
         name="SearchEvent"
-        component={SearchEvent}
+        children={() => <SearchEvent searchPhrase={searchPhrase} />}
         options={{ tabBarLabel: "Events" }}
       />
     </Tab.Navigator>
