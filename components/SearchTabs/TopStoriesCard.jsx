@@ -12,13 +12,26 @@ const TopStoriesCard = ({
   rating,
   completeDate,
   storyImage,
+  navigation,
+  user_id,
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
   return (
     <View style={styles.storyCard}>
       <Pressable
         onPress={() => {
-          setModalVisible(true);
+          navigation.navigate("StoryPage", {
+            story_id: story_id,
+            title: title,
+            description: description,
+            category: category,
+            location: location,
+            rating: rating,
+            completeDate: completeDate,
+            storyImage: storyImage,
+            navigation: navigation,
+            user_id: user_id
+          });
         }}
       >
         <View style={styles.item}>
@@ -37,14 +50,14 @@ const TopStoriesCard = ({
               style={styles.storyImage}
             />
             <Card.Content>
-              <Paragraph>{description}</Paragraph>
+              <Paragraph>{'"' + description + '"'}</Paragraph>
             </Card.Content>
           </Card>
           <View style={styles.date_rating}>
             <Caption style={{ fontSize: 10 }}>
               Date Completed: {completeDate}
             </Caption>
-            <View style={[styles.rating, { marginLeft: 100 }]}>
+            <View style={[styles.rating, { marginLeft: 90 }]}>
               <Caption style={{ fontSize: 10 }}>Rating:</Caption>
               <Rating
                 style={styles.rating}
@@ -60,7 +73,7 @@ const TopStoriesCard = ({
             </View>
           </View>
         </View>
-        <Modal
+        {/* <Modal
           animationType="slide"
           transparent={true}
           visible={modalVisible}
@@ -77,11 +90,13 @@ const TopStoriesCard = ({
                   <Caption style={styles.storyInformation}>{location}</Caption>
                 </View>
                 <Card.Cover
+                  style={{ width: 250, height: 150, borderRadius: 10 }}
                   source={{ uri: storyImage }}
-                  style={{ height: 125, width: 250 }}
                 />
                 <Image />
-                <Text style={styles.storyInformation}>{description}</Text>
+                <Text style={styles.storyInformation}>
+                  {'"' + description + '"'}
+                </Text>
               </View>
               <Pressable
                 style={[styles.button, styles.buttonClose]}
@@ -93,7 +108,7 @@ const TopStoriesCard = ({
               </Pressable>
             </View>
           </View>
-        </Modal>
+        </Modal> */}
       </Pressable>
     </View>
   );
