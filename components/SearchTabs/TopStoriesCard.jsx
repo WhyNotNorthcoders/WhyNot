@@ -1,4 +1,4 @@
-import { Text, Pressable, View, Modal, StyleSheet } from "react-native";
+import { Text, Pressable, View, Modal, StyleSheet, Image } from "react-native";
 import { useState } from "react";
 import { Title, Caption, Paragraph, Card } from "react-native-paper";
 import { Rating } from "react-native-ratings";
@@ -32,10 +32,10 @@ const TopStoriesCard = ({
             </Caption>
           </View>
           <Card>
-              <Card.Cover
-                source={{ uri: storyImage }}
-                style={styles.storyImage}
-              />
+            <Card.Cover
+              source={{ uri: storyImage }}
+              style={styles.storyImage}
+            />
             <Card.Content>
               <Paragraph>{description}</Paragraph>
             </Card.Content>
@@ -72,11 +72,16 @@ const TopStoriesCard = ({
             <View style={styles.modalView}>
               <View>
                 <Title style={styles.storyInformation}>{title}</Title>
-                <Text style={styles.storyInformation}>
-                  Description: {description}
-                </Text>
-                <Text style={styles.storyInformation}>{category}</Text>
-                <Text style={styles.storyInformation}>{location}</Text>
+                <View style={styles.caption}>
+                  <Caption style={styles.storyInformation}>{category}</Caption>
+                  <Caption style={styles.storyInformation}>{location}</Caption>
+                </View>
+                <Card.Cover
+                  source={{ uri: storyImage }}
+                  style={{ height: 125, width: 250 }}
+                />
+                <Image />
+                <Text style={styles.storyInformation}>{description}</Text>
               </View>
               <Pressable
                 style={[styles.button, styles.buttonClose]}
@@ -126,10 +131,10 @@ const styles = StyleSheet.create({
     marginTop: 22,
   },
   modalView: {
-    margin: 20,
+    // margin: 20,
     backgroundColor: "#faf9f6",
     borderRadius: 20,
-    padding: 35,
+    padding: 20,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -139,6 +144,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+    width: "90%",
   },
   button: {
     borderRadius: 20,
