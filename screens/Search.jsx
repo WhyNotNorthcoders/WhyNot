@@ -40,25 +40,24 @@ const Search = () => {
         />
       </View>
       <View style={styles.topTabContainer}>
-        <SearchTopTab />
+        <SearchTopTab searchPhrase={searchPhrase} />
       </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  parentContainer:{
+  parentContainer: {
     flex: 1,
   },
   topTabContainer: {
-    flex:1,
-    backgroundColor: "#354F52"
+    flex: 1,
+    backgroundColor: "#354F52",
   },
   searchContainer: {
     backgroundColor: "#6667AB",
     paddingBottom: 1,
   },
-  
 });
 
 export default Search;

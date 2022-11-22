@@ -1,5 +1,6 @@
 import { collection, getDocs } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
+import { createFilter } from "react-native-search-filter";
 import {
   View,
   Text,
@@ -10,7 +11,7 @@ import {
 import { auth, database } from "../../config/firebaseConfig";
 import { userContext } from "../../context";
 
-const SearchUser = ({navigation}) => {
+const SearchUser = (props) => {
   const { userData } = useContext(userContext);
   const [users, setUsers] = useState({});
 
@@ -24,22 +25,33 @@ const SearchUser = ({navigation}) => {
           list.push({ ...doc.data(), id: doc.id });
           }
         });
-        setUsers(list)
+        setUsers(list);
       })
       .catch((err) => {
         alert(err.message);
       });
   }, []);
 
+  let filteredUsers;
+  if (users.length > 0) {
+     filteredUsers = users.filter(
+      createFilter(props.searchPhrase, ["username", "location"])
+      );
+  }
+  
   return (
     <View style={styles.listContainer}>
       <FlatList
-        data={users}
+        data={filteredUsers}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={()=>{navigation.navigate("UserPage", {user: item})}}>
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate("UserPage", { user: item })
+            }}
+          >
             <View style={styles.item}>
-            <Text style={styles.itemText}>Username: {item.username} </Text>
-            <Text style={styles.itemText}>Location: {item.location}</Text>
+              <Text style={styles.itemText}>Username: {item.username} </Text>
+              <Text style={styles.itemText}>Location: {item.location}</Text>
             </View>
           </TouchableOpacity>
         )}
@@ -68,7 +80,7 @@ const styles = StyleSheet.create({
     shadowColor: "black",
   },
   itemText: {
-    padding:10,
+    padding: 10,
     textAlign: "center",
     fontSize: 20,
     margin: 10,

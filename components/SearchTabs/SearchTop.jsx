@@ -1,6 +1,12 @@
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
 import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { View, StyleSheet, FlatList } from "react-native";
 import { database } from "../../config/firebaseConfig";
 import TopStoriesCard from "./TopStoriesCard";
 
