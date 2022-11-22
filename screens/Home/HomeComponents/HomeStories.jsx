@@ -22,7 +22,7 @@ const HomeStories = ({ item }) => {
             Rating: {item.rating} / 5
           </Text>
           <Caption style={styles.eventInformation}>
-            Click on the item to add to your Bucket List
+            Click to view more about this story
           </Caption>
           <View style={styles.imageContainer}></View>
         </View>
