@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { getStorage } from "firebase/storage"
 
 import { getFirestore, collection, getDocs, addDoc } from "firebase/firestore";
 
@@ -29,6 +30,8 @@ initializeApp(firebaseConfig);
 export const auth = getAuth();
 //init servic
 export const database = getFirestore(app);
+
+export const storage = getStorage(app)
 
 //collection ref
 // export const colRef = collection(database, "users");

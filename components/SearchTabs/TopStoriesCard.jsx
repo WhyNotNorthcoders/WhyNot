@@ -11,6 +11,7 @@ const TopStoriesCard = ({
   location,
   rating,
   completeDate,
+  storyImage,
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
   return (
@@ -31,6 +32,10 @@ const TopStoriesCard = ({
             </Caption>
           </View>
           <Card>
+              <Card.Cover
+                source={{ uri: storyImage }}
+                style={styles.storyImage}
+              />
             <Card.Content>
               <Paragraph>{description}</Paragraph>
             </Card.Content>
@@ -39,7 +44,7 @@ const TopStoriesCard = ({
             <Caption style={{ fontSize: 10 }}>
               Date Completed: {completeDate}
             </Caption>
-            <View style={[styles.rating, {marginLeft: 100}]}>
+            <View style={[styles.rating, { marginLeft: 100 }]}>
               <Caption style={{ fontSize: 10 }}>Rating:</Caption>
               <Rating
                 style={styles.rating}
@@ -146,5 +151,12 @@ const styles = StyleSheet.create({
   },
   storyInformation: {
     margin: 5,
+  },
+
+  storyImage: {
+    // borderTopEndRadius: 10,
+    // borderTopStartRadius: 10,
+    borderRadius: 5,
+    height: 125,
   },
 });
