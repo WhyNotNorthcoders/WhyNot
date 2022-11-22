@@ -9,7 +9,7 @@ import {
   Modal,
   View,
 } from "react-native";
-import { Title } from 'react-native-paper'
+import { Title } from "react-native-paper";
 import { TextInput } from "react-native-gesture-handler";
 import { Rating } from "react-native-ratings";
 import { auth, database } from "../config/firebaseConfig";
@@ -51,18 +51,19 @@ const StoryCard = ({ item, itemID }) => {
   const StoryItem = () => {
     return (
       <>
-        <Text>Title: {title}</Text>
-        <Text>Category: {category}</Text>
-        <Text>Location: {location}</Text>
-        <Text>Description: {description}</Text>
-        <Text>Complete Date: {completeDate}</Text>
+        <Text style={styles.title}>Completed</Text>
+        <Text style={styles.modaltitle}>{title}</Text>
+        <Text style={styles.textData}>Category: {category}</Text>
+        <Text style={styles.textData}>Location: {location}</Text>
+        <Text style={styles.textData}>Description: {description}</Text>
+        <Text style={styles.textData}>Complete Date: {completeDate}</Text>
         <View>
-          <Text>Rating:</Text>
+          <Text style={styles.textData}>Rating:</Text>
           <Rating
             style={styles.rating}
             type={"custom"}
             ratingColor={"#FFF36D"}
-            tintColor={"white"}
+            tintColor={"#6667AB"}
             ratingBackgroundColor={"#CAD2C5"}
             minValue={0}
             startingValue={rating}
@@ -73,9 +74,17 @@ const StoryCard = ({ item, itemID }) => {
           onPress={() => {
             setEdit(true);
           }}
-          style={styles.button}
+          style={styles.editButton}
         >
-          <Text>Edit</Text>
+          <Text
+            style={{
+              color: "#6667AB",
+              fontWeight: "bold",
+              textAlign: "center",
+            }}
+          >
+            Edit
+          </Text>
         </Pressable>
       </>
     );
@@ -90,13 +99,14 @@ const StoryCard = ({ item, itemID }) => {
         style={styles.item}
       >
         <Title style={styles.titles}>{title}</Title>
+        <Text style={styles.text}> Description: {description}</Text>
         <Text style={styles.text}>Complete Date: {completeDate}</Text>
         <View style={{ flex: 1, right: 0 }}>
           <Rating
             imageSize={20}
             type={"custom"}
             ratingColor={"#FFF36D"}
-            tintColor={"#6667AB"}
+            tintColor={"white"}
             ratingBackgroundColor={"#CAD2C5"}
             startingValue={rating}
             readonly={true}
@@ -117,8 +127,8 @@ const StoryCard = ({ item, itemID }) => {
               <View>
                 {edit ? (
                   <>
-                    <View style={styles.textData}>
-                      <Text>Title: </Text>
+                    <View style={styles.editData}>
+                      <Text style={styles.editTitle}>Title: </Text>
                       <TextInput
                         defaultValue={title}
                         onChangeText={(val) => {
@@ -127,8 +137,8 @@ const StoryCard = ({ item, itemID }) => {
                         editable={true}
                       ></TextInput>
                     </View>
-                    <View style={styles.textData}>
-                      <Text>Category: </Text>
+                    <View style={styles.editData}>
+                      <Text style={styles.editTitle}>Category: </Text>
                       <TextInput
                         onChangeText={(val) => {
                           setCategory(val);
@@ -137,8 +147,8 @@ const StoryCard = ({ item, itemID }) => {
                         defaultValue={category}
                       ></TextInput>
                     </View>
-                    <View style={styles.textData}>
-                      <Text>Location: </Text>
+                    <View style={styles.editData}>
+                      <Text style={styles.editTitle}>Location: </Text>
                       <TextInput
                         defaultValue={location}
                         onChangeText={(val) => {
@@ -147,8 +157,8 @@ const StoryCard = ({ item, itemID }) => {
                         editable={true}
                       ></TextInput>
                     </View>
-                    <View style={styles.textData}>
-                      <Text>Description: </Text>
+                    <View style={styles.editData}>
+                      <Text style={styles.editTitle}>Description: </Text>
                       <TextInput
                         defaultValue={description}
                         onChangeText={(val) => {
@@ -157,8 +167,8 @@ const StoryCard = ({ item, itemID }) => {
                         editable={true}
                       ></TextInput>
                     </View>
-                    <View style={styles.textData}>
-                      <Text>Complete Date: </Text>
+                    <View style={styles.editData}>
+                      <Text style={styles.editTitle}>Complete Date: </Text>
                       <TextInput
                         defaultValue={completeDate}
                         onChangeText={(val) => {
@@ -167,14 +177,14 @@ const StoryCard = ({ item, itemID }) => {
                         editable={true}
                       ></TextInput>
                     </View>
-                    <View style={styles.textData}>
+                    <View style={{ marginTop: 5, marginBottom: 5 }}>
                       <View>
-                        <Text>Rating:</Text>
+                        <Text style={styles.editTitle}>Rating:</Text>
                         <Rating
                           style={styles.rating}
                           type={"custom"}
                           ratingColor={"#FFF36D"}
-                          tintColor={"white"}
+                          tintColor={"#6667AB"}
                           ratingBackgroundColor={"#CAD2C5"}
                           startingValue={rating}
                           onFinishRating={(rating) => {
@@ -183,8 +193,13 @@ const StoryCard = ({ item, itemID }) => {
                         />
                       </View>
                     </View>
-                    <Pressable onPress={onEditSubmit} style={styles.button}>
-                      <Text>Submit Edit</Text>
+                    <Pressable
+                      onPress={onEditSubmit}
+                      style={styles.editcompleteButton}
+                    >
+                      <Text style={{ color: "white", fontWeight: "bold" }}>
+                        Submit Edit
+                      </Text>
                     </Pressable>
                   </>
                 ) : (
@@ -202,7 +217,7 @@ const StoryCard = ({ item, itemID }) => {
                   setModalVisible(false);
                 }}
               >
-                <Text style={{ color: "white" }}>close</Text>
+                <Text style={{ color: "white", fontWeight: "bold" }}>X</Text>
               </Pressable>
             </View>
           </View>
@@ -219,12 +234,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 22,
   },
+  rating: {
+    backgroundColor: "#6667AB",
+  },
   modalView: {
+    borderWidth: 2,
+    borderColor: "#6667AB",
     margin: 20,
-    backgroundColor: "#faf9f6",
+    width: "95%",
+    marginTop: 215,
+    height: "55%",
+    backgroundColor: "#6667AB",
     borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
+    padding: 15,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -240,30 +262,89 @@ const styles = StyleSheet.create({
     backgroundColor: "#6667AB",
     elevation: 2,
   },
-  buttonClose: {
-    borderRadius: 10,
-    elevation: 2,
-    padding: 5,
-    backgroundColor: "#6667AB",
-  },
+
   text: {
-    color: "white",
+    color: "black",
     fontSize: 16,
+    marginTop: 4,
+    marginBottom: 4,
   },
   item: {
-    backgroundColor: "#6667AB",
-    height: 180,
-    width: 200,
     padding: 10,
-    margin: 5,
-    borderRadius: 10,
+    width: 250,
+    backgroundColor: "white",
+    borderRadius: 15,
+    borderWidth: 4,
+    borderColor: "#6667AB",
+    fontSize: 20,
+    margin: 10,
+    shadowRadius: 5,
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.5,
+    shadowColor: "black",
+  },
+  titles: {
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  modaltitle: {
+    color: "white",
+    fontSize: 25,
+    textAlign: "center",
+    fontWeight: "bold",
+  },
+  title: {
+    color: "white",
+    fontSize: 25,
+    textAlign: "center",
+    fontWeight: "bold",
+    textDecorationLine: "underline",
   },
   textData: {
+    color: "white",
+    fontSize: 20,
     width: 250,
     margin: 5,
     padding: 5,
-    borderWidth: 2,
-    borderColor: "black",
+  },
+  editButton: {
+    padding: 10,
+    marginTop: 15,
+    backgroundColor: "white",
+    alignSelf: "flex-start",
+    borderRadius: 15,
+    height: 40,
+    width: 100,
+  },
+  buttonClose: {
+    padding: 10,
+    borderRadius: 15,
+    backgroundColor: "red",
+    alignSelf: "flex-end",
+    marginTop: -35,
+    marginRight: -10,
+  },
+  editData: {
+    backgroundColor: "white",
+    borderRadius: 5,
+    height: 40,
+    marginTop: 5,
+    marginBottom: 20,
+  },
+  editTitle: {
+    marginTop: -20,
+    marginBottom: 15,
+    color: "white",
+  },
+  editcompleteButton: {
+    padding: 10,
+    backgroundColor: "green",
+    alignSelf: "center",
+    marginTop: 0,
+    borderRadius: 15,
+    height: 40,
+    width: 100,
   },
 });
 

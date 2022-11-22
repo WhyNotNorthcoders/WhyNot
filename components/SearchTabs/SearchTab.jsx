@@ -13,36 +13,42 @@ function SearchTopTab({ searchPhrase }) {
       screenOptions={{
         tabBarIndicatorStyle: {
           borderWidth: 1,
-          borderColor: "#CAD2C5",
+          borderColor: "black",
           height: "100%",
-          backgroundColor: "#6667AB",
+          backgroundColor: "#9f86c0",
         },
         tabBarActiveLabelStyle: {
           color: "black",
           fontSize: 14,
         },
         tabBarStyle: {
-          backgroundColor: "white",
+          borderWidth:1,
+          backgroundColor: "#6667AB",
           borderBottomWidth: 0.5,
           borderBottomColor: "gray",
         },
+        tabBarActiveTintColor: "white",
+        tabBarInactiveTintColor: "white",
       }}
     >
       <Tab.Screen
         name="SearchTop"
-        children={() => <SearchTop searchPhrase={searchPhrase} />}
         options={{ tabBarLabel: "Top" }}
-      />
+      >
+        {props => <SearchTop {...props} searchPhrase={searchPhrase} />}
+      </Tab.Screen>
       <Tab.Screen
         name="SearchUser"
-        children={() => <SearchUser searchPhrase={searchPhrase} />}
         options={{ tabBarLabel: "User" }}
-      />
+      >
+        {props => <SearchUser {...props} searchPhrase={searchPhrase} />}
+      </Tab.Screen>
       <Tab.Screen
         name="SearchEvent"
-        children={() => <SearchEvent searchPhrase={searchPhrase} />}
         options={{ tabBarLabel: "Events" }}
-      />
+      >
+        {props => <SearchEvent {...props} searchPhrase={searchPhrase} />}
+      </Tab.Screen>
     </Tab.Navigator>
   );
 }

@@ -26,7 +26,6 @@ const SearchEvent = ({ searchPhrase }) => {
         setEvents(data.events_results);
       });
   }, []);
-  console.log();
   const filteredEvents = events.filter(
     createFilter(searchPhrase, ["title", "address"])
   );

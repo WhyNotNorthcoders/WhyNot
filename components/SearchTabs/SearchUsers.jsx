@@ -11,7 +11,7 @@ import {
 import { auth, database } from "../../config/firebaseConfig";
 import { userContext } from "../../context";
 
-const SearchUser = ({ navigation, searchPhrase }) => {
+const SearchUser = (props) => {
   const { userData } = useContext(userContext);
   const [users, setUsers] = useState({});
 
@@ -21,7 +21,9 @@ const SearchUser = ({ navigation, searchPhrase }) => {
       .then((snapshot) => {
         let list = [];
         snapshot.docs.forEach((doc) => {
+          if (doc.id !== auth.currentUser.uid){
           list.push({ ...doc.data(), id: doc.id });
+          }
         });
         setUsers(list);
       })
@@ -32,19 +34,19 @@ const SearchUser = ({ navigation, searchPhrase }) => {
 
   let filteredUsers;
   if (users.length > 0) {
-    filteredUsers = users.filter(
-      createFilter(searchPhrase, ["username", "location"])
-    );
+     filteredUsers = users.filter(
+      createFilter(props.searchPhrase, ["username", "location"])
+      );
   }
-
+  
   return (
     <View style={styles.listContainer}>
       <FlatList
-        data={users ? filteredUsers : users}
+        data={filteredUsers}
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("UserPage", { user: item });
+              props.navigation.navigate("UserPage", { user: item })
             }}
           >
             <View style={styles.item}>
@@ -69,7 +71,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     borderWidth: 4,
     borderColor: "#6667AB",
-    height: 200,
+    height: 170,
     fontSize: 20,
     margin: 15,
     shadowRadius: 5,
@@ -81,7 +83,7 @@ const styles = StyleSheet.create({
     padding: 10,
     textAlign: "center",
     fontSize: 20,
-    margin: 15,
+    margin: 10,
   },
 });
 
