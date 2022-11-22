@@ -23,7 +23,7 @@ const EventsCard = ({ item }) => {
         }}
       >
         <View style={styles.item}>
-          <Text style={styles.eventInformation}>Title: {item.title}</Text>
+          <Text style={styles.eventInformationTitle}>{item.title}</Text>
           <Image
             style={{ height: 150, width: "100%", borderRadius: 15 }}
             source={{ uri: item.image }}
@@ -32,8 +32,8 @@ const EventsCard = ({ item }) => {
             Address: {item.address[0]}, {item.address[1]}
           </Text>
           <Text style={styles.eventInformation}>{item.date.when}</Text>
-          <Text style={styles.eventInformation}>
-            Click on the post to see more about event
+          <Text style={styles.eventInformationLink}>
+            Click on the post to see more about event!
           </Text>
           <View style={styles.imageContainer}></View>
         </View>
@@ -48,16 +48,27 @@ const EventsCard = ({ item }) => {
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <View>
-                <Text style={styles.eventInformation}>Title: {item.title}</Text>
+                <Text style={styles.eventInformationTitle}>{item.title}</Text>
                 <Image
-                  style={{ height: 100, width: 100, borderRadius: 10 }}
+                  style={{
+                    height: 150,
+                    width: 250,
+                    borderRadius: 15,
+                    borderStyle: "solid",
+                    borderWidth: 1,
+                    alignSelf: "center",
+                  }}
                   source={{ uri: item.image }}
                 />
-                <Text style={styles.eventInformation}>Description: {item.description}</Text>
-                <Text style={styles.eventInformation}>
+                <Text style={styles.eventInformationModal}>
+                  {item.description}
+                </Text>
+                <Text style={styles.eventInformationModal}>
                   Address: {item.address[0]}, {item.address[1]}
                 </Text>
-                <Text style={styles.eventInformation}>{item.date.when}</Text>
+                <Text style={styles.eventInformationModal}>
+                  {item.date.when}
+                </Text>
                 <View style={styles.imageContainer}></View>
                 <Text
                   style={{ color: "blue" }}
@@ -74,7 +85,7 @@ const EventsCard = ({ item }) => {
                   setModalVisible(!modalVisible);
                 }}
               >
-                <Text style={{ color: "white" }}>close</Text>
+                <Text style={{ color: "white" }}>Close</Text>
               </Pressable>
             </View>
           </View>
@@ -107,10 +118,14 @@ const styles = StyleSheet.create({
     marginTop: 22,
   },
   modalView: {
-    margin: 20,
+    marginTop: "25%",
+    height: "60%",
+    margin: 10,
+    borderWidth: 2,
+    borderColor: "#6667AB",
     backgroundColor: "#faf9f6",
-    borderRadius: 20,
-    padding: 35,
+    borderRadius: 15,
+    padding: 15,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -127,10 +142,25 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   buttonClose: {
+    marginTop: "10%",
     padding: 10,
     backgroundColor: "#6667AB",
   },
+  eventInformationTitle: {
+    margin: 5,
+    fontSize: 20,
+    fontWeight: "bold",
+    alignSelf: "center",
+  },
   eventInformation: {
     margin: 5,
+  },
+  eventInformationModal: {
+    margin: 5,
+    fontSize: 15,
+  },
+  eventInformationLink: {
+    margin: 5,
+    textDecorationLine: "underline",
   },
 });

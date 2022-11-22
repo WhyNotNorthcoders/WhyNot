@@ -6,11 +6,12 @@ import {
   StyleSheet,
   FlatList,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import { auth, database } from "../../config/firebaseConfig";
 import { userContext } from "../../context";
 
-const SearchUser = ({navigation}) => {
+const SearchUser = ({ navigation }) => {
   const { userData } = useContext(userContext);
   const [users, setUsers] = useState({});
 
@@ -20,11 +21,11 @@ const SearchUser = ({navigation}) => {
       .then((snapshot) => {
         let list = [];
         snapshot.docs.forEach((doc) => {
-          if (doc.id !== auth.currentUser.uid){
-          list.push({ ...doc.data(), id: doc.id });
+          if (doc.id !== auth.currentUser.uid) {
+            list.push({ ...doc.data(), id: doc.id });
           }
         });
-        setUsers(list)
+        setUsers(list);
       })
       .catch((err) => {
         alert(err.message);
@@ -36,10 +37,25 @@ const SearchUser = ({navigation}) => {
       <FlatList
         data={users}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={()=>{navigation.navigate("UserPage", {user: item})}}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("UserPage", { user: item });
+            }}
+          >
             <View style={styles.item}>
-            <Text style={styles.itemText}>Username: {item.username} </Text>
-            <Text style={styles.itemText}>Location: {item.location}</Text>
+              <Text style={styles.itemTitle}>{item.username} </Text>
+              <Text style={styles.itemHead}>About Me:</Text>
+              <Text style={styles.itemText}>{item.about}</Text>
+              <Text style={styles.itemHead}>Location: </Text>
+              <Text style={styles.itemText}>{item.location}</Text>
+              <Text style={styles.itemHead}>Age:</Text>
+              <Text style={styles.itemText}>
+                {2022 - item.dob.substr(item.dob.length - 4)}
+              </Text>
+              <Image
+                source={{ uri: item.profile_picture }}
+                style={styles.ionicons}
+              />
             </View>
           </TouchableOpacity>
         )}
@@ -54,12 +70,11 @@ const styles = StyleSheet.create({
   },
   item: {
     padding: 10,
-    textAlign: "center",
+    height: 200,
     backgroundColor: "white",
     borderRadius: 15,
     borderWidth: 4,
     borderColor: "#6667AB",
-    height: 170,
     fontSize: 20,
     margin: 15,
     shadowRadius: 5,
@@ -67,11 +82,25 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowColor: "black",
   },
+  itemTitle: {
+    alignSelf: "center",
+    fontSize: 22,
+    fontWeight: "bold",
+  },
+  itemHead: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
   itemText: {
-    padding:10,
-    textAlign: "center",
-    fontSize: 20,
-    margin: 10,
+    fontSize: 15,
+    margin: 3,
+  },
+  ionicons: {
+    borderRadius: 15,
+    width: 100,
+    height: 100,
+    marginLeft: "70%",
+    marginTop: "-28%",
   },
 });
 
