@@ -32,10 +32,10 @@ const TopStoriesCard = ({
             </Caption>
           </View>
           <Card>
-              <Card.Cover
-                source={{ uri: storyImage }}
-                style={styles.storyImage}
-              />
+            <Card.Cover
+              source={{ uri: storyImage }}
+              style={styles.storyImage}
+            />
             <Card.Content>
               <Paragraph>{description}</Paragraph>
             </Card.Content>
@@ -44,7 +44,7 @@ const TopStoriesCard = ({
             <Caption style={{ fontSize: 10 }}>
               Date Completed: {completeDate}
             </Caption>
-            <View style={[styles.rating, { marginLeft: 100 }]}>
+            <View style={[styles.rating, { marginLeft: "25%" }]}>
               <Caption style={{ fontSize: 10 }}>Rating:</Caption>
               <Rating
                 style={styles.rating}
