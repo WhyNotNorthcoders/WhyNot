@@ -1,12 +1,11 @@
 import { GiftedChat } from "react-native-gifted-chat";
 import React, {
   useState,
-  useEffect,
   useLayoutEffect,
   useCallback,
 } from "react";
 
-import { TouchableOpacity, Text } from "react-native";
+import { TouchableOpacity } from "react-native";
 import {
   addDoc,
   orderBy,
@@ -16,7 +15,6 @@ import {
 } from "firebase/firestore";
 import { signOut } from "firebase/auth";
 import { auth, database } from "../config/firebaseConfig";
-import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 
 export default function Chat({navigation}) {

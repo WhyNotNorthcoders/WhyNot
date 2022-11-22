@@ -10,7 +10,7 @@ import {
     collection,
     getDocs,
   } from "firebase/firestore";
-  import { database, auth } from "../../config/firebaseConfig";
+  import { database } from "../../config/firebaseConfig";
   import UserDetails from "./UserDetails";
 
 const UserPage = ({route}) => {

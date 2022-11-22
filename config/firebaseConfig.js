@@ -28,15 +28,7 @@ const app = initializeApp(firebaseConfig);
 
 initializeApp(firebaseConfig);
 export const auth = getAuth();
-//init servic
 export const database = getFirestore(app);
-
 export const storage = getStorage(app)
 
-//collection ref
-// export const colRef = collection(database, "users");
 
-//get collection data
-// getDocs(colRef).then((snapshot) => {
-//   console. log(snapshot.docs);
-// });

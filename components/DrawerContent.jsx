@@ -1,13 +1,10 @@
 import { View, StyleSheet, Pressable } from "react-native";
 import {
-  Text,
   Title,
   Avatar,
   Caption,
   Paragraph,
   Drawer,
-  TouchableRipple,
-  Swtich,
 } from "react-native-paper";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";

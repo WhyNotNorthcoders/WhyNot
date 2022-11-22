@@ -74,39 +74,6 @@ const ProfileDetails = () => {
     }
   };
 
-  //   if (!result.canceled) {
-  //     setImageSelected(true);
-
-  //     setImage(result.assets[0].uri);
-  //     const imageRef = ref(
-  //       storage,
-  //       "images/",
-  //       `${auth.currentUser.uid}+ "profile.jpeg`
-  //     );
-
-  //     const img = await fetch(result.assets[0].uri);
-  //     const bytes = await img.blob();
-  //     // console.log(source.uri);
-  //     await uploadBytes(imageRef, bytes).then((snapshot) => {
-  //       getDownloadURL(imageRef)
-  //         .then((url) => {
-  //           console.log(url);
-  //           const userRef = collection(database, "users");
-  //           const data = {
-  //             profile_picture: url,
-  //           };
-  //           const itemRef = doc(userRef, auth.currentUser.uid);
-  //           updateDoc(itemRef, data)
-  //             .then(alert("Profile pics has been updated!"))
-  //             .catch((err) => console.log(err.message));
-  //         })
-  //         .catch((err) => {
-  //           console.log(err.msg);
-  //         });
-  //     });
-  //   }
-  // };
-
   return (
     <SafeAreaView style={styles.profileDetails}>
       <Text style={styles.username}>{userInfo.username}</Text>

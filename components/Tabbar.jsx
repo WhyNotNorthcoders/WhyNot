@@ -8,8 +8,6 @@ import Profile from "../screens/Profile";
 import Chat from "./Chat";
 import BucketListForm from "./Forms/BucketListForm";
 import StoryForm from "./Forms/StoryForm";
-import { signOut } from "firebase/auth";
-import { auth } from "../config/firebaseConfig";
 import LoginScreen from "../screens/LoginScreen";
 import EditProfile from "./Profiles/EditProfile";
 import UserPage from "./Profiles/UserPage";
@@ -20,7 +18,7 @@ const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 const Drawer2 = createDrawerNavigator();
 
-function DrawerRoutes({ navigation }) {
+function DrawerRoutes() {
   return (
     <Drawer.Navigator
       initialRouteName="Profile"
