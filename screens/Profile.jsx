@@ -1,31 +1,15 @@
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  Button,
-} from "react-native";
+import { FlatList, StyleSheet, Text, ScrollView } from "react-native";
 import { useState, useEffect } from "react";
 import ProfileDetails from "../components/Profiles/ProfileDetails";
-import {
-  collection,
-  getDocs,
-  doc,
-  query,
-  documentId,
-  where,
-} from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { database, auth } from "../config/firebaseConfig";
-import { getAdditionalUserInfo } from "firebase/auth";
 import BucketListCard from "../components/BucketListCard";
-import StoryCard from '../components/StoryCard'
+import StoryCard from "../components/StoryCard";
 
 const Profile = () => {
   const [bucketListData, setBucketListData] = useState([]);
   const [storyData, setStoryData] = useState([]);
-  // const { userData } = useContext(userContext);
-  // console.log(userData)
+
   const bucketRef = collection(
     database,
     "users",
@@ -52,44 +36,21 @@ const Profile = () => {
       .catch((err) => {
         alert(err.message);
       });
-      getDocs(storyRef)
+    getDocs(storyRef)
       .then((snapshot) => {
         let storyList = [];
         snapshot.docs.forEach((doc) => {
           storyList.push({ ...doc.data(), id: doc.id });
         });
-        setStoryData(storyList);
+        const sortedStory = storyList.sort(
+          (a, b) => (b.completeDate.split(" ").join("")) - (a.completeDate.split(" ").join(""))
+        );
+        setStoryData(sortedStory);
       })
       .catch((err) => {
         alert(err.message);
       });
-  }, []);
-
-  // const Item = ({ item, onPress }) => (
-  //   <TouchableOpacity onPress={onPress} style={styles.item}>
-  //     <Text style={styles.titles}>{item.title}: </Text>
-  //     <Text style={styles.text}>Category: {item.category}</Text>
-  //     <Text style={styles.text}>Location: {item.location}</Text>
-  //     <Text style={styles.text}>Target Date: {item.targetDate}</Text>
-  //     <Text style={styles.text}>Difficulty: {item.difficulty}</Text>
-  //   </TouchableOpacity>
-  // );
-
-  // const [selectedId, setSelectedId] = useState(null);
-
-  // const renderItem = ({ item }) => {
-  //   const backgroundColor = item.id === selectedId ? "#CAD2C5" : "#84A98C";
-  //   const color = item.id === selectedId ? "white" : "white";
-
-  //   return (
-  //     <Item
-  //       item={item}
-  //       onPress={() => setSelectedId(item.id)}
-  //       backgroundColor={{ backgroundColor }}
-  //       textColor={{ color }}
-  //     />
-  //   );
-  // };
+  }, [bucketListData.length, storyData.length]);
 
   return (
     <>
@@ -103,8 +64,6 @@ const Profile = () => {
           renderItem={({ item }) => (
             <BucketListCard item={item} itemID={item.id} />
           )}
-          // keyExtractor={(item) => item.id}
-          // extraData={selectedId}
           horizontal={true}
         />
         <Text style={styles.header}>Recently Completed</Text>
@@ -112,11 +71,7 @@ const Profile = () => {
           nestedScrollEnabled={true}
           style={styles.list}
           data={storyData}
-          renderItem={({ item }) => (
-            <StoryCard item={item} itemID={item.id} />
-          )}
-          // keyExtractor={(item) => item.id}
-          // extraData={selectedId}
+          renderItem={({ item }) => <StoryCard item={item} itemID={item.id} />}
           horizontal={true}
         />
       </ScrollView>

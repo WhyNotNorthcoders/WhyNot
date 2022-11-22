@@ -23,8 +23,9 @@ const SearchTop = () => {
           stories.forEach((story) => {
             storyList.push({ ...story.data(), id: story.id });
           });
-          const sorted = storyList.sort((a, b) => b.rating - a.rating)
-          setStories(sorted);
+          const sortedRating = storyList.sort((a, b) => b.rating - a.rating);
+          const sortedRecent = sortedRating.sort((a, b) => b.completeDate.split(" ").join("") - a.completeDate.split(" ").join(""))
+          setStories(sortedRecent);
         });
       });
     });
@@ -43,6 +44,7 @@ const SearchTop = () => {
             location={item.location}
             rating={item.rating}
             completeDate={item.completeDate}
+            storyImage={item.storyImage}
           />
         )}
       />

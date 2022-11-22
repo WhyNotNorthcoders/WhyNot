@@ -15,11 +15,12 @@ import Modal from "react-native-modal";
 import * as ImagePicker from "expo-image-picker";
 import { Rating } from "react-native-ratings";
 import { doc, addDoc, collection, deleteDoc } from "firebase/firestore";
-import { auth, database } from "../../config/firebaseConfig";
+import { auth, database, storage } from "../../config/firebaseConfig";
 import { useNavigation } from "@react-navigation/native";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const StoryForm = ({ route }) => {
-  const { title, location, setComplete, category, bucketItemId } = route.params;
+  const { title, location, category, bucketItemId } = route.params;
 
   const [storyTitle, setStoryTitle] = useState(title);
   const [description, setDescription] = useState("");
@@ -46,7 +47,6 @@ const StoryForm = ({ route }) => {
   };
 
   const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -55,7 +55,14 @@ const StoryForm = ({ route }) => {
     });
 
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      const imageRef = ref(storage, `images/${bucketItemId + "-story.jpeg"}`);
+      const img = await fetch(result.assets[0].uri);
+      const bytes = await img.blob();
+      uploadBytes(imageRef, bytes).then(() => {
+        getDownloadURL(imageRef).then((url) => {
+          setImage(url);
+        });
+      });
     }
   };
 
@@ -83,12 +90,14 @@ const StoryForm = ({ route }) => {
       location: storyLocation,
       completeDate: date,
       rating: rating,
+      storyImage: image,
     };
+
     addDoc(storyRef, storyItem)
       .then(() => {
         deleteDoc(itemRef);
         alert("Story has been posted");
-        setComplete(true);
+        setImage(null);
         navigation.navigate("Your Profile");
       })
       .catch((err) => {
@@ -165,11 +174,13 @@ const StoryForm = ({ route }) => {
           }}
         >
           <View style={styles.imageContainer}>
-            {image && (
+            {image ? (
               <Image
                 source={{ uri: image }}
                 style={{ width: "100%", height: "100%" }}
               />
+            ) : (
+              <Text>Select An Image</Text>
             )}
           </View>
           <Pressable style={styles.button} onPress={pickImage}>
