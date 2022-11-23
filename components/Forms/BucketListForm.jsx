@@ -62,6 +62,7 @@ const BucketListForm = () => {
           <TextInput
             style={styles.textInput}
             placeholder="Enter Bucket List Item Name"
+            placeholderTextColor={"#003f5c"}
             onChangeText={(val) => setTitle(val)}
           />
         </View>
@@ -76,6 +77,7 @@ const BucketListForm = () => {
               borderColor: "#C200FB",
             }}
             placeholder="--Select Category--"
+            placeholderTextColor={"#003f5c"}
             open={categoryOpen}
             value={category}
             items={items}
@@ -94,6 +96,7 @@ const BucketListForm = () => {
           <TextInput
             style={styles.textInput}
             placeholder="Enter Location"
+            placeholderTextColor={"#003f5c"}
             onChangeText={(val) => setLocation(val)}
           />
         </View>
@@ -126,7 +129,7 @@ const BucketListForm = () => {
           <TextInput
             style={styles.textInput}
             keyboardType="numeric"
-            placeholderTextColor={"lightgrey"}
+            placeholderTextColor={"#003f5c"}
             placeholder="Enter Difficulty"
             onChangeText={(val) => setDifficulty(val)}
           />
@@ -136,7 +139,13 @@ const BucketListForm = () => {
             style={styles.bucketListButton}
             onPress={handleSubmit}
           >
-            <Text style={{ textAlign: "center", color: "white" }}>
+            <Text
+              style={{
+                textAlign: "center",
+                color: "black",
+                fontWeight: "bold",
+              }}
+            >
               Add Bucket List Item
             </Text>
           </TouchableOpacity>
@@ -177,14 +186,10 @@ const styles = StyleSheet.create({
   },
   bucketListButton: {
     justifyContent: "center",
-    alignItems: "center",
     width: 200,
     height: 50,
     margin: 10,
-    marginTop: 20,
-    paddingTop: 5,
-    borderRadius: 15,
-    paddingBottom: 5,
+    borderRadius: 30,
     borderWidth: 5,
     borderColor: "green",
   },
