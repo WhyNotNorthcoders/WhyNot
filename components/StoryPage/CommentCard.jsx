@@ -9,43 +9,57 @@ import {
 } from "react-native-paper";
 import { StyleSheet } from "react-native";
 import { useEffect, useState } from "react";
-import { doc, getDoc } from "firebase/firestore";
+import { deleteDoc, doc, getDoc } from "firebase/firestore";
 import { auth, database } from "../../config/firebaseConfig";
 
-const CommentCard = ({ comment }) => {
+const CommentCard = ({ comment, setCommentDeleted, publisherId }) => {
   const [user, setUser] = useState({});
-
-  const { comment_text, user_id, created_at } = comment;
+  const { comment_text, user_id, created_at, story_id, id } = comment;
 
   useEffect(() => {
     const user = doc(database, "users", user_id);
     getDoc(user).then((user) => {
       setUser(user.data());
     });
-  }, []);
+  }, [id]);
 
   const deleteComment = () => {
-    alert("comment delete button pressed");
+    const commentRef = doc(
+      database,
+      "users",
+      publisherId,
+      "Story_list",
+      story_id,
+      "Comments",
+      id
+    );
+
+    deleteDoc(commentRef).then(() => {
+      setCommentDeleted(true)
+      alert("Comment has been deleted");
+    });
   };
 
   return (
     <View style={styles.commentBox}>
       <View style={{ flexDirection: "row" }}>
-        <View style={{ marginTop: 5, marginRight: 5, paddingTop: 5}}>
+        <View style={{ marginTop: 5, marginRight: 5, paddingTop: 5 }}>
           <Avatar.Image source={{ uri: user.profile_picture }} size={40} />
         </View>
         <Text></Text>
         <Card style={styles.commentCard}>
           <View style={{ flexDirection: "row", padding: 10 }}>
             <Card.Content>
-              <Paragraph>{'"' + comment_text + '"'}</Paragraph>
+              <Paragraph style={styles.commentText}>
+                {'"' + comment_text + '"'}
+              </Paragraph>
               <View>
                 <Caption style={{ fontSize: 10 }}>from {user.username}</Caption>
               </View>
             </Card.Content>
           </View>
           {user_id === auth.currentUser.uid ? (
-            <View style={{ position: "absolute", right: "7%" }}>
+            <View style={{ position: "absolute", bottom: "1%", right: "7%" }}>
               <Button icon="delete" onPress={deleteComment} />
             </View>
           ) : (
@@ -66,5 +80,8 @@ const styles = StyleSheet.create({
   },
   commentCard: {
     width: "100%",
+  },
+  commentText: {
+    marginRight: "15%",
   },
 });
