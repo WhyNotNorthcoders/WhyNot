@@ -44,7 +44,7 @@ const DrawerContent = (props) => {
               >
                 <Title style={styles.title}>{user.username}</Title>
               </Pressable>
-              <Caption style={styles.caption}>User Caption</Caption>
+              <Caption style={styles.caption}>{user.about}</Caption>
             </View>
           </View>
           <View style={[styles.row, styles.userInfoSection]}>
