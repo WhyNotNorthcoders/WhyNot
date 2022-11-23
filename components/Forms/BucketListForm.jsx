@@ -12,7 +12,6 @@ import {
 import DropDownPicker from "react-native-dropdown-picker";
 import DatePicker from "react-native-modern-datepicker";
 import Modal from "react-native-modal";
-import { useNavigation } from "@react-navigation/native";
 import { addDoc, collection } from "firebase/firestore";
 
 const BucketListForm = ({ route, navigation }) => {
@@ -42,11 +41,12 @@ const BucketListForm = ({ route, navigation }) => {
       setSuggested(true);
     }
   }, [route.params]);
+
   const toggleDate = () => {
     setDateOpen(!dateOpen);
   };
   const handleSubmit = () => {
-    navigation.navigate("Profile");
+    navigation.navigate("Your Profile");
     const bucketRef = collection(
       database,
       "users",

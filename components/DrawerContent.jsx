@@ -1,11 +1,5 @@
 import { View, StyleSheet, Pressable } from "react-native";
-import {
-  Title,
-  Avatar,
-  Caption,
-  Paragraph,
-  Drawer,
-} from "react-native-paper";
+import { Title, Avatar, Caption, Paragraph, Drawer } from "react-native-paper";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import { auth, database } from "../config/firebaseConfig";
