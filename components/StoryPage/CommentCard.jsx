@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import { deleteDoc, doc, getDoc } from "firebase/firestore";
 import { auth, database } from "../../config/firebaseConfig";
 
-const CommentCard = ({ comment, setCommentDeleted }) => {
+const CommentCard = ({ comment, setCommentDeleted, publisherId }) => {
   const [user, setUser] = useState({});
   const { comment_text, user_id, created_at, story_id, id } = comment;
 
@@ -21,18 +21,24 @@ const CommentCard = ({ comment, setCommentDeleted }) => {
     getDoc(user).then((user) => {
       setUser(user.data());
     });
-  }, []);
+  }, [id]);
+
+  console.log(user)
+  console.log(publisherId)
+  console.log(user_id)
+  console.log(auth.currentUser.uid)
 
   const deleteComment = () => {
     const commentRef = doc(
       database,
       "users",
-      user_id,
+      publisherId,
       "Story_list",
       story_id,
       "Comments",
       id
     );
+
     deleteDoc(commentRef).then(() => {
       setCommentDeleted(true)
       alert("Comment has been deleted");
@@ -58,7 +64,7 @@ const CommentCard = ({ comment, setCommentDeleted }) => {
             </Card.Content>
           </View>
           {user_id === auth.currentUser.uid ? (
-            <View style={{ position: "absolute", right: "7%" }}>
+            <View style={{ position: "absolute", bottom: "1%", right: "7%" }}>
               <Button icon="delete" onPress={deleteComment} />
             </View>
           ) : (

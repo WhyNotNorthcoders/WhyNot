@@ -15,17 +15,9 @@ import {
 } from "react-native";
 import { Rating } from "react-native-ratings";
 import { useState, useEffect } from "react";
-import {
-  addDoc,
-  collection,
-  getDoc,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
+import { addDoc, collection, getDocs } from "firebase/firestore";
 import { auth, database } from "../../config/firebaseConfig";
 import CommentCard from "./CommentCard";
-import Ionicons from "react-native-vector-icons/Ionicons";
 
 const StoryPage = ({
   route: {
@@ -87,7 +79,6 @@ const StoryPage = ({
       created_at: String(new Date()),
     };
     addDoc(commentRef, commentItem).then(() => {
-      alert("Comment has been added");
       Keyboard.dismiss();
       setCommentPosted(true);
       setCommentInput("");
@@ -95,18 +86,23 @@ const StoryPage = ({
   };
 
   return (
-    <SafeAreaView style={{ height: "100%" }}>
+    <SafeAreaView style={{ height: "100%"}}>
       <Button
         style={{
           position: "absolute",
           zIndex: 999,
+          // backgroundColor: "black",
         }}
-        size={60}
         icon="arrow-left"
         onPress={() => navigation.goBack()}
       />
-
-      <ScrollView style={styles.storyContent}>
+      <ScrollView
+        style={
+          user_id === auth.currentUser.uid
+            ? styles.yourStory
+            : styles.storyContent
+        }
+      >
         <Card style={{ padding: 15 }}>
           <View style={styles.header}>
             <Title>{title}</Title>
@@ -150,6 +146,7 @@ const StoryPage = ({
               return (
                 <CommentCard
                   key={comment.id}
+                  publisherId={user_id}
                   comment={comment}
                   setCommentDeleted={setCommentDeleted}
                 />
@@ -158,23 +155,29 @@ const StoryPage = ({
           )}
         </View>
       </ScrollView>
-      <View style={styles.commentForm}>
-        <TextInput
-          mode="outlined"
-          label="Enter Comment"
-          value={commentInput}
-          onChangeText={(input) => {
-            setCommentInput(input);
-          }}
-          right={
-            <TextInput.Icon
-              icon="send-circle-outline"
-              size={30}
-              onPress={onSubmitComment}
-            />
-          }
-        />
-      </View>
+      {user_id === auth.currentUser.uid ? (
+        <View>
+          <Card></Card>
+        </View>
+      ) : (
+        <View style={styles.commentForm}>
+          <TextInput
+            mode="outlined"
+            label="Enter Comment"
+            value={commentInput}
+            onChangeText={(input) => {
+              setCommentInput(input);
+            }}
+            right={
+              <TextInput.Icon
+                icon="send-circle-outline"
+                size={30}
+                onPress={onSubmitComment}
+              />
+            }
+          />
+        </View>
+      )}
     </SafeAreaView>
   );
 };
@@ -202,9 +205,15 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   storyContent: {
-    marginTop: 5,
+    marginTop: "10%",
     marginLeft: 5,
     marginRight: 5,
     marginBottom: "15%",
+  },
+  yourStory: {
+    marginTop: "10%",
+    marginLeft: 5,
+    marginRight: 5,
+    marginBottom: 5
   },
 });
