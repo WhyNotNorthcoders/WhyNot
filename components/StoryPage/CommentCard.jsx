@@ -23,11 +23,6 @@ const CommentCard = ({ comment, setCommentDeleted, publisherId }) => {
     });
   }, [id]);
 
-  console.log(user)
-  console.log(publisherId)
-  console.log(user_id)
-  console.log(auth.currentUser.uid)
-
   const deleteComment = () => {
     const commentRef = doc(
       database,

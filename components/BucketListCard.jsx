@@ -12,7 +12,7 @@ import {
 import { TextInput } from "react-native-gesture-handler";
 import { auth, database } from "../config/firebaseConfig";
 
-const BucketListCard = ({ item, itemID }) => {
+const BucketListCard = ({ item, itemID, setBucketItemAdded }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [edit, setEdit] = useState(false);
   const [complete, setComplete] = useState(false);
@@ -39,6 +39,7 @@ const BucketListCard = ({ item, itemID }) => {
     };
     setEdit(false);
     setModalVisible(false);
+    setBucketItemAdded(true)
     const itemRef = doc(bucketRef, itemID);
     updateDoc(itemRef, data)
       .then(alert("item has been updated"))
@@ -46,6 +47,7 @@ const BucketListCard = ({ item, itemID }) => {
   };
 
   const BucketItem = ({ title, location, category, setComplete }) => {
+
     const navigation = useNavigation();
 
     return (

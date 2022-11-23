@@ -8,6 +8,7 @@ import StoryCard from "../components/StoryCard";
 
 const Profile = () => {
   const [bucketListData, setBucketListData] = useState([]);
+  const [bucketItemAdded, setBucketItemAdded] = useState(false)
   const [storyData, setStoryData] = useState([]);
 
   const bucketRef = collection(
@@ -25,6 +26,7 @@ const Profile = () => {
   );
 
   useEffect(() => {
+    setBucketItemAdded(false)
     getDocs(bucketRef)
       .then((snapshot) => {
         let bucketList = [];
@@ -50,7 +52,7 @@ const Profile = () => {
       .catch((err) => {
         alert(err.message);
       });
-  }, [bucketListData.length, storyData.length]);
+  }, [bucketItemAdded]);
 
   return (
     <>
@@ -62,7 +64,7 @@ const Profile = () => {
           style={styles.list}
           data={bucketListData}
           renderItem={({ item }) => (
-            <BucketListCard item={item} itemID={item.id} />
+            <BucketListCard item={item} itemID={item.id} setBucketItemAdded={setBucketItemAdded}/>
           )}
           horizontal={true}
         />
