@@ -14,7 +14,6 @@ const TopStoriesCard = ({
   navigation,
   user_id,
 }) => {
-
   return (
     <View style={styles.storyCard}>
       <Pressable
@@ -29,7 +28,7 @@ const TopStoriesCard = ({
             completeDate: completeDate,
             storyImage: storyImage,
             navigation: navigation,
-            user_id: user_id
+            user_id: user_id,
           });
         }}
       >
@@ -44,10 +43,14 @@ const TopStoriesCard = ({
             </Caption>
           </View>
           <Card>
-            <Card.Cover
-              source={{ uri: storyImage }}
-              style={styles.storyImage}
-            />
+            {storyImage ? (
+              <Card.Cover
+                source={{ uri: storyImage }}
+                style={styles.storyImage}
+              />
+            ) : (
+              <></>
+            )}
             <Card.Content>
               <Paragraph>{'"' + description + '"'}</Paragraph>
             </Card.Content>
