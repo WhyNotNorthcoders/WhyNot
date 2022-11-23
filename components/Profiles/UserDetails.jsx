@@ -1,6 +1,5 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { SafeAreaView, Text, StyleSheet, Image } from "react-native";
-import Ionicons from "react-native-vector-icons/Ionicons";
 
 const UserDetails = (props) => {
   const [userInfo, setUserInfo] = useState({});

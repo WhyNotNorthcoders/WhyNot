@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -37,7 +37,6 @@ const LoginScreen = () => {
     }
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
-        alert("User Logged In"); // remove this later
         setEmail("");
         setPassword("");
       })

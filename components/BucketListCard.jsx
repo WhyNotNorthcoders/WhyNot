@@ -8,7 +8,6 @@ import {
   Pressable,
   Modal,
   View,
-  Alert,
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { auth, database } from "../config/firebaseConfig";

@@ -1,21 +1,14 @@
 import { useEffect, useState } from "react";
 import {
   View,
-  Text,
   StyleSheet,
   FlatList,
-  TouchableOpacity,
-  Linking,
-  Image,
-  Modal,
-  Pressable,
 } from "react-native";
 import { createFilter } from "react-native-search-filter";
 import EventsCard from "./EventsCard";
 
 const SearchEvent = ({ searchPhrase }) => {
   const [events, setEvents] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetch(

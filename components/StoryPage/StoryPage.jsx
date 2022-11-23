@@ -25,7 +25,6 @@ const StoryPage = ({
       story_id,
       title,
       description,
-      category,
       location,
       rating,
       completeDate,
@@ -91,7 +90,6 @@ const StoryPage = ({
         style={{
           position: "absolute",
           zIndex: 999,
-          // backgroundColor: "black",
         }}
         icon="arrow-left"
         onPress={() => navigation.goBack()}

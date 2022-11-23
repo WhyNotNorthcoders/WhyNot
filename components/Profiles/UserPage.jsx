@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
-import { database, auth } from "../../config/firebaseConfig";
+import { database } from "../../config/firebaseConfig";
 import UserDetails from "./UserDetails";
 
 const UserPage = ({ route, navigation }) => {
