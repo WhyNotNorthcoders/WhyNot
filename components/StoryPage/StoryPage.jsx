@@ -6,7 +6,7 @@ import {
   TextInput,
   Button,
 } from "react-native-paper";
-import { ScrollView, View, StyleSheet, SafeAreaView } from "react-native";
+import { ScrollView, View, StyleSheet, SafeAreaView, Keyboard } from "react-native";
 import { Rating } from "react-native-ratings";
 import { useState, useEffect } from "react";
 import {
@@ -67,7 +67,7 @@ const StoryPage = ({
         setComments(commentList);
       }
     });
-  }, [story_id]);
+  }, [story_id, comments.length]);
 
   const onSubmitComment = () => {
     const commentItem = {
@@ -76,9 +76,9 @@ const StoryPage = ({
       story_id: story_id,
       created_at: String(new Date()),
     };
-
     addDoc(commentRef, commentItem).then(() => {
       alert("Comment has been added");
+      Keyboard.dismiss()
       setCommentInput("");
     });
   };
@@ -136,7 +136,7 @@ const StoryPage = ({
             </Card>
           ) : (
             comments.map((comment) => {
-              return <CommentCard comment={comment} />;
+              return <CommentCard key={comment.id} comment={comment} />;
             })
           )}
         </ScrollView>
@@ -145,7 +145,7 @@ const StoryPage = ({
         <TextInput
           mode="outlined"
           label="Enter Comment"
-          placeholder="Type Text"
+          value={commentInput}
           onChangeText={(input) => {
             setCommentInput(input);
           }}

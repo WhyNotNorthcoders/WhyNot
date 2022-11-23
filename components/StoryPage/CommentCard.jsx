@@ -9,13 +9,12 @@ import {
 } from "react-native-paper";
 import { StyleSheet } from "react-native";
 import { useEffect, useState } from "react";
-import { doc, getDoc } from "firebase/firestore";
+import { deleteDoc, doc, getDoc } from "firebase/firestore";
 import { auth, database } from "../../config/firebaseConfig";
 
 const CommentCard = ({ comment }) => {
   const [user, setUser] = useState({});
-
-  const { comment_text, user_id, created_at } = comment;
+  const { comment_text, user_id, created_at, story_id, id } = comment;
 
   useEffect(() => {
     const user = doc(database, "users", user_id);
@@ -25,13 +24,24 @@ const CommentCard = ({ comment }) => {
   }, []);
 
   const deleteComment = () => {
-    alert("comment delete button pressed");
+    const commentRef = doc(
+      database,
+      "users",
+      user_id,
+      "Story_list",
+      story_id,
+      "Comments",
+      id
+    );
+    deleteDoc(commentRef).then(() => {
+      alert("comment delete button pressed");
+    });
   };
 
   return (
     <View style={styles.commentBox}>
       <View style={{ flexDirection: "row" }}>
-        <View style={{ marginTop: 5, marginRight: 5, paddingTop: 5}}>
+        <View style={{ marginTop: 5, marginRight: 5, paddingTop: 5 }}>
           <Avatar.Image source={{ uri: user.profile_picture }} size={40} />
         </View>
         <Text></Text>
