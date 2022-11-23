@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { View, Text, StyleSheet, Image, Modal, Pressable } from "react-native";
-import { Caption } from "react-native-paper"
+import { Caption } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
+
 
 const HomeSuggested = ({ item }) => {
   const [modalVisible, setModalVisible] = useState(false);
-  return (
+  const navigation = useNavigation();
+  
+    return (
     <View style={styles.eventCard}>
       <Pressable
         onPress={() => {
@@ -55,16 +59,29 @@ const HomeSuggested = ({ item }) => {
                 </Text>
                 <View style={styles.imageContainer}></View>
               </View>
-              <Pressable style={[styles.button, styles.buttonClose]}>
+              <Pressable 
+              style={[styles.button]} 
+              onPress={()=>{
+                setModalVisible(false);
+                navigation.navigate("Add bucket list item", {
+                  Title: item.Title,
+                  Category: item.Category,
+                  Location: item.Location,
+                  Difficulty: item.Difficulty,
+                });
+              }}
+              >
                 <Text style={{ color: "white" }}>Add to my Bucket List</Text>
               </Pressable>
               <Pressable
-                style={[styles.button, styles.buttonClose]}
+                style={[styles.buttonClose]}
                 onPress={() => {
                   setModalVisible(!modalVisible);
                 }}
               >
-                <Text style={{ color: "white" }}>Close</Text>
+                <Text style={{ color: "white", fontWeight: "bold" }}>
+                  Close
+                </Text>
               </Pressable>
             </View>
           </View>
@@ -115,12 +132,16 @@ const styles = StyleSheet.create({
   button: {
     borderRadius: 20,
     padding: 10,
-    elevation: 2,
     marginTop: 2,
+    padding: 10,
+    backgroundColor: "green",
+    alignSelf: "center",
   },
   buttonClose: {
+    borderRadius: 20,
+    marginTop: 2,
     padding: 10,
-    backgroundColor: "#6667AB",
+    backgroundColor: "red",
     alignSelf: "center",
   },
   eventInformationTitle: {

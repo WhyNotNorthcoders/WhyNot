@@ -57,7 +57,7 @@ const TopStoriesCard = ({
             <Caption style={{ fontSize: 10 }}>
               Date Completed: {completeDate}
             </Caption>
-            <View style={[styles.rating, { marginLeft: 90 }]}>
+            <View style={[styles.rating, { marginLeft: "25%" }]}>
               <Caption style={{ fontSize: 10 }}>Rating:</Caption>
               <Rating
                 style={styles.rating}
@@ -73,42 +73,6 @@ const TopStoriesCard = ({
             </View>
           </View>
         </View>
-        {/* <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            setModalVisible(!modalVisible);
-          }}
-        >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <View>
-                <Title style={styles.storyInformation}>{title}</Title>
-                <View style={styles.caption}>
-                  <Caption style={styles.storyInformation}>{category}</Caption>
-                  <Caption style={styles.storyInformation}>{location}</Caption>
-                </View>
-                <Card.Cover
-                  style={{ width: 250, height: 150, borderRadius: 10 }}
-                  source={{ uri: storyImage }}
-                />
-                <Image />
-                <Text style={styles.storyInformation}>
-                  {'"' + description + '"'}
-                </Text>
-              </View>
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => {
-                  setModalVisible(!modalVisible);
-                }}
-              >
-                <Text style={{ color: "white" }}>close</Text>
-              </Pressable>
-            </View>
-          </View>
-        </Modal> */}
       </Pressable>
     </View>
   );

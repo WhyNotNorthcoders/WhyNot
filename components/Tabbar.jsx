@@ -51,6 +51,14 @@ function DrawerRoutes2() {
     </Drawer.Navigator>
   );
 }
+function DrawerRoutes3() {
+  return (
+    <Drawer.Navigator initialRouteName="Home Page" screenOptions={{headerShown: false}}>
+      <Drawer.Screen name="Home Page" component={Home} />
+      <Drawer.Screen name="Add bucket list item" component={BucketListForm} />
+    </Drawer.Navigator>
+  );
+}
 
 const Tabbar = () => {
   return (
@@ -81,7 +89,7 @@ const Tabbar = () => {
     >
       <Tab.Screen
         name="Home"
-        component={Home}
+        component={DrawerRoutes3}
         options={{ headerShown: false }}
       />
       <Tab.Screen

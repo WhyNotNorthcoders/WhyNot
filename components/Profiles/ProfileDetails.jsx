@@ -74,42 +74,8 @@ const ProfileDetails = () => {
     }
   };
 
-  //   if (!result.canceled) {
-  //     setImageSelected(true);
-
-  //     setImage(result.assets[0].uri);
-  //     const imageRef = ref(
-  //       storage,
-  //       "images/",
-  //       `${auth.currentUser.uid}+ "profile.jpeg`
-  //     );
-
-  //     const img = await fetch(result.assets[0].uri);
-  //     const bytes = await img.blob();
-  //     // console.log(source.uri);
-  //     await uploadBytes(imageRef, bytes).then((snapshot) => {
-  //       getDownloadURL(imageRef)
-  //         .then((url) => {
-  //           console.log(url);
-  //           const userRef = collection(database, "users");
-  //           const data = {
-  //             profile_picture: url,
-  //           };
-  //           const itemRef = doc(userRef, auth.currentUser.uid);
-  //           updateDoc(itemRef, data)
-  //             .then(alert("Profile pics has been updated!"))
-  //             .catch((err) => console.log(err.message));
-  //         })
-  //         .catch((err) => {
-  //           console.log(err.msg);
-  //         });
-  //     });
-  //   }
-  // };
-
   return (
     <SafeAreaView style={styles.profileDetails}>
-      <Text style={styles.username}>{userInfo.username}</Text>
       {imageUrl ? (
         <Pressable onPress={pickImage}>
           <View>
@@ -121,6 +87,9 @@ const ProfileDetails = () => {
           <Ionicons name={"person-outline"} size={40} style={styles.ionicons} />
         </Pressable>
       )}
+      <Text style={styles.username}>{userInfo.username}</Text>
+      <Text style={styles.userInfo}>About: {userInfo.about}</Text>
+      <Text style={styles.userInfo}>Location: {userInfo.location}</Text>
     </SafeAreaView>
   );
 };
@@ -138,20 +107,27 @@ const styles = StyleSheet.create({
   },
   ionicons: {
     color: "white",
+    marginTop: 20,
     borderRadius: 40,
-    padding: 17,
+    padding: 20,
     width: 80,
     height: 80,
     borderWidth: 2,
-    marginTop: -25,
     borderColor: "white",
-    marginLeft: 20,
+    marginLeft: 15,
   },
   username: {
     color: "white",
-    marginLeft: 120,
-    marginTop: 20,
-    fontSize: 18,
+    fontWeight: "bold",
+    marginLeft: 110,
+    fontSize: 20,
+    marginTop: "-22%",
+  },
+  userInfo: {
+    color: "white",
+    marginLeft: 110,
+    marginTop: 2,
+    fontSize: 16,
   },
 });
 
