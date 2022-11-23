@@ -40,7 +40,7 @@ const BucketListForm = ({route, navigation}) => {
       setLocation(Location)
       setSuggested(true)
     }
-  },[route.params.Title])
+  },[route.params])
 
   const toggleDate = () => {
     setDateOpen(!dateOpen);
