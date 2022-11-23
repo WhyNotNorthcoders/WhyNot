@@ -6,7 +6,13 @@ import {
   TextInput,
   Button,
 } from "react-native-paper";
-import { ScrollView, View, StyleSheet, SafeAreaView, Keyboard } from "react-native";
+import {
+  ScrollView,
+  View,
+  StyleSheet,
+  SafeAreaView,
+  Keyboard,
+} from "react-native";
 import { Rating } from "react-native-ratings";
 import { useState, useEffect } from "react";
 import {
@@ -38,6 +44,8 @@ const StoryPage = ({
   },
 }) => {
   const [comments, setComments] = useState([]);
+  const [commentPosted, setCommentPosted] = useState(false);
+  const [commentDeleted, setCommentDeleted] = useState(false);
   const [isCommentsLoading, setIsCommentsLoading] = useState(true);
   const [commentInput, setCommentInput] = useState("");
 
@@ -51,6 +59,8 @@ const StoryPage = ({
   );
 
   useEffect(() => {
+    setCommentPosted(false);
+    setCommentDeleted(false);
     setIsCommentsLoading(true);
     let commentList = [];
     getDocs(commentRef).then((comments) => {
@@ -67,7 +77,7 @@ const StoryPage = ({
         setComments(commentList);
       }
     });
-  }, [story_id, comments.length]);
+  }, [story_id, commentDeleted, commentPosted]);
 
   const onSubmitComment = () => {
     const commentItem = {
@@ -78,7 +88,8 @@ const StoryPage = ({
     };
     addDoc(commentRef, commentItem).then(() => {
       alert("Comment has been added");
-      Keyboard.dismiss()
+      Keyboard.dismiss();
+      setCommentPosted(true);
       setCommentInput("");
     });
   };
@@ -95,7 +106,7 @@ const StoryPage = ({
         onPress={() => navigation.goBack()}
       />
 
-      <View style={styles.storyContent}>
+      <ScrollView style={styles.storyContent}>
         <Card style={{ padding: 15 }}>
           <View style={styles.header}>
             <Title>{title}</Title>
@@ -127,7 +138,7 @@ const StoryPage = ({
             <Paragraph>{'"' + description + '"'}</Paragraph>
           </Card.Content>
         </Card>
-        <ScrollView style={styles.commentSection}>
+        <View style={styles.commentSection}>
           {isCommentsLoading ? (
             <Card styles={styles.comments}>
               <Card.Content>
@@ -136,11 +147,17 @@ const StoryPage = ({
             </Card>
           ) : (
             comments.map((comment) => {
-              return <CommentCard key={comment.id} comment={comment} />;
+              return (
+                <CommentCard
+                  key={comment.id}
+                  comment={comment}
+                  setCommentDeleted={setCommentDeleted}
+                />
+              );
             })
           )}
-        </ScrollView>
-      </View>
+        </View>
+      </ScrollView>
       <View style={styles.commentForm}>
         <TextInput
           mode="outlined"
@@ -185,6 +202,9 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   storyContent: {
-    margin: 5,
+    marginTop: 5,
+    marginLeft: 5,
+    marginRight: 5,
+    marginBottom: "15%",
   },
 });

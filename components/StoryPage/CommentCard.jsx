@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import { deleteDoc, doc, getDoc } from "firebase/firestore";
 import { auth, database } from "../../config/firebaseConfig";
 
-const CommentCard = ({ comment }) => {
+const CommentCard = ({ comment, setCommentDeleted }) => {
   const [user, setUser] = useState({});
   const { comment_text, user_id, created_at, story_id, id } = comment;
 
@@ -34,7 +34,8 @@ const CommentCard = ({ comment }) => {
       id
     );
     deleteDoc(commentRef).then(() => {
-      alert("comment delete button pressed");
+      setCommentDeleted(true)
+      alert("Comment has been deleted");
     });
   };
 
@@ -48,7 +49,9 @@ const CommentCard = ({ comment }) => {
         <Card style={styles.commentCard}>
           <View style={{ flexDirection: "row", padding: 10 }}>
             <Card.Content>
-              <Paragraph>{'"' + comment_text + '"'}</Paragraph>
+              <Paragraph style={styles.commentText}>
+                {'"' + comment_text + '"'}
+              </Paragraph>
               <View>
                 <Caption style={{ fontSize: 10 }}>from {user.username}</Caption>
               </View>
@@ -76,5 +79,8 @@ const styles = StyleSheet.create({
   },
   commentCard: {
     width: "100%",
+  },
+  commentText: {
+    marginRight: "15%",
   },
 });
