@@ -12,6 +12,7 @@ import {
 import DropDownPicker from "react-native-dropdown-picker";
 import DatePicker from "react-native-modern-datepicker";
 import Modal from "react-native-modal";
+import { useNavigation } from "@react-navigation/native";
 import { addDoc, collection } from "firebase/firestore";
 
 const BucketListForm = () => {
@@ -28,11 +29,12 @@ const BucketListForm = () => {
   const [dateOpen, setDateOpen] = useState(false);
   const [date, setDate] = useState("");
   const [difficulty, setDifficulty] = useState("");
-
+  const navigation = useNavigation();
   const toggleDate = () => {
     setDateOpen(!dateOpen);
   };
   const handleSubmit = () => {
+    navigation.navigate("Profile");
     const bucketRef = collection(
       database,
       "users",
@@ -57,7 +59,7 @@ const BucketListForm = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.container}>
+      <View>
         <View style={styles.inputView}>
           <TextInput
             style={styles.textInput}
@@ -159,7 +161,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    paddingTop: "30%",
+    justifyContent: "center",
     backgroundColor: "#FAF9F6",
   },
   inputView: {
@@ -186,6 +188,7 @@ const styles = StyleSheet.create({
   },
   bucketListButton: {
     justifyContent: "center",
+    alignSelf: "center",
     width: 200,
     height: 50,
     margin: 10,

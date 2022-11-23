@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { collection, doc, updateDoc } from "firebase/firestore";
+import { collection, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { useState } from "react";
 import {
   StyleSheet,
@@ -8,11 +8,12 @@ import {
   Pressable,
   Modal,
   View,
+  Alert,
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { auth, database } from "../config/firebaseConfig";
 
-const BucketListCard = ({ item, itemID }) => {
+const BucketListCard = ({ item, itemID, setIsDeleted, setStoryAdded }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [edit, setEdit] = useState(false);
   const [complete, setComplete] = useState(false);
@@ -48,6 +49,13 @@ const BucketListCard = ({ item, itemID }) => {
   const BucketItem = ({ title, location, category, setComplete }) => {
     const navigation = useNavigation();
 
+    const handleDelete = () => {
+      const itemRef = doc(bucketRef, itemID);
+      deleteDoc(itemRef).then(
+        alert("item has been deleted"),
+        setIsDeleted(true)
+      );
+    };
     return (
       <>
         <Text style={styles.modaltitle}>{title}</Text>
@@ -81,6 +89,7 @@ const BucketListCard = ({ item, itemID }) => {
               category: category,
               location: location,
               bucketItemId: itemID,
+              setStoryAdded: setStoryAdded,
             });
           }}
           style={styles.completeButton}
@@ -89,6 +98,18 @@ const BucketListCard = ({ item, itemID }) => {
             style={{ color: "white", textAlign: "center", fontWeight: "bold" }}
           >
             Complete
+          </Text>
+        </Pressable>
+        <Pressable
+          onPress={() => {
+            handleDelete();
+          }}
+          style={styles.deleteButton}
+        >
+          <Text
+            style={{ color: "white", textAlign: "center", fontWeight: "bold" }}
+          >
+            Delete
           </Text>
         </Pressable>
       </>
@@ -198,7 +219,12 @@ const BucketListCard = ({ item, itemID }) => {
                 }}
               >
                 <Text
-                  style={{ color: "white", fontWeight: "bold", fontSize: 10 }}
+                  style={{
+                    color: "white",
+                    fontWeight: "bold",
+                    fontSize: 15,
+                    textAlign: "center",
+                  }}
                 >
                   X
                 </Text>
@@ -239,33 +265,42 @@ const styles = StyleSheet.create({
   },
   editButton: {
     padding: 10,
-    marginTop: 10,
     backgroundColor: "white",
-    alignSelf: "flex-start",
+    alignSelf: "center",
     borderRadius: 15,
-    marginTop: 175,
+    margin: 5,
     height: 40,
     width: 100,
   },
   completeButton: {
     padding: 10,
+    margin: 5,
     backgroundColor: "green",
     alignSelf: "center",
-    marginTop: -40,
+    borderRadius: 15,
+    height: 40,
+    width: 100,
+  },
+  deleteButton: {
+    padding: 10,
+    backgroundColor: "black",
+    alignSelf: "center",
     borderRadius: 15,
     height: 40,
     width: 100,
   },
   buttonClose: {
-    padding: 10,
     borderRadius: 15,
+    width: 50,
+    fontSize: 20,
     backgroundColor: "red",
-    alignSelf: "flex-end",
-    marginTop: -36,
-    marginRight: -10,
+    alignSelf: "center",
+    padding: 10,
+    margin: 10,
   },
   item: {
-    padding: 10,
+    overflow: "hidden",
+    padding: 5,
     width: 250,
     backgroundColor: "white",
     borderRadius: 15,
