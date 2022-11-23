@@ -40,6 +40,7 @@ const BucketListCard = ({ item, itemID, setIsDeleted, setStoryAdded }) => {
     };
     setEdit(false);
     setModalVisible(false);
+    setBucketItemAdded(true);
     const itemRef = doc(bucketRef, itemID);
     updateDoc(itemRef, data)
       .then(alert("item has been updated"))
@@ -72,7 +73,7 @@ const BucketListCard = ({ item, itemID, setIsDeleted, setStoryAdded }) => {
         >
           <Text
             style={{
-              color: "#6667AB",
+              color: "white",
               fontWeight: "bold",
               textAlign: "center",
             }}
@@ -249,7 +250,6 @@ const styles = StyleSheet.create({
     borderColor: "#6667AB",
     margin: 20,
     width: "95%",
-    marginTop: 215,
     height: "55%",
     backgroundColor: "#6667AB",
     borderRadius: 20,

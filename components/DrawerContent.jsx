@@ -1,17 +1,13 @@
 import { View, StyleSheet, Pressable } from "react-native";
 import {
-  Text,
   Title,
   Avatar,
   Caption,
   Paragraph,
   Drawer,
-  TouchableRipple,
-  Swtich,
 } from "react-native-paper";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
-import ProfileAvatar from "./images/profile.jpg";
 import { auth, database } from "../config/firebaseConfig";
 import { useContext, useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
@@ -43,7 +39,7 @@ const DrawerContent = (props) => {
                   props.navigation.navigate("Your Profile");
                 }}
               >
-                <Avatar.Image source={ProfileAvatar} />
+                <Avatar.Image source={{ uri: user.profile_picture }} />
               </Pressable>
             </View>
             <View style={{ marginLeft: 9, marginTop: 15 }}>
@@ -82,7 +78,7 @@ const DrawerContent = (props) => {
                 />
               )}
               onPress={() => {
-                props.navigation.navigate("Add to bucket list");
+                props.navigation.navigate("Add to bucket list", { user: user });
               }}
             />
             <DrawerItem

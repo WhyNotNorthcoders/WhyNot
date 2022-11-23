@@ -9,6 +9,7 @@ import StoryCard from "../components/StoryCard";
 const Profile = () => {
   const [isDeleted, setIsDeleted] = useState(false);
   const [bucketListData, setBucketListData] = useState([]);
+  const [bucketItemAdded, setBucketItemAdded] = useState(false);
   const [storyData, setStoryData] = useState([]);
   const [storyAdded, setStoryAdded] = useState(false);
 

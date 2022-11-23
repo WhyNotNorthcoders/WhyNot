@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { auth, database } from "../../config/firebaseConfig";
 import {
   SafeAreaView,
@@ -15,7 +15,7 @@ import Modal from "react-native-modal";
 import { useNavigation } from "@react-navigation/native";
 import { addDoc, collection } from "firebase/firestore";
 
-const BucketListForm = () => {
+const BucketListForm = ({ route, navigation }) => {
   const [categoryOpen, setCategoryOpen] = useState(false);
   const [category, setCategory] = useState("");
   const [items, setItems] = useState([
@@ -29,7 +29,19 @@ const BucketListForm = () => {
   const [dateOpen, setDateOpen] = useState(false);
   const [date, setDate] = useState("");
   const [difficulty, setDifficulty] = useState("");
-  const navigation = useNavigation();
+  const [suggested, setSuggested] = useState(false);
+
+  useEffect(() => {
+    setSuggested(false);
+    if (route.params.Title !== undefined) {
+      const { Title, Category, Location, Difficulty } = route.params;
+      setCategory(Category);
+      setDifficulty(Difficulty);
+      setTitle(Title);
+      setLocation(Location);
+      setSuggested(true);
+    }
+  }, [route.params]);
   const toggleDate = () => {
     setDateOpen(!dateOpen);
   };
@@ -59,11 +71,12 @@ const BucketListForm = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View>
+      <View style={styles.container}>
         <View style={styles.inputView}>
           <TextInput
             style={styles.textInput}
             placeholder="Enter Bucket List Item Name"
+            value={title}
             placeholderTextColor={"#003f5c"}
             onChangeText={(val) => setTitle(val)}
           />
@@ -98,6 +111,7 @@ const BucketListForm = () => {
           <TextInput
             style={styles.textInput}
             placeholder="Enter Location"
+            value={location}
             placeholderTextColor={"#003f5c"}
             onChangeText={(val) => setLocation(val)}
           />
@@ -133,6 +147,7 @@ const BucketListForm = () => {
             keyboardType="numeric"
             placeholderTextColor={"#003f5c"}
             placeholder="Enter Difficulty"
+            value={difficulty}
             onChangeText={(val) => setDifficulty(val)}
           />
         </View>
@@ -151,6 +166,41 @@ const BucketListForm = () => {
               Add Bucket List Item
             </Text>
           </TouchableOpacity>
+          {suggested ? (
+            <TouchableOpacity
+              style={styles.backButton}
+              onPress={() => {
+                navigation.navigate("Home Page");
+              }}
+            >
+              <Text
+                style={{
+                  textAlign: "center",
+                  color: "black",
+                  fontWeight: "bold",
+                }}
+              >
+                Go Back!
+              </Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={styles.backButton}
+              onPress={() => {
+                navigation.goBack();
+              }}
+            >
+              <Text
+                style={{
+                  textAlign: "center",
+                  color: "black",
+                  fontWeight: "bold",
+                }}
+              >
+                Go Back!
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     </SafeAreaView>
@@ -213,6 +263,15 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 4, height: 4 },
     shadowOpacity: 0.75,
     shadowColor: "#6667AB",
+  },
+  backButton: {
+    justifyContent: "center",
+    width: 200,
+    height: 50,
+    margin: 10,
+    borderRadius: 30,
+    borderWidth: 5,
+    borderColor: "green",
   },
 });
 

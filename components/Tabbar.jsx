@@ -13,12 +13,12 @@ import { auth } from "../config/firebaseConfig";
 import LoginScreen from "../screens/LoginScreen";
 import EditProfile from "./Profiles/EditProfile";
 import UserPage from "./Profiles/UserPage";
+import StoryPage from "./StoryPage/StoryPage";
 import DrawerContent from "./DrawerContent";
 
 const Tab = createBottomTabNavigator();
 
 const Drawer = createDrawerNavigator();
-const Drawer2 = createDrawerNavigator();
 
 function DrawerRoutes({ navigation }) {
   return (
@@ -33,7 +33,11 @@ function DrawerRoutes({ navigation }) {
         component={EditProfile}
         options={{ backgroundColor: "#FAF9F6" }}
       />
-      <Drawer.Screen name="Logout" component={LoginScreen} />
+      <Drawer.Screen
+        name="Logout"
+        component={LoginScreen}
+        options={{ swipeEnabled: false }}
+      />
       <Drawer.Screen
         name="Add to Story"
         component={StoryForm}
@@ -42,11 +46,48 @@ function DrawerRoutes({ navigation }) {
     </Drawer.Navigator>
   );
 }
+
 function DrawerRoutes2() {
   return (
-    <Drawer.Navigator initialRouteName="Search" screenOptions={{headerShown: false}}>
-      <Drawer.Screen name="SearchPage" component={Search} />
-      <Drawer.Screen name="UserPage" component={UserPage} />
+    <Drawer.Navigator
+      initialRouteName="Search"
+      screenOptions={{ headerShown: false }}
+    >
+      <Drawer.Screen
+        name="SearchPage"
+        component={Search}
+        options={{ swipeEnabled: false }}
+      />
+      <Drawer.Screen
+        name="UserPage"
+        component={UserPage}
+        options={{ swipeEnabled: false }}
+      />
+      <Drawer.Screen
+        name="StoryPage"
+        component={StoryPage}
+        options={{ swipeEnabled: false }}
+      />
+    </Drawer.Navigator>
+  );
+}
+
+function DrawerRoutes3() {
+  return (
+    <Drawer.Navigator
+      initialRouteName="Home Page"
+      screenOptions={{ headerShown: false }}
+    >
+      <Drawer.Screen
+        name="Home Page"
+        component={Home}
+        options={{ swipeEnabled: false }}
+      />
+      <Drawer.Screen
+        name="Add bucket list item"
+        component={BucketListForm}
+        options={{ swipeEnabled: false }}
+      />
     </Drawer.Navigator>
   );
 }
@@ -80,7 +121,7 @@ const Tabbar = () => {
     >
       <Tab.Screen
         name="Home"
-        component={Home}
+        component={DrawerRoutes3}
         options={{ headerShown: false }}
       />
       <Tab.Screen
