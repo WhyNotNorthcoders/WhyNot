@@ -1,10 +1,25 @@
-import { Title, Caption, Paragraph, Card, TextInput } from "react-native-paper";
-import { Button, ScrollView, View, StyleSheet } from "react-native";
+import {
+  Title,
+  Caption,
+  Paragraph,
+  Card,
+  TextInput,
+  Button,
+} from "react-native-paper";
+import { ScrollView, View, StyleSheet, SafeAreaView } from "react-native";
 import { Rating } from "react-native-ratings";
 import { useState, useEffect } from "react";
-import { addDoc, collection, getDoc, getDocs } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import { auth, database } from "../../config/firebaseConfig";
 import CommentCard from "./CommentCard";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 const StoryPage = ({
   route: {
@@ -39,15 +54,20 @@ const StoryPage = ({
     setIsCommentsLoading(true);
     let commentList = [];
     getDocs(commentRef).then((comments) => {
-      comments.forEach((comment) => {
-        commentList.push({ ...comment.data(), id: comment.id });
-      });
-      if (commentList.length !== 0) {
+      if (comments) {
+        comments.forEach((comment) => {
+          commentList.push({ ...comment.data(), id: comment.id });
+        });
+      }
+      if (commentList.length > 0) {
         setIsCommentsLoading(false);
+        setComments(commentList);
+      } else {
+        setIsCommentsLoading(true);
         setComments(commentList);
       }
     });
-  }, []);
+  }, [story_id]);
 
   const onSubmitComment = () => {
     const commentItem = {
@@ -64,63 +84,81 @@ const StoryPage = ({
   };
 
   return (
-    <ScrollView>
-      <Button title="Go Back" onPress={() => navigation.goBack()} />
-      <Card>
-        <View style={styles.header}>
-          <Title>{title}</Title>
-          <Caption>{location}</Caption>
-          <Card.Cover source={{ uri: storyImage }} />
-          <View style={styles.date_rating}>
-            <View style={{}}>
-              <View style={styles.rating}>
-                <Caption style={{ fontSize: 8 }}>Rating:</Caption>
-                <Rating
-                  style={styles.rating}
-                  type={"custom"}
-                  ratingColor={"#FFF36D"}
-                  tintColor={"white"}
-                  imageSize={15}
-                  ratingBackgroundColor={"#CAD2C5"}
-                  minValue={0}
-                  startingValue={rating}
-                  readonly={true}
-                />
+    <SafeAreaView style={{ height: "100%" }}>
+      <Button
+        style={{
+          position: "absolute",
+          zIndex: 999,
+        }}
+        size={60}
+        icon="arrow-left"
+        onPress={() => navigation.goBack()}
+      />
+
+      <View style={styles.storyContent}>
+        <Card style={{ padding: 15 }}>
+          <View style={styles.header}>
+            <Title>{title}</Title>
+            <Caption>{location}</Caption>
+            <Card.Cover source={{ uri: storyImage }} />
+            <View style={styles.date_rating}>
+              <View style={{}}>
+                <View style={styles.rating}>
+                  <Caption style={{ fontSize: 8 }}>Rating:</Caption>
+                  <Rating
+                    style={styles.rating}
+                    type={"custom"}
+                    ratingColor={"#FFF36D"}
+                    tintColor={"white"}
+                    imageSize={15}
+                    ratingBackgroundColor={"#CAD2C5"}
+                    minValue={0}
+                    startingValue={rating}
+                    readonly={true}
+                  />
+                </View>
+                <Caption style={{ fontSize: 8, marginTop: -5 }}>
+                  Date Completed: {completeDate}
+                </Caption>
               </View>
-              <Caption style={{ fontSize: 8, marginTop: -5 }}>
-                Date Completed: {completeDate}
-              </Caption>
             </View>
           </View>
-        </View>
-        <Card.Content>
-          <Paragraph>{'"' + description + '"'}</Paragraph>
-        </Card.Content>
-      </Card>
-      <View style={styles.commentSection}>
-        {isCommentsLoading ? (
-          <Card styles={styles.comments}>
-            <Card.Content>
-              <Paragraph>"No Comments"</Paragraph>
-            </Card.Content>
-          </Card>
-        ) : (
-          comments.map((comment) => {
-            return <CommentCard comment={comment} />;
-          })
-        )}
+          <Card.Content>
+            <Paragraph>{'"' + description + '"'}</Paragraph>
+          </Card.Content>
+        </Card>
+        <ScrollView style={styles.commentSection}>
+          {isCommentsLoading ? (
+            <Card styles={styles.comments}>
+              <Card.Content>
+                <Paragraph>"No Comments"</Paragraph>
+              </Card.Content>
+            </Card>
+          ) : (
+            comments.map((comment) => {
+              return <CommentCard comment={comment} />;
+            })
+          )}
+        </ScrollView>
       </View>
-      <TextInput
-        mode="outlined"
-        label="Enter Comment"
-        placeholder="Type Text"
-        onChangeText={(input) => {
-          setCommentInput(input);
-        }}
-        right={<TextInput.Affix text="/100" />}
-      ></TextInput>
-      <Button title="submit" onPress={onSubmitComment} />
-    </ScrollView>
+      <View style={styles.commentForm}>
+        <TextInput
+          mode="outlined"
+          label="Enter Comment"
+          placeholder="Type Text"
+          onChangeText={(input) => {
+            setCommentInput(input);
+          }}
+          right={
+            <TextInput.Icon
+              icon="send-circle-outline"
+              size={30}
+              onPress={onSubmitComment}
+            />
+          }
+        />
+      </View>
+    </SafeAreaView>
   );
 };
 
@@ -140,5 +178,13 @@ const styles = StyleSheet.create({
   },
   caption: {
     fontSize: 10,
+  },
+  commentForm: {
+    position: "absolute",
+    width: "100%",
+    bottom: 0,
+  },
+  storyContent: {
+    margin: 5,
   },
 });

@@ -30,28 +30,29 @@ const CommentCard = ({ comment }) => {
 
   return (
     <View style={styles.commentBox}>
-      <Card style={styles.commentCard}>
-        <View style={{ flexDirection: "row" }}>
-          <View style={{ flexDirection: "row" }}>
-            <Avatar.Image source={{ uri: user.profile_picture }} size={40} />
+      <View style={{ flexDirection: "row" }}>
+        <View style={{ marginTop: 5, marginRight: 5, paddingTop: 5}}>
+          <Avatar.Image source={{ uri: user.profile_picture }} size={40} />
+        </View>
+        <Text></Text>
+        <Card style={styles.commentCard}>
+          <View style={{ flexDirection: "row", padding: 10 }}>
             <Card.Content>
               <Paragraph>{'"' + comment_text + '"'}</Paragraph>
               <View>
                 <Caption style={{ fontSize: 10 }}>from {user.username}</Caption>
               </View>
             </Card.Content>
-            {user_id === auth.currentUser.uid ? (
-              <View
-                style={{ justifyContent: "flex-end", alignItems: "flex-end" }}
-              >
-                <Button icon="delete" onPress={deleteComment} />
-              </View>
-            ) : (
-              <View></View>
-            )}
           </View>
-        </View>
-      </Card>
+          {user_id === auth.currentUser.uid ? (
+            <View style={{ position: "absolute", right: "7%" }}>
+              <Button icon="delete" onPress={deleteComment} />
+            </View>
+          ) : (
+            <View></View>
+          )}
+        </Card>
+      </View>
     </View>
   );
 };
@@ -64,6 +65,6 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   commentCard: {
-    padding: 10,
+    width: "100%",
   },
 });
