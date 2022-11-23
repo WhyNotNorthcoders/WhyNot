@@ -43,7 +43,7 @@ const DrawerContent = (props) => {
                   props.navigation.navigate("Your Profile");
                 }}
               >
-                <Avatar.Image source={ProfileAvatar} />
+                <Avatar.Image source={{ uri: user.profile_picture}} />
               </Pressable>
             </View>
             <View style={{ marginLeft: 9, marginTop: 15 }}>

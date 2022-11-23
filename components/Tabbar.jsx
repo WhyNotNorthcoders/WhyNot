@@ -13,12 +13,12 @@ import { auth } from "../config/firebaseConfig";
 import LoginScreen from "../screens/LoginScreen";
 import EditProfile from "./Profiles/EditProfile";
 import UserPage from "./Profiles/UserPage";
+import StoryPage from "./StoryPage/StoryPage"
 import DrawerContent from "./DrawerContent";
 
 const Tab = createBottomTabNavigator();
 
 const Drawer = createDrawerNavigator();
-const Drawer2 = createDrawerNavigator();
 
 function DrawerRoutes({ navigation }) {
   return (
@@ -47,6 +47,7 @@ function DrawerRoutes2() {
     <Drawer.Navigator initialRouteName="Search" screenOptions={{headerShown: false}}>
       <Drawer.Screen name="SearchPage" component={Search} />
       <Drawer.Screen name="UserPage" component={UserPage} />
+      <Drawer.Screen name="StoryPage" component={StoryPage} />
     </Drawer.Navigator>
   );
 }

@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { database } from "../../config/firebaseConfig";
 import TopStoriesCard from "./TopStoriesCard";
 
-const SearchTop = () => {
+const SearchTop = ({ navigation }) => {
   const [stories, setStories] = useState([]);
 
   useEffect(() => {
@@ -21,10 +21,14 @@ const SearchTop = () => {
         const stories = collection(database, "users", user.id, "Story_list");
         getDocs(stories).then((stories) => {
           stories.forEach((story) => {
-            storyList.push({ ...story.data(), id: story.id });
+            storyList.push({ ...story.data(), id: story.id, user_id: user.id });
           });
           const sortedRating = storyList.sort((a, b) => b.rating - a.rating);
-          const sortedRecent = sortedRating.sort((a, b) => b.completeDate.split(" ").join("") - a.completeDate.split(" ").join(""))
+          const sortedRecent = sortedRating.sort(
+            (a, b) =>
+              b.completeDate.split(" ").join("") -
+              a.completeDate.split(" ").join("")
+          );
           setStories(sortedRecent);
         });
       });
@@ -37,6 +41,8 @@ const SearchTop = () => {
         data={stories}
         renderItem={({ item }) => (
           <TopStoriesCard
+            navigation={navigation}
+            user_id={item.user_id}
             story_id={item.id}
             title={item.title}
             description={item.description}
