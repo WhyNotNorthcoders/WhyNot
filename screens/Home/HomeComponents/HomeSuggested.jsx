@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { View, Text, StyleSheet, Image, Modal, Pressable } from "react-native";
 import { Caption } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
+
 
 const HomeSuggested = ({ item }) => {
   const [modalVisible, setModalVisible] = useState(false);
-  return (
+  const navigation = useNavigation();
+  
+    return (
     <View style={styles.eventCard}>
       <Pressable
         onPress={() => {
@@ -55,7 +59,18 @@ const HomeSuggested = ({ item }) => {
                 </Text>
                 <View style={styles.imageContainer}></View>
               </View>
-              <Pressable style={[styles.button]}>
+              <Pressable 
+              style={[styles.button]} 
+              onPress={()=>{
+                setModalVisible(false);
+                navigation.navigate("Add bucket list item", {
+                  Title: item.Title,
+                  Category: item.Category,
+                  Location: item.Location,
+                  Difficulty: item.Difficulty,
+                });
+              }}
+              >
                 <Text style={{ color: "white" }}>Add to my Bucket List</Text>
               </Pressable>
               <Pressable

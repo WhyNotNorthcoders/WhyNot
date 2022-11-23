@@ -64,7 +64,7 @@ const BucketListCard = ({ item, itemID }) => {
         >
           <Text
             style={{
-              color: "#6667AB",
+              color: "white",
               fontWeight: "bold",
               textAlign: "center",
             }}
@@ -223,7 +223,6 @@ const styles = StyleSheet.create({
     borderColor: "#6667AB",
     margin: 20,
     width: "95%",
-    marginTop: 215,
     height: "55%",
     backgroundColor: "#6667AB",
     borderRadius: 20,
@@ -240,7 +239,7 @@ const styles = StyleSheet.create({
   editButton: {
     padding: 10,
     marginTop: 10,
-    backgroundColor: "white",
+    backgroundColor: "#6667AB",
     alignSelf: "flex-start",
     borderRadius: 15,
     marginTop: 175,

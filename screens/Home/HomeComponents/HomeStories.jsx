@@ -22,7 +22,7 @@ const HomeStories = ({ item }) => {
             Rating: {item.rating} / 5
           </Text>
           <Caption style={styles.eventInformation}>
-            Click on the item to add to your Bucket List
+            Click on the item see more details!
           </Caption>
           <View style={styles.imageContainer}></View>
         </View>
@@ -46,13 +46,10 @@ const HomeStories = ({ item }) => {
                   Location: {item.location}
                 </Text>
                 <Text style={styles.eventInformation}>
-                  Difficulty: {item.difficulty}
+                  Description: {item.description}
                 </Text>
                 <View style={styles.imageContainer}></View>
               </View>
-              <Pressable style={[styles.button, styles.buttonClose]}>
-                <Text style={{ color: "white" }}>Add to my Bucket List</Text>
-              </Pressable>
               <Pressable
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => {
