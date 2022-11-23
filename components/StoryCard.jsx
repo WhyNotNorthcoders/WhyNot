@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import { collection, doc, updateDoc } from "firebase/firestore";
 import { useState } from "react";
 import {

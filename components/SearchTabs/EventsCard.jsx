@@ -11,7 +11,6 @@ import {
 
 const EventsCard = ({ item }) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
 
   return (
     <View style={styles.eventCard}>

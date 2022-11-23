@@ -1,5 +1,4 @@
-import { Text, Pressable, View, Modal, StyleSheet, Image } from "react-native";
-import { useState } from "react";
+import { Pressable, View, StyleSheet } from "react-native";
 import { Title, Caption, Paragraph, Card } from "react-native-paper";
 import { Rating } from "react-native-ratings";
 
@@ -15,7 +14,7 @@ const TopStoriesCard = ({
   navigation,
   user_id,
 }) => {
-  const [modalVisible, setModalVisible] = useState(false);
+
   return (
     <View style={styles.storyCard}>
       <Pressable
@@ -110,7 +109,6 @@ const styles = StyleSheet.create({
     marginTop: 22,
   },
   modalView: {
-    // margin: 20,
     backgroundColor: "#faf9f6",
     borderRadius: 20,
     padding: 20,
@@ -139,8 +137,6 @@ const styles = StyleSheet.create({
   },
 
   storyImage: {
-    // borderTopEndRadius: 10,
-    // borderTopStartRadius: 10,
     borderRadius: 5,
     height: 125,
   },

@@ -1,5 +1,5 @@
 import { collection, getDocs } from "firebase/firestore";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { createFilter } from "react-native-search-filter";
 import {
   View,
@@ -10,10 +10,8 @@ import {
   Image,
 } from "react-native";
 import { auth, database } from "../../config/firebaseConfig";
-import { userContext } from "../../context";
 
 const SearchUser = (props) => {
-  const { userData } = useContext(userContext);
   const [users, setUsers] = useState({});
 
   useEffect(() => {

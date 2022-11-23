@@ -3,7 +3,6 @@ import {
   Text,
   StyleSheet,
   FlatList,
-  TouchableOpacity,
 } from "react-native";
 import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
