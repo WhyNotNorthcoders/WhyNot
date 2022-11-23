@@ -12,10 +12,10 @@ import {
 import DropDownPicker from "react-native-dropdown-picker";
 import DatePicker from "react-native-modern-datepicker";
 import Modal from "react-native-modal";
+import { useNavigation } from "@react-navigation/native";
 import { addDoc, collection } from "firebase/firestore";
 
-const BucketListForm = ({route, navigation}) => {
-  
+const BucketListForm = ({ route, navigation }) => {
   const [categoryOpen, setCategoryOpen] = useState(false);
   const [category, setCategory] = useState("");
   const [items, setItems] = useState([
@@ -30,22 +30,23 @@ const BucketListForm = ({route, navigation}) => {
   const [date, setDate] = useState("");
   const [difficulty, setDifficulty] = useState("");
   const [suggested, setSuggested] = useState(false);
-  
-  useEffect(()=>{
-    if (route.params !== undefined) {
-      const {Title, Category, Location, Difficulty} = route.params
-      setCategory(Category)
-      setDifficulty(Difficulty)
-      setTitle(Title)
-      setLocation(Location)
-      setSuggested(true)
-    }
-  },[route.params])
 
+  useEffect(() => {
+    setSuggested(false);
+    if (route.params.Title !== undefined) {
+      const { Title, Category, Location, Difficulty } = route.params;
+      setCategory(Category);
+      setDifficulty(Difficulty);
+      setTitle(Title);
+      setLocation(Location);
+      setSuggested(true);
+    }
+  }, [route.params]);
   const toggleDate = () => {
     setDateOpen(!dateOpen);
   };
   const handleSubmit = () => {
+    navigation.navigate("Profile");
     const bucketRef = collection(
       database,
       "users",
@@ -69,121 +70,142 @@ const BucketListForm = ({route, navigation}) => {
   };
 
   return (
- <SafeAreaView style={styles.container}>
-    <View style={styles.container}>
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.textInput}
-          placeholder="Enter Bucket List Item Name"
-          value={title}
-          placeholderTextColor={"#003f5c"}
-          onChangeText={(val) => setTitle(val)}
-        />
-      </View>
-      <View style={{ zIndex: 1 }}>
-        <DropDownPicker
-          style={{
-            zIndex: 1,
-            borderRadius: 30,
-            width: 300,
-            marginBottom: 20,
-            borderWidth: 2,
-            borderColor: "#C200FB",
-          }}
-          placeholder="--Select Category--"
-          placeholderTextColor={"#003f5c"}
-          open={categoryOpen}
-          value={category}
-          items={items}
-          setOpen={setCategoryOpen}
-          setValue={setCategory}
-          setItems={setItems}
-          dropDownContainerStyle={{
-            borderStyle: "solid",
-            borderWidth: 2,
-            borderColor: "#C200FB",
-            width: 300,
-          }}
-        />
-      </View>
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.textInput}
-          placeholder="Enter Location"
-          value={location}
-          placeholderTextColor={"#003f5c"}
-          onChangeText={(val) => setLocation(val)}
-        />
-      </View>
-      <View style={styles.inputView}>
-        <TouchableOpacity onPress={toggleDate}>
-          <Text style={styles.textInput}>Target Date: {date}</Text>
-        </TouchableOpacity>
-      </View>
-      <Modal isVisible={dateOpen}>
-        <View>
-          <DatePicker
-            mode="monthYear"
-            selectorStartingYear={2022}
-            onMonthYearChange={(selectedDate) => setDate(selectedDate)}
-            options={{
-              backgroundColor: "#6667AB",
-              textHeaderColor: "white",
-              textDefaultColor: "white",
-              selectedTextColor: "black",
-              mainColor: "white",
-              textSecondaryColor: "#52796F",
+    <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Enter Bucket List Item Name"
+            value={title}
+            placeholderTextColor={"#003f5c"}
+            onChangeText={(val) => setTitle(val)}
+          />
+        </View>
+        <View style={{ zIndex: 1 }}>
+          <DropDownPicker
+            style={{
+              zIndex: 1,
+              borderRadius: 30,
+              width: 300,
+              marginBottom: 20,
+              borderWidth: 2,
+              borderColor: "#C200FB",
+            }}
+            placeholder="--Select Category--"
+            placeholderTextColor={"#003f5c"}
+            open={categoryOpen}
+            value={category}
+            items={items}
+            setOpen={setCategoryOpen}
+            setValue={setCategory}
+            setItems={setItems}
+            dropDownContainerStyle={{
+              borderStyle: "solid",
+              borderWidth: 2,
+              borderColor: "#C200FB",
+              width: 300,
             }}
           />
-          <Pressable style={styles.button} onPress={toggleDate}>
-            <Text style={styles.buttonText}>Hide</Text>
-          </Pressable>
         </View>
-      </Modal>
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.textInput}
-          keyboardType="numeric"
-          placeholderTextColor={"#003f5c"}
-          placeholder="Enter Difficulty"
-          value={difficulty}
-          onChangeText={(val) => setDifficulty(val)}
-        />
-      </View>
-      <View>
-      <TouchableOpacity
-          style={styles.bucketListButton}
-          onPress={handleSubmit}
-        >
-          <Text
-            style={{
-              textAlign: "center",
-              color: "black",
-              fontWeight: "bold",
-            }}
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Enter Location"
+            value={location}
+            placeholderTextColor={"#003f5c"}
+            onChangeText={(val) => setLocation(val)}
+          />
+        </View>
+        <View style={styles.inputView}>
+          <TouchableOpacity onPress={toggleDate}>
+            <Text style={styles.textInput}>Target Date: {date}</Text>
+          </TouchableOpacity>
+        </View>
+        <Modal isVisible={dateOpen}>
+          <View>
+            <DatePicker
+              mode="monthYear"
+              selectorStartingYear={2022}
+              onMonthYearChange={(selectedDate) => setDate(selectedDate)}
+              options={{
+                backgroundColor: "#6667AB",
+                textHeaderColor: "white",
+                textDefaultColor: "white",
+                selectedTextColor: "black",
+                mainColor: "white",
+                textSecondaryColor: "#52796F",
+              }}
+            />
+            <Pressable style={styles.button} onPress={toggleDate}>
+              <Text style={styles.buttonText}>Hide</Text>
+            </Pressable>
+          </View>
+        </Modal>
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.textInput}
+            keyboardType="numeric"
+            placeholderTextColor={"#003f5c"}
+            placeholder="Enter Difficulty"
+            value={difficulty}
+            onChangeText={(val) => setDifficulty(val)}
+          />
+        </View>
+        <View>
+          <TouchableOpacity
+            style={styles.bucketListButton}
+            onPress={handleSubmit}
           >
-            Add Bucket List Item
-          </Text>
-        </TouchableOpacity>
-        {suggested ?<TouchableOpacity
-          style={styles.backButton}
-          onPress={() => {navigation.navigate("Home Page")}}
-        >
-          <Text
-            style={{
-              textAlign: "center",
-              color: "black",
-              fontWeight: "bold",
-            }}
-          >
-            Go Back!
-          </Text>
-        </TouchableOpacity> : <></>}
+            <Text
+              style={{
+                textAlign: "center",
+                color: "black",
+                fontWeight: "bold",
+              }}
+            >
+              Add Bucket List Item
+            </Text>
+          </TouchableOpacity>
+          {suggested ? (
+            <TouchableOpacity
+              style={styles.backButton}
+              onPress={() => {
+                navigation.navigate("Home Page");
+              }}
+            >
+              <Text
+                style={{
+                  textAlign: "center",
+                  color: "black",
+                  fontWeight: "bold",
+                }}
+              >
+                Go Back!
+              </Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={styles.backButton}
+              onPress={() => {
+                navigation.goBack();
+              }}
+            >
+              <Text
+                style={{
+                  textAlign: "center",
+                  color: "black",
+                  fontWeight: "bold",
+                }}
+              >
+                Go Back!
+              </Text>
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
-    </View>
-  </SafeAreaView> 
-)}
-
+    </SafeAreaView>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -216,6 +238,7 @@ const styles = StyleSheet.create({
   },
   bucketListButton: {
     justifyContent: "center",
+    alignSelf: "center",
     width: 200,
     height: 50,
     margin: 10,
@@ -249,7 +272,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     borderWidth: 5,
     borderColor: "green",
-  }
+  },
 });
 
 export default BucketListForm;

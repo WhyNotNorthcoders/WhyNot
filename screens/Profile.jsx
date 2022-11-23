@@ -7,9 +7,11 @@ import BucketListCard from "../components/BucketListCard";
 import StoryCard from "../components/StoryCard";
 
 const Profile = () => {
+  const [isDeleted, setIsDeleted] = useState(false);
   const [bucketListData, setBucketListData] = useState([]);
-  const [bucketItemAdded, setBucketItemAdded] = useState(false)
+  const [bucketItemAdded, setBucketItemAdded] = useState(false);
   const [storyData, setStoryData] = useState([]);
+  const [storyAdded, setStoryAdded] = useState(false);
 
   const bucketRef = collection(
     database,
@@ -26,7 +28,8 @@ const Profile = () => {
   );
 
   useEffect(() => {
-    setBucketItemAdded(false)
+    setStoryAdded(false);
+    setIsDeleted(false);
     getDocs(bucketRef)
       .then((snapshot) => {
         let bucketList = [];
@@ -45,14 +48,16 @@ const Profile = () => {
           storyList.push({ ...doc.data(), id: doc.id });
         });
         const sortedStory = storyList.sort(
-          (a, b) => (b.completeDate.split(" ").join("")) - (a.completeDate.split(" ").join(""))
+          (a, b) =>
+            b.completeDate.split(" ").join("") -
+            a.completeDate.split(" ").join("")
         );
         setStoryData(sortedStory);
       })
       .catch((err) => {
         alert(err.message);
       });
-  }, [bucketItemAdded]);
+  }, [isDeleted, storyAdded]);
 
   return (
     <>
@@ -64,7 +69,12 @@ const Profile = () => {
           style={styles.list}
           data={bucketListData}
           renderItem={({ item }) => (
-            <BucketListCard item={item} itemID={item.id} setBucketItemAdded={setBucketItemAdded}/>
+            <BucketListCard
+              item={item}
+              itemID={item.id}
+              setIsDeleted={setIsDeleted}
+              setStoryAdded={setStoryAdded}
+            />
           )}
           horizontal={true}
         />

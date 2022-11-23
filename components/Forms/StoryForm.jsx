@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -20,13 +20,14 @@ import { useNavigation } from "@react-navigation/native";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const StoryForm = ({ route }) => {
-  const { title, location, category, bucketItemId } = route.params;
+  const { title, location, category, bucketItemId, setStoryAdded } =
+    route.params;
 
-  const [storyTitle, setStoryTitle] = useState(title);
+  const [storyTitle, setStoryTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [storyLocation, setStoryLocation] = useState(location);
+  const [storyLocation, setStoryLocation] = useState("");
   const [categoryOpen, setCategoryOpen] = useState(false);
-  const [storyCategory, setStoryCategory] = useState(category);
+  const [storyCategory, setStoryCategory] = useState("");
   const [items, setItems] = useState([
     { label: "Activities", value: "Activities" },
     { label: "Travel", value: "Travel" },
@@ -41,6 +42,12 @@ const StoryForm = ({ route }) => {
   const [image, setImage] = useState("");
 
   const navigation = useNavigation();
+
+  useEffect(() => {
+    setStoryTitle(title);
+    setStoryLocation(location);
+    setStoryCategory(category);
+  }, [route.params]);
 
   const toggleDate = () => {
     setDateOpen(!dateOpen);
@@ -98,6 +105,7 @@ const StoryForm = ({ route }) => {
         deleteDoc(itemRef);
         alert("Story has been posted");
         setImage(null);
+        setStoryAdded(true);
         navigation.navigate("Your Profile");
       })
       .catch((err) => {
