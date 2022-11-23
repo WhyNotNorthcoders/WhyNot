@@ -41,11 +41,12 @@ const BucketListForm = ({ route, navigation }) => {
       setSuggested(true);
     }
   }, [route.params]);
+
   const toggleDate = () => {
     setDateOpen(!dateOpen);
   };
   const handleSubmit = () => {
-    navigation.navigate("Profile");
+    navigation.navigate("Your Profile");
     const bucketRef = collection(
       database,
       "users",
