@@ -11,6 +11,7 @@
   "dependencies": {
     "@firebase/storage": "^0.9.14",
     "@react-native-community/datetimepicker": "6.5.2",
+    "@react-native-firebase/firestore": "^16.4.6",
     "@react-navigation/bottom-tabs": "^6.4.0",
     "@react-navigation/drawer": "^6.5.0",
     "@react-navigation/material-top-tabs": "^6.3.0",
