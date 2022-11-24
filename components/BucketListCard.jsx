@@ -72,7 +72,7 @@ const BucketListCard = ({ item, itemID, setIsDeleted, setStoryAdded }) => {
         >
           <Text
             style={{
-              color: "white",
+              color: "black",
               fontWeight: "bold",
               textAlign: "center",
             }}
