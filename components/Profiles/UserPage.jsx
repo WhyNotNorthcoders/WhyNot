@@ -4,8 +4,8 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
-  Button,
 } from "react-native";
+import { Button } from "react-native-paper";
 import { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { database } from "../../config/firebaseConfig";
@@ -83,8 +83,15 @@ const UserPage = ({ route, navigation }) => {
 
   return (
     <>
+      <Button
+        style={{
+          position: "absolute",
+          zIndex: 999,
+        }}
+        icon="arrow-left"
+        onPress={() => navigation.goBack()}
+      />
       <ScrollView style={styles.container}>
-        <Button title="< Back" onPress={() => navigation.goBack()} />
         <UserDetails user={route.params.user} />
         <Text style={styles.header}>Bucket List</Text>
         <FlatList
@@ -113,6 +120,7 @@ const UserPage = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: "10%",
     backgroundColor: "white",
   },
   list: {
