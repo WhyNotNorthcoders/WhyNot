@@ -60,8 +60,16 @@ const UserPage = ({ route, navigation }) => {
       <Text style={styles.titles}>{item.title}</Text>
       <Text style={styles.text}>Category: {item.category}</Text>
       <Text style={styles.text}>Location: {item.location}</Text>
-      <Text style={styles.text}>Target Date: {item.targetDate}</Text>
-      <Text style={styles.text}>Difficulty: {item.difficulty}</Text>
+      {item.targetDate ? (
+        <Text style={styles.text}>Date: {item.targetDate}</Text>
+      ) : (
+        <Text style={styles.text}>Complete Date: {item.completeDate}</Text>
+      )}
+      {item.difficulty ? (
+        <Text style={styles.text}>Difficulty: {item.difficulty}</Text>
+      ) : (
+        <Text style={styles.text}>Rating: {item.rating} / 5</Text>
+      )}
     </TouchableOpacity>
   );
 
@@ -121,7 +129,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderStyle: "solid",
     padding: 2,
-    height: 250,
+    height: 300,
     margin: 10,
     borderRadius: 15,
     shadowRadius: 5,
@@ -151,7 +159,6 @@ const styles = StyleSheet.create({
   item: {
     padding: 10,
     width: 250,
-    height: 220,
     backgroundColor: "white",
     borderRadius: 15,
     borderWidth: 4,

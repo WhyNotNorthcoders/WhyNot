@@ -273,11 +273,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: "700",
     color: "black",
-    borderWidth: 2,
-    borderRightColor: 0,
-    borderTopColor: 0,
-    borderLeftColor: 0,
-    borderBottomColor: "#6667AB",
+    textDecorationLine: "underline",
   },
   inputView: {
     borderWidth: 1,

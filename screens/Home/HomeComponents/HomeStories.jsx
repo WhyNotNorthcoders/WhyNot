@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { View, Text, StyleSheet, Image, Modal, Pressable } from "react-native";
-import { Caption } from 'react-native-paper'
+import { Caption } from "react-native-paper";
 
 const HomeStories = ({ item }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -18,9 +18,7 @@ const HomeStories = ({ item }) => {
             source={{ uri: item.storyImage }}
           />
           <Text style={styles.eventInformation}>Location: {item.location}</Text>
-          <Text style={styles.eventInformation}>
-            Rating: {item.rating} / 5
-          </Text>
+          <Text style={styles.eventInformation}>Rating: {item.rating} / 5</Text>
           <Caption style={styles.eventInformation}>
             Click on the item see more details!
           </Caption>
@@ -69,6 +67,7 @@ const HomeStories = ({ item }) => {
 const styles = StyleSheet.create({
   item: {
     padding: 10,
+    width: 350,
     backgroundColor: "white",
     borderRadius: 15,
     borderWidth: 4,

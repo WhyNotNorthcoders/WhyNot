@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderStyle: "solid",
     padding: 2,
-    height: 200,
+    height: 250,
     margin: 10,
     borderRadius: 15,
     shadowRadius: 5,

@@ -98,7 +98,7 @@ const StoryCard = ({ item, itemID }) => {
         style={styles.item}
       >
         <Title style={styles.titles}>{title}</Title>
-        <Text style={styles.text}> Description: {description}</Text>
+        <Text style={styles.text}>Description: {description}</Text>
         <Text style={styles.text}>Complete Date: {completeDate}</Text>
         <View style={{ flex: 1, right: 0 }}>
           <Rating
