@@ -1,5 +1,4 @@
-import { Text, Pressable, View, Modal, StyleSheet } from "react-native";
-import { useState } from "react";
+import { Pressable, View, StyleSheet } from "react-native";
 import { Title, Caption, Paragraph, Card } from "react-native-paper";
 import { Rating } from "react-native-ratings";
 
@@ -12,13 +11,25 @@ const TopStoriesCard = ({
   rating,
   completeDate,
   storyImage,
+  navigation,
+  user_id,
 }) => {
-  const [modalVisible, setModalVisible] = useState(false);
   return (
     <View style={styles.storyCard}>
       <Pressable
         onPress={() => {
-          setModalVisible(true);
+          navigation.navigate("StoryPage", {
+            story_id: story_id,
+            title: title,
+            description: description,
+            category: category,
+            location: location,
+            rating: rating,
+            completeDate: completeDate,
+            storyImage: storyImage,
+            navigation: navigation,
+            user_id: user_id,
+          });
         }}
       >
         <View style={styles.item}>
@@ -32,19 +43,23 @@ const TopStoriesCard = ({
             </Caption>
           </View>
           <Card>
+            {storyImage ? (
               <Card.Cover
                 source={{ uri: storyImage }}
                 style={styles.storyImage}
               />
+            ) : (
+              <></>
+            )}
             <Card.Content>
-              <Paragraph>{description}</Paragraph>
+              <Paragraph>{'"' + description + '"'}</Paragraph>
             </Card.Content>
           </Card>
           <View style={styles.date_rating}>
             <Caption style={{ fontSize: 10 }}>
               Date Completed: {completeDate}
             </Caption>
-            <View style={[styles.rating, { marginLeft: 100 }]}>
+            <View style={[styles.rating, { marginLeft: "25%" }]}>
               <Caption style={{ fontSize: 10 }}>Rating:</Caption>
               <Rating
                 style={styles.rating}
@@ -60,35 +75,6 @@ const TopStoriesCard = ({
             </View>
           </View>
         </View>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            setModalVisible(!modalVisible);
-          }}
-        >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <View>
-                <Title style={styles.storyInformation}>{title}</Title>
-                <Text style={styles.storyInformation}>
-                  Description: {description}
-                </Text>
-                <Text style={styles.storyInformation}>{category}</Text>
-                <Text style={styles.storyInformation}>{location}</Text>
-              </View>
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => {
-                  setModalVisible(!modalVisible);
-                }}
-              >
-                <Text style={{ color: "white" }}>close</Text>
-              </Pressable>
-            </View>
-          </View>
-        </Modal>
       </Pressable>
     </View>
   );
@@ -126,10 +112,9 @@ const styles = StyleSheet.create({
     marginTop: 22,
   },
   modalView: {
-    margin: 20,
     backgroundColor: "#faf9f6",
     borderRadius: 20,
-    padding: 35,
+    padding: 20,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -139,6 +124,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+    width: "90%",
   },
   button: {
     borderRadius: 20,
@@ -154,8 +140,6 @@ const styles = StyleSheet.create({
   },
 
   storyImage: {
-    // borderTopEndRadius: 10,
-    // borderTopStartRadius: 10,
     borderRadius: 5,
     height: 125,
   },

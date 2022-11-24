@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, colRef, database } from "../config/firebaseConfig";
+import { auth, database } from "../config/firebaseConfig";
 
 import { Button, StyleSheet, TextInput, View } from "react-native";
-import { doc, setDoc, collection, addDoc } from "firebase/firestore";
-import { FirebaseError } from "firebase/app";
+import { doc, setDoc } from "firebase/firestore";
 
 export default function Registration() {
   const [username, setUsername] = useState("");

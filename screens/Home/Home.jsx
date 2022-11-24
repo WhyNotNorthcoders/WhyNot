@@ -24,7 +24,7 @@ const Home = () => {
       .then((results) => {
         let list = [];
         results.docs.forEach((doc) => {
-          list.push({ ...doc.data() });
+          list.push({ ...doc.data(), id: doc.id });
         });
         setSuggested(list);
       })

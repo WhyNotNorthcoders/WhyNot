@@ -1,6 +1,5 @@
-import { StyleSheet, Text, View, Button, Pressable } from "react-native";
+import { StyleSheet, Pressable } from "react-native";
 import * as React from "react";
-import "react-native-gesture-handler";
 import { useState } from "react";
 import LoginScreen from "./screens/LoginScreen";
 import ActivePages from "./components/ActivePages";

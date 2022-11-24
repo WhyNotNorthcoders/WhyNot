@@ -1,28 +1,30 @@
-import { useContext, useEffect, useState } from "react";
-import {
-  SafeAreaView,
-  Text,
-  StyleSheet,
-} from "react-native";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { useEffect, useState } from "react";
+import { SafeAreaView, Text, StyleSheet, Image } from "react-native";
 
 const UserDetails = (props) => {
   const [userInfo, setUserInfo] = useState({});
-  
-  useEffect(()=>{
-  setUserInfo(props.user)
-  },[props.user])
+
+  useEffect(() => {
+    setUserInfo(props.user);
+  }, [props.user]);
 
   return (
     <SafeAreaView style={styles.profileDetails}>
-    <Text style={styles.username}>{userInfo.username}</Text>
-    <Ionicons name={"person-outline"} size={40} style={styles.ionicons} />
+      <Image
+        source={{ uri: userInfo.profile_picture }}
+        style={styles.ionicons}
+      />
+      <Text style={styles.username}>{userInfo.username}</Text>
+      <Text style={styles.userInfo}>About: {userInfo.about}</Text>
+      <Text style={styles.userInfo}>Location: {userInfo.location}</Text>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   profileDetails: {
+    flex: 1,
+    flexDirection: "column",
     borderStyle: "solid",
     borderColor: "#CAD2C5",
     borderRadius: 15,
@@ -34,20 +36,27 @@ const styles = StyleSheet.create({
   },
   ionicons: {
     color: "white",
+    marginTop: 20,
     borderRadius: 40,
     padding: 20,
     width: 80,
     height: 80,
     borderWidth: 2,
-    marginTop: -25,
     borderColor: "white",
-    marginLeft: 20,
+    marginLeft: 15,
   },
   username: {
     color: "white",
-    marginLeft: 120,
-    marginTop: 20,
-    fontSize: 18,
+    fontWeight: "bold",
+    marginLeft: 110,
+    fontSize: 20,
+    marginTop: "-22%",
+  },
+  userInfo: {
+    color: "white",
+    marginLeft: 110,
+    marginTop: 2,
+    fontSize: 16,
   },
 });
 

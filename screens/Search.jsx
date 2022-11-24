@@ -1,13 +1,9 @@
 import React from "react";
 import { useState } from "react";
 import {
-  FlatList,
   View,
-  Text,
   SafeAreaView,
-  StatusBar,
   StyleSheet,
-  Dimensions,
 } from "react-native";
 import SearchBar from "../components/SearchTabs/SearchBar";
 import SearchTopTab from "../components/SearchTabs/SearchTab";
@@ -15,19 +11,6 @@ import SearchTopTab from "../components/SearchTabs/SearchTab";
 const Search = () => {
   const [searchPhrase, setSearchPhrase] = useState("");
   const [clicked, setClicked] = useState(false);
-  const [searchData, setSearchData] = useState([]);
-
-  const testData = [
-    { title: "item1" },
-    { title: "item2" },
-    { title: "item3" },
-    { title: "item4" },
-    { title: "item5" },
-    { title: "item6" },
-    { title: "item7" },
-    { title: "item8" },
-    { title: "item9" },
-  ];
 
   return (
     <SafeAreaView style={styles.parentContainer}>
@@ -40,25 +23,24 @@ const Search = () => {
         />
       </View>
       <View style={styles.topTabContainer}>
-        <SearchTopTab />
+        <SearchTopTab searchPhrase={searchPhrase} />
       </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  parentContainer:{
+  parentContainer: {
     flex: 1,
   },
   topTabContainer: {
-    flex:1,
-    backgroundColor: "#354F52"
+    flex: 1,
+    backgroundColor: "#354F52",
   },
   searchContainer: {
     backgroundColor: "#6667AB",
     paddingBottom: 1,
   },
-  
 });
 
 export default Search;

@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { collection, doc, updateDoc } from "firebase/firestore";
+import { collection, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { useState } from "react";
 import {
   StyleSheet,
@@ -12,7 +12,7 @@ import {
 import { TextInput } from "react-native-gesture-handler";
 import { auth, database } from "../config/firebaseConfig";
 
-const BucketListCard = ({ item, itemID }) => {
+const BucketListCard = ({ item, itemID, setIsDeleted, setStoryAdded }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [edit, setEdit] = useState(false);
   const [complete, setComplete] = useState(false);
@@ -39,6 +39,7 @@ const BucketListCard = ({ item, itemID }) => {
     };
     setEdit(false);
     setModalVisible(false);
+    setBucketItemAdded(true);
     const itemRef = doc(bucketRef, itemID);
     updateDoc(itemRef, data)
       .then(alert("item has been updated"))
@@ -48,50 +49,80 @@ const BucketListCard = ({ item, itemID }) => {
   const BucketItem = ({ title, location, category, setComplete }) => {
     const navigation = useNavigation();
 
+    const handleDelete = () => {
+      const itemRef = doc(bucketRef, itemID);
+      deleteDoc(itemRef).then(
+        alert("item has been deleted"),
+        setIsDeleted(true)
+      );
+    };
     return (
-      <>
+      <View style={{ height: "100%", width: "100%" }}>
         <Text style={styles.modaltitle}>{title}</Text>
         <Text style={styles.textData}>Category: {category}</Text>
         <Text style={styles.textData}>Location: {location}</Text>
         <Text style={styles.textData}>Target Date: {targetDate}</Text>
         <Text style={styles.textData}>Difficulty: {difficulty}</Text>
-        <Pressable
-          onPress={() => {
-            setComplete(false);
-            setEdit(true);
-          }}
-          style={styles.editButton}
-        >
-          <Text
-            style={{
-              color: "#6667AB",
-              fontWeight: "bold",
-              textAlign: "center",
+        <View style={{ flexDirection: "row", bottom: 0, position: "absolute" }}>
+          <Pressable
+            onPress={() => {
+              setComplete(false);
+              setEdit(true);
             }}
+            style={styles.editButton}
           >
-            Edit
-          </Text>
-        </Pressable>
-        <Pressable
-          onPress={() => {
-            setModalVisible(false);
-            setEdit(false);
-            navigation.navigate("Add to Story", {
-              title: title,
-              category: category,
-              location: location,
-              bucketItemId: itemID,
-            });
-          }}
-          style={styles.completeButton}
-        >
-          <Text
-            style={{ color: "white", textAlign: "center", fontWeight: "bold" }}
+            <Text
+              style={{
+                color: "black",
+                fontWeight: "bold",
+                textAlign: "center",
+              }}
+            >
+              Edit
+            </Text>
+          </Pressable>
+          <Pressable
+            onPress={() => {
+              setModalVisible(false);
+              setEdit(false);
+              navigation.navigate("Add to Story", {
+                title: title,
+                category: category,
+                location: location,
+                bucketItemId: itemID,
+                setStoryAdded: setStoryAdded,
+              });
+            }}
+            style={styles.completeButton}
           >
-            Complete
-          </Text>
-        </Pressable>
-      </>
+            <Text
+              style={{
+                color: "white",
+                textAlign: "center",
+                fontWeight: "bold",
+              }}
+            >
+              Complete
+            </Text>
+          </Pressable>
+          <Pressable
+            onPress={() => {
+              handleDelete();
+            }}
+            style={styles.deleteButton}
+          >
+            <Text
+              style={{
+                color: "white",
+                textAlign: "center",
+                fontWeight: "bold",
+              }}
+            >
+              Delete
+            </Text>
+          </Pressable>
+        </View>
+      </View>
     );
   };
 
@@ -198,7 +229,14 @@ const BucketListCard = ({ item, itemID }) => {
                 }}
               >
                 <Text
-                  style={{ color: "white", fontWeight: "bold", fontSize: 10 }}
+                  style={{
+                    color: "white",
+                    fontWeight: "bold",
+                    fontSize: 20,
+                    textAlign: "center",
+                    borderWidth: 2,
+                    borderColor: "white",
+                  }}
                 >
                   X
                 </Text>
@@ -220,10 +258,10 @@ const styles = StyleSheet.create({
   },
   modalView: {
     borderWidth: 2,
+    marginTop: "44%",
     borderColor: "#6667AB",
     margin: 20,
     width: "95%",
-    marginTop: 215,
     height: "55%",
     backgroundColor: "#6667AB",
     borderRadius: 20,
@@ -239,33 +277,43 @@ const styles = StyleSheet.create({
   },
   editButton: {
     padding: 10,
-    marginTop: 10,
     backgroundColor: "white",
-    alignSelf: "flex-start",
+    alignSelf: "center",
     borderRadius: 15,
-    marginTop: 175,
+    margin: 5,
     height: 40,
     width: 100,
   },
   completeButton: {
     padding: 10,
+    margin: 5,
     backgroundColor: "green",
     alignSelf: "center",
-    marginTop: -40,
+    borderRadius: 15,
+    height: 40,
+    width: 100,
+  },
+  deleteButton: {
+    padding: 10,
+    backgroundColor: "black",
+    alignSelf: "center",
     borderRadius: 15,
     height: 40,
     width: 100,
   },
   buttonClose: {
-    padding: 10,
+    position: "absolute",
+    top: 0,
+    right: 0,
     borderRadius: 15,
-    backgroundColor: "red",
-    alignSelf: "flex-end",
-    marginTop: -36,
-    marginRight: -10,
+    width: 50,
+    alignSelf: "center",
+    padding: 10,
+    margin: 5,
   },
   item: {
-    padding: 10,
+    overflow: "hidden",
+    padding: 5,
     width: 250,
     backgroundColor: "white",
     borderRadius: 15,

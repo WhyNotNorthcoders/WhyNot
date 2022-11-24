@@ -5,49 +5,44 @@ import SearchUser from "./SearchUsers";
 import SearchEvent from "./SearchEvents";
 
 const Tab = createMaterialTopTabNavigator();
-function SearchTopTab({ searchPhrase }) {
+function SearchTopTab() {
   return (
     <Tab.Navigator
-      initialRouteName="SearchTop"
+      initialRouteName="Route1"
       screenOptions={{
         tabBarIndicatorStyle: {
-          borderWidth: 1,
+          borderWidth: 2,
           borderColor: "black",
           height: "100%",
-          backgroundColor: "#9f86c0",
+          backgroundColor: "#354F52",
         },
-        tabBarActiveLabelStyle: {
-          color: "black",
-          fontSize: 14,
+        tabBarLabelStyle: {
+          color: "#CAD2C5",
+          fontSize: 20,
         },
         tabBarStyle: {
-          borderWidth:1,
-          backgroundColor: "#6667AB",
+          backgroundColor: "white",
           borderBottomWidth: 0.5,
           borderBottomColor: "gray",
+          tabBarInactiveTintColor: "#354F52",
         },
-        tabBarActiveTintColor: "white",
-        tabBarInactiveTintColor: "white",
       }}
     >
       <Tab.Screen
         name="SearchTop"
+        component={SearchTop}
         options={{ tabBarLabel: "Top" }}
-      >
-        {props => <SearchTop {...props} searchPhrase={searchPhrase} />}
-      </Tab.Screen>
+      />
       <Tab.Screen
         name="SearchUser"
+        component={SearchUser}
         options={{ tabBarLabel: "User" }}
-      >
-        {props => <SearchUser {...props} searchPhrase={searchPhrase} />}
-      </Tab.Screen>
+      />
       <Tab.Screen
         name="SearchEvent"
+        component={SearchEvent}
         options={{ tabBarLabel: "Events" }}
-      >
-        {props => <SearchEvent {...props} searchPhrase={searchPhrase} />}
-      </Tab.Screen>
+      />
     </Tab.Navigator>
   );
 }

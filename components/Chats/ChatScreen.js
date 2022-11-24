@@ -28,54 +28,33 @@ export default function ChatScreen(props) {
   const username = props.route.params.user;
   const [message, setMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
-  const [messages, setMessages] = useState([]);
-  const { userData } = useContext(userContext);
 
   const thread = props.route.params.user;
-  console.log("user data ", userData);
 
   useEffect(() => {
-    console.log("thread", thread);
-    getUserDetail(auth.currentUser.uid);
-    console.log("logged in as ", loggedInUser);
-
-    const collectionRef = collection(database, "THREADS", "Michael", "Moroti");
+    const collectionRef = collection(database, "THREADS", "Gary", thread);
 
     getDocs(collectionRef).then((snapshot) => {
       let messages = [];
-      console.log("inside getDocs");
-      console.log(snapshot);
+
       snapshot.forEach((doc) => {
-        console.log(doc.id, " =>", doc.data());
         messages.push({ ...doc.data() });
         setMessageList(messages);
       });
     });
   }, [message]);
 
-  function getUserDetail(id) {
-    const userRef = collection(database, "users");
-    getDocs(userRef, id).then((snapshots) => {
-      snapshots.forEach((doc) => {
-        if (doc.id === id) {
-          console.log(doc.data().username);
-          setLoggedInUser[doc.data().username];
-        }
-      });
-    });
-  }
-
   async function handleSend() {
     //create new chat room
-    console.log(message);
-    const messageRef = collection(database, "THREADS", "Michael", thread);
+
+    const messageRef = collection(database, "THREADS", "Gary", thread);
     addDoc(messageRef, {
       message,
       createdAt: new Date().getTime(),
-      sender: "Moroti",
+      sender: "Gary",
       reciever: username,
     }).then(() => {
-      const receiverRef = collection(database, "THREADS", thread, "Michael");
+      const receiverRef = collection(database, "THREADS", thread, "Gary");
       addDoc(receiverRef, {
         message,
         createdAt: new Date().getTime(),
@@ -89,24 +68,6 @@ export default function ChatScreen(props) {
           console.log(err.message);
         });
     });
-    // const q = collection(database, "THREADS", thread?._id);
-    // await addDoc(q, {
-    //   data: {
-    //     message,
-    //     user: username,
-    //     createdAt: new Date().getTime(),
-    //   },
-    // });
-    //then(() => {
-    //   const q = collection(database, "THREADS", thread?._id);
-    //   addDoc(q, {
-    //     data: {
-    //       message,
-    //       user: username,
-    //       createdAt: new Date().getTime(),
-    //     },
-    //   });
-    // });
   }
 
   function renderHeader() {
@@ -143,9 +104,6 @@ export default function ChatScreen(props) {
       <View style={{ height: "75%" }}>
         <FlatList
           data={messageList}
-          //   data={messages.sort((a, b) => {
-          //     const dateA = new Date(`${a.createAt} ${a.createdAt}`);
-          //   })}
           renderItem={({ item, index }) => {
             return (
               <View

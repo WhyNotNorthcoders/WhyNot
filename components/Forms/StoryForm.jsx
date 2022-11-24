@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -18,15 +18,17 @@ import { doc, addDoc, collection, deleteDoc } from "firebase/firestore";
 import { auth, database, storage } from "../../config/firebaseConfig";
 import { useNavigation } from "@react-navigation/native";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { SafeAreaView } from "react-navigation";
 
 const StoryForm = ({ route }) => {
-  const { title, location, category, bucketItemId } = route.params;
+  const { title, location, category, bucketItemId, setStoryAdded } =
+    route.params;
 
-  const [storyTitle, setStoryTitle] = useState(title);
+  const [storyTitle, setStoryTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [storyLocation, setStoryLocation] = useState(location);
+  const [storyLocation, setStoryLocation] = useState("");
   const [categoryOpen, setCategoryOpen] = useState(false);
-  const [storyCategory, setStoryCategory] = useState(category);
+  const [storyCategory, setStoryCategory] = useState("");
   const [items, setItems] = useState([
     { label: "Activities", value: "Activities" },
     { label: "Travel", value: "Travel" },
@@ -41,6 +43,12 @@ const StoryForm = ({ route }) => {
   const [image, setImage] = useState("");
 
   const navigation = useNavigation();
+
+  useEffect(() => {
+    setStoryTitle(title);
+    setStoryLocation(location);
+    setStoryCategory(category);
+  }, [route.params]);
 
   const toggleDate = () => {
     setDateOpen(!dateOpen);
@@ -98,6 +106,7 @@ const StoryForm = ({ route }) => {
         deleteDoc(itemRef);
         alert("Story has been posted");
         setImage(null);
+        setStoryAdded(true);
         navigation.navigate("Your Profile");
       })
       .catch((err) => {
@@ -106,17 +115,30 @@ const StoryForm = ({ route }) => {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <View>
-        <TextInput
-          style={styles.textInput}
-          placeholderTextColor={"lightgrey"}
-          value={storyTitle}
-          onChange={setStoryTitle}
-        />
-        <View style={{ zIndex: 1 }}>
-          <DropDownPicker
+    <ScrollView>
+      <View style={styles.container}>
+        <View style={styles.inputView}>
+          <TextInput
             style={styles.textInput}
+            placeholderTextColor={"lightgrey"}
+            value={storyTitle}
+            onChange={setStoryTitle}
+          />
+        </View>
+        <View
+          style={{
+            zIndex: 1,
+          }}
+        >
+          <DropDownPicker
+            style={{
+              zIndex: 1,
+              borderRadius: 30,
+              width: 300,
+              marginBottom: 20,
+              borderWidth: 2,
+              borderColor: "#C200FB",
+            }}
             placeholder="--Select Category--"
             placeholderTextColor={"white"}
             open={categoryOpen}
@@ -127,26 +149,30 @@ const StoryForm = ({ route }) => {
             setItems={setItems}
           />
         </View>
-        <TextInput
-          style={styles.textInput}
-          multiline={true}
-          placeholder="Enter Your Experience"
-          placeholderTextColor={"white"}
-          onChangeText={(val) => {
-            setDescription(val);
-          }}
-        ></TextInput>
-        <TextInput
-          style={styles.textInput}
-          placeholderTextColor={"white"}
-          value={storyLocation}
-        />
-        <View>
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.textInput}
+            multiline={true}
+            placeholder="Enter Your Experience"
+            placeholderTextColor={"black"}
+            onChangeText={(val) => {
+              setDescription(val);
+            }}
+          ></TextInput>
+        </View>
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.textInput}
+            placeholderTextColor={"white"}
+            value={storyLocation}
+          />
+        </View>
+        <View style={styles.inputView}>
           <TouchableOpacity onPress={toggleDate}>
             <Text style={styles.textInput}>Complete Date: {date}</Text>
           </TouchableOpacity>
           <Modal isVisible={dateOpen}>
-            <View>
+            <View style={styles.inputView}>
               <DatePicker
                 mode="monthYear"
                 selectorStartingYear={2022}
@@ -166,27 +192,20 @@ const StoryForm = ({ route }) => {
             </View>
           </Modal>
         </View>
-        <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            alignSelf: "center",
-          }}
-        >
-          <View style={styles.imageContainer}>
-            {image ? (
-              <Image
-                source={{ uri: image }}
-                style={{ width: "100%", height: "100%" }}
-              />
-            ) : (
-              <Text>Select An Image</Text>
-            )}
-          </View>
-          <Pressable style={styles.button} onPress={pickImage}>
-            <Text style={styles.buttonText}>Select Image</Text>
-          </Pressable>
+        <View style={styles.imageContainer}>
+          {image ? (
+            <Image
+              source={{ uri: image }}
+              style={{ width: "100%", height: "100%" }}
+            />
+          ) : (
+            <Text>Select An Image</Text>
+          )}
         </View>
+        <Pressable style={styles.button} onPress={pickImage}>
+          <Text style={styles.buttonText}>Select Image</Text>
+        </Pressable>
+
         <View style={styles.ratingContainer}>
           <Text style={{ color: "black" }}>Rating: </Text>
           <Rating
@@ -202,16 +221,16 @@ const StoryForm = ({ route }) => {
             }}
           />
         </View>
-      </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          onPress={submitStory}
-          style={styles.completeStoryButton}
-        >
-          <Text style={{ textAlign: "center", color: "white" }}>
-            Complete Story
-          </Text>
-        </TouchableOpacity>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            onPress={submitStory}
+            style={styles.completeStoryButton}
+          >
+            <Text style={{ textAlign: "center", color: "white" }}>
+              Complete Story
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </ScrollView>
   );
@@ -219,19 +238,28 @@ const StoryForm = ({ route }) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 25,
-    borderRadius: 25,
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#FAF9F6",
+  },
+  inputView: {
     backgroundColor: "white",
+    borderColor: "#C200FB",
+    borderStyle: "solid",
+    borderWidth: 2,
+    borderRadius: 30,
+    width: 300,
+    height: 45,
+    marginBottom: 20,
+    alignItems: "center",
   },
   textInput: {
-    color: "white",
-    backgroundColor: "#6667AB",
-    borderRadius: 6,
-    borderColor: "#6667AB",
-    borderWidth: 2,
-    padding: 5,
-    marginBottom: 10,
-    width: "100%",
+    height: 50,
+    flex: 1,
+    padding: 10,
+    marginLeft: 20,
+    backgroundColor: "white",
   },
 
   buttonContainer: {
@@ -271,10 +299,10 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     width: 200,
-    height: 200,
+    height: 150,
     borderRadius: 5,
     borderWidth: 2,
-    borderColor: "#2F3E46",
+    borderColor: "#C200FB",
   },
 
   ratingContainer: {
@@ -284,12 +312,12 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginBottom: 15,
     margin: 10,
-    borderRadius: 20,
+    borderRadius: 30,
     paddingTop: 10,
     paddingBottom: 10,
     paddingRight: 40,
     paddingLeft: 40,
-    borderColor: "#6667AB",
+    borderColor: "#C200FB",
     borderWidth: 2,
     borderRadius: 5,
     backgroundColor: "white",

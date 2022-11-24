@@ -1,22 +1,28 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
   View,
-  TextInput,
-  TouchableOpacity,
   Alert,
   Modal,
   Pressable,
+  TouchableOpacity,
+  Dimensions,
+  ImageBackground,
+  TextInput,
 } from "react-native";
 import { auth, database } from "../config/firebaseConfig";
 import {
+  browserPopupRedirectResolver,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
+import { Button } from "react-native-paper";
 
 const LoginScreen = () => {
+  const { height, width } = Dimensions.get("window");
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
@@ -37,7 +43,6 @@ const LoginScreen = () => {
     }
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
-        alert("User Logged In"); // remove this later
         setEmail("");
         setPassword("");
       })
@@ -107,56 +112,65 @@ const LoginScreen = () => {
   return (
     <View style={styles.container}>
       <Modal
-        animationType="slide"
+        animationType="fade"
         transparent={true}
+        backdropOpacity={0.4}
         visible={modalVisible}
         onRequestClose={() => {
           Alert.alert("Modal has been closed.");
-          setModalVisible(!modalVisible);
         }}
       >
         <View style={styles.container}>
           <View style={styles.modalView}>
+            <View style={{ position: "absolute", left: 0, top: "1%" }}>
+              <Button
+                style={{
+                  position: "absolute",
+                }}
+                icon="arrow-left"
+                onPress={() => setModalVisible(false)}
+              />
+            </View>
             <Text style={styles.modalText}>Create New Account</Text>
-            <View style={styles.inputView}>
+            <View style={styles.regInputView}>
               <TextInput
-                style={styles.TextInput}
+                style={styles.regTextInput}
                 placeholder="Email"
                 value={regEmail}
                 placeholderTextColor="#003f5c"
                 onChangeText={(email) => setRegEmail(email)}
               />
             </View>
-            <View style={styles.inputView}>
+            <View style={styles.regInputView}>
               <TextInput
-                style={styles.TextInput}
+                style={styles.regTextInput}
                 placeholder="Username"
                 value={regUsername}
                 placeholderTextColor="#003f5c"
                 onChangeText={(val) => setRegUsername(val)}
               />
             </View>
-            <View style={styles.inputView}>
+            <View style={styles.regInputView}>
               <TextInput
-                style={styles.TextInput}
+                style={styles.regTextInput}
                 placeholder="Location"
                 placeholderTextColor="#003f5c"
                 value={regLocation}
                 onChangeText={(val) => setRegLocation(val)}
               />
             </View>
-            <View style={styles.inputView}>
+            <View style={styles.regInputView}>
               <TextInput
-                style={styles.TextInput}
+                style={styles.regTextInput}
                 placeholder="D.O.B"
                 placeholderTextColor="#003f5c"
                 value={regDOB}
                 onChangeText={(val) => setRegDOB(val)}
               />
             </View>
-            <View style={styles.inputView}>
+            <View style={styles.regInputView}>
               <TextInput
-                style={styles.TextInput}
+                style={styles.regTextInput}
                 placeholder="Password"
                 placeholderTextColor="#003f5c"
                 secureTextEntry={true}
@@ -164,9 +178,9 @@ const LoginScreen = () => {
                 onChangeText={(val) => setRegPassword(val)}
               />
             </View>
-            <View style={styles.inputView}>
+            <View style={styles.regInputView}>
               <TextInput
-                style={styles.TextInput}
+                style={styles.regTextInput}
                 placeholder="Confirm Password"
                 placeholderTextColor="#003f5c"
                 secureTextEntry={true}
@@ -174,46 +188,75 @@ const LoginScreen = () => {
                 onChangeText={(val) => setRegConfirmPassword(val)}
               />
             </View>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={handleRegistration}
-            >
+            <Pressable style={styles.buttonSubmit} onPress={handleRegistration}>
               <Text style={styles.textStyle}>Submit</Text>
             </Pressable>
           </View>
         </View>
       </Modal>
-      <View style={styles.container}>
-        <Text style={styles.logo}>Why Not?</Text>
-        <View style={styles.inputView}>
-          <TextInput
-            style={styles.TextInput}
-            placeholder="Email"
-            placeholderTextColor="#003f5c"
-            value={email}
-            onChangeText={(email) => setEmail(email)}
-          />
-        </View>
-
-        <View style={styles.inputView}>
-          <TextInput
-            style={styles.TextInput}
-            placeholder="Password"
-            placeholderTextColor="#003f5c"
-            secureTextEntry={true}
-            value={password}
-            onChangeText={(password) => setPassword(password)}
-          />
-        </View>
-        <Pressable
-          style={[styles.button, styles.buttonOpen]}
-          onPress={() => setModalVisible(true)}
+      <View style={{ height: height, width: width }}>
+        <ImageBackground
+          source={require("../Images/Login.jpg")}
+          style={{ height: height, width: width }}
         >
-          <Text style={styles.textStyle}>Create Account</Text>
-        </Pressable>
-        <TouchableOpacity style={styles.loginBtn} onPress={handleLogin}>
-          <Text style={styles.loginText}>LogIn</Text>
-        </TouchableOpacity>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "flex-end",
+              alignItems: "center",
+            }}
+          >
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                height: height * 1.2,
+              }}
+            >
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={styles.logo}>Why Not?</Text>
+                <View style={styles.inputView}>
+                  <TextInput
+                    style={styles.TextInput}
+                    placeholder="Email"
+                    placeholderTextColor="#003f5c"
+                    value={email}
+                    onChangeText={(email) => setEmail(email)}
+                  />
+                </View>
+                <View style={styles.inputView}>
+                  <TextInput
+                    style={styles.TextInput}
+                    mode="outlined"
+                    label="Password"
+                    placeholder="Password"
+                    secureTextEntry={true}
+                    value={password}
+                    onChangeText={(password) => setPassword(password)}
+                  />
+                </View>
+                <Pressable style={styles.loginBtn} onPress={handleLogin}>
+                  <Text
+                    style={{ color: "white", fontSize: 14, fontWeight: "600" }}
+                  >
+                    Login
+                  </Text>
+                </Pressable>
+                <TouchableOpacity
+                  style={[styles.button, styles.buttonOpen]}
+                  onPress={() => setModalVisible(true)}
+                >
+                  <Text style={styles.textStyle}>Create Account</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </ImageBackground>
       </View>
     </View>
   );
@@ -228,23 +271,45 @@ const styles = StyleSheet.create({
   logo: {
     marginBottom: 20,
     fontSize: 30,
+    fontWeight: "700",
+    color: "black",
+    textDecorationLine: "underline",
   },
   inputView: {
-    backgroundColor: "white",
-    borderColor: "black",
-    borderRadius: 30,
+    borderWidth: 1,
+    borderRadius: 10,
     width: 300,
     height: 45,
     marginBottom: 20,
-    alignItems: "center",
   },
+  regInputView: {
+    backgroundColor: "white",
+    borderWidth: 1,
+    borderRadius: 10,
+    width: 300,
+    height: 45,
+    marginBottom: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
 
+    elevation: 5,
+  },
   TextInput: {
     height: 50,
     flex: 1,
     padding: 10,
     marginLeft: 20,
-    backgroundColor: "white",
+  },
+  regTextInput: {
+    height: 50,
+    flex: 1,
+    padding: 10,
+    marginLeft: 20,
   },
   createAccount: {
     width: "60%",
@@ -261,18 +326,16 @@ const styles = StyleSheet.create({
     height: 40,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 10,
-    backgroundColor: "green",
+    backgroundColor: "#6667AB",
   },
-
   modalView: {
     margin: 20,
-    height: 500,
+    height: 520,
     width: 350,
     backgroundColor: "skyblue",
+    opacity: 0.97,
     borderRadius: 20,
     padding: 35,
-
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -284,7 +347,14 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   button: {
+    marginTop: 10,
     borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonSubmit: {
+    backgroundColor: "#6667AB",
+    borderRadius: 10,
     padding: 10,
     elevation: 2,
   },
@@ -298,7 +368,8 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     color: "white",
-    fontWeight: "bold",
+    fontSize: 14,
+    fontWeight: "400",
     textAlign: "center",
   },
   modalText: {

@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import { collection, doc, updateDoc } from "firebase/firestore";
 import { useState } from "react";
 import {
@@ -99,7 +98,7 @@ const StoryCard = ({ item, itemID }) => {
         style={styles.item}
       >
         <Title style={styles.titles}>{title}</Title>
-        <Text style={styles.text}> Description: {description}</Text>
+        <Text style={styles.text}>Description: {description}</Text>
         <Text style={styles.text}>Complete Date: {completeDate}</Text>
         <View style={{ flex: 1, right: 0 }}>
           <Rating
@@ -239,10 +238,10 @@ const styles = StyleSheet.create({
   },
   modalView: {
     borderWidth: 2,
+    marginTop: "44%",
     borderColor: "#6667AB",
     margin: 20,
     width: "95%",
-    marginTop: 215,
     height: "55%",
     backgroundColor: "#6667AB",
     borderRadius: 20,

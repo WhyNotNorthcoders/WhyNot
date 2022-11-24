@@ -3,7 +3,6 @@ import {
   Text,
   StyleSheet,
   Pressable,
-  Alert,
   View,
   TextInput,
 } from "react-native";
@@ -15,14 +14,28 @@ const EditProfile = () => {
         <View style={styles.inputView}>
           <TextInput
             style={styles.TextInput}
-            placeholder="New Username"
+            placeholder="Change my Username"
             placeholderTextColor="#003f5c"
           />
         </View>
         <View style={styles.inputView}>
           <TextInput
             style={styles.TextInput}
-            placeholder="New Location"
+            placeholder="Update my Location"
+            placeholderTextColor="#003f5c"
+          />
+        </View>
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.TextInput}
+            placeholder="Change my About"
+            placeholderTextColor="#003f5c"
+          />
+        </View>
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.TextInput}
+            placeholder="Change my D.O.B"
             placeholderTextColor="#003f5c"
           />
         </View>
@@ -62,19 +75,17 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   button: {
-    borderRadius: 20,
-    width: 180,
-    height: 40,
-    borderStyle: "solid",
-    borderWidth: 2,
-    borderColor: "#2F3E46",
-    elevation: 2,
-    marginBottom: 20,
-    color: "black",
+    justifyContent: "center",
+    width: 200,
+    height: 50,
+    margin: 10,
+    borderRadius: 30,
+    borderWidth: 5,
+    borderColor: "green",
   },
   textStyle: {
     color: "black",
-    padding: 10,
     textAlign: "center",
+    fontWeight: "bold",
   },
 });
