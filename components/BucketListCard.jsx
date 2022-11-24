@@ -57,62 +57,72 @@ const BucketListCard = ({ item, itemID, setIsDeleted, setStoryAdded }) => {
       );
     };
     return (
-      <>
+      <View style={{ height: "100%", width: "100%" }}>
         <Text style={styles.modaltitle}>{title}</Text>
         <Text style={styles.textData}>Category: {category}</Text>
         <Text style={styles.textData}>Location: {location}</Text>
         <Text style={styles.textData}>Target Date: {targetDate}</Text>
         <Text style={styles.textData}>Difficulty: {difficulty}</Text>
-        <Pressable
-          onPress={() => {
-            setComplete(false);
-            setEdit(true);
-          }}
-          style={styles.editButton}
-        >
-          <Text
-            style={{
-              color: "black",
-              fontWeight: "bold",
-              textAlign: "center",
+        <View style={{ flexDirection: "row", bottom: 0, position: "absolute" }}>
+          <Pressable
+            onPress={() => {
+              setComplete(false);
+              setEdit(true);
             }}
+            style={styles.editButton}
           >
-            Edit
-          </Text>
-        </Pressable>
-        <Pressable
-          onPress={() => {
-            setModalVisible(false);
-            setEdit(false);
-            navigation.navigate("Add to Story", {
-              title: title,
-              category: category,
-              location: location,
-              bucketItemId: itemID,
-              setStoryAdded: setStoryAdded,
-            });
-          }}
-          style={styles.completeButton}
-        >
-          <Text
-            style={{ color: "white", textAlign: "center", fontWeight: "bold" }}
+            <Text
+              style={{
+                color: "black",
+                fontWeight: "bold",
+                textAlign: "center",
+              }}
+            >
+              Edit
+            </Text>
+          </Pressable>
+          <Pressable
+            onPress={() => {
+              setModalVisible(false);
+              setEdit(false);
+              navigation.navigate("Add to Story", {
+                title: title,
+                category: category,
+                location: location,
+                bucketItemId: itemID,
+                setStoryAdded: setStoryAdded,
+              });
+            }}
+            style={styles.completeButton}
           >
-            Complete
-          </Text>
-        </Pressable>
-        <Pressable
-          onPress={() => {
-            handleDelete();
-          }}
-          style={styles.deleteButton}
-        >
-          <Text
-            style={{ color: "white", textAlign: "center", fontWeight: "bold" }}
+            <Text
+              style={{
+                color: "white",
+                textAlign: "center",
+                fontWeight: "bold",
+              }}
+            >
+              Complete
+            </Text>
+          </Pressable>
+          <Pressable
+            onPress={() => {
+              handleDelete();
+            }}
+            style={styles.deleteButton}
           >
-            Delete
-          </Text>
-        </Pressable>
-      </>
+            <Text
+              style={{
+                color: "white",
+                textAlign: "center",
+                fontWeight: "bold",
+              }}
+            >
+              Delete
+            </Text>
+          </Pressable>
+        </View>
+      </View>
     );
   };
 
@@ -222,8 +232,10 @@ const BucketListCard = ({ item, itemID, setIsDeleted, setStoryAdded }) => {
                   style={{
                     color: "white",
                     fontWeight: "bold",
-                    fontSize: 15,
+                    fontSize: 20,
                     textAlign: "center",
+                    borderWidth: 2,
+                    borderColor: "white",
                   }}
                 >
                   X
@@ -246,6 +258,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     borderWidth: 2,
+    marginTop: "44%",
     borderColor: "#6667AB",
     margin: 20,
     width: "95%",
@@ -289,13 +302,14 @@ const styles = StyleSheet.create({
     width: 100,
   },
   buttonClose: {
+    position: "absolute",
+    top: 0,
+    right: 0,
     borderRadius: 15,
     width: 50,
-    fontSize: 20,
-    backgroundColor: "red",
     alignSelf: "center",
     padding: 10,
-    margin: 10,
+    margin: 5,
   },
   item: {
     overflow: "hidden",

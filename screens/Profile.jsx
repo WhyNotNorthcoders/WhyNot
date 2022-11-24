@@ -111,8 +111,9 @@ const styles = StyleSheet.create({
 
   header: {
     alignSelf: "center",
-    fontSize: 20,
+    fontSize: 25,
     color: "#6667AB",
+    fontWeight: "bold",
   },
   titles: {
     color: "white",
