@@ -5,7 +5,7 @@ import "react-native-gesture-handler";
 import Home from "../screens/Home/Home";
 import Search from "../screens/Search";
 import Profile from "../screens/Profile";
-import Chat from "./Chat";
+import Chat from "../components/Chats/Chat";
 import BucketListForm from "./Forms/BucketListForm";
 import StoryForm from "./Forms/StoryForm";
 import { signOut } from "firebase/auth";
@@ -14,6 +14,7 @@ import LoginScreen from "../screens/LoginScreen";
 import EditProfile from "./Profiles/EditProfile";
 import UserPage from "./Profiles/UserPage";
 import DrawerContent from "./DrawerContent";
+import ChatScreen from "./Chats/ChatScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -44,14 +45,32 @@ function DrawerRoutes({ navigation }) {
 }
 function DrawerRoutes2() {
   return (
-    <Drawer.Navigator initialRouteName="Search" screenOptions={{headerShown: false}}>
+    <Drawer.Navigator
+      initialRouteName="Search"
+      screenOptions={{ headerShown: false }}
+    >
       <Drawer.Screen name="SearchPage" component={Search} />
       <Drawer.Screen name="UserPage" component={UserPage} />
     </Drawer.Navigator>
   );
 }
+function DrawerRoutes3({ userData }) {
+  return (
+    <Drawer.Navigator
+      initialRouteName="Chat"
+      screenOptions={{ headerShown: false }}
+    >
+      <Drawer.Screen
+        name="ChatScreen"
+        component={ChatScreen}
+        userData={userData}
+      />
+      <Drawer.Screen name="Chat" component={Chat} />
+    </Drawer.Navigator>
+  );
+}
 
-const Tabbar = () => {
+const Tabbar = ({ userData }) => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -67,7 +86,7 @@ const Tabbar = () => {
             iconName = focused ? "home" : "home-outline";
           } else if (route.name === "Search") {
             iconName = focused ? "search" : "search-outline";
-          } else if (route.name === "Messages") {
+          } else if (route.name === "Chats") {
             iconName = focused ? "phone-portrait" : "phone-portrait-outline";
           } else if (route.name === "Profile") {
             iconName = focused ? "person" : "person-outline";
@@ -89,8 +108,9 @@ const Tabbar = () => {
         options={{ headerShown: false }}
       />
       <Tab.Screen
-        name="Messages"
-        component={Chat}
+        name="Chats"
+        component={DrawerRoutes3}
+        userData={userData}
         options={{ headerShown: false }}
       />
       <Tab.Screen

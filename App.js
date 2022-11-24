@@ -7,15 +7,17 @@ import ActivePages from "./components/ActivePages";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./config/firebaseConfig";
+import { auth, database } from "./config/firebaseConfig";
 import { userContext } from "./context";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { collection, getDocs } from "firebase/firestore";
 
 const Stack = createStackNavigator();
 
 export default function App() {
   const [LoggedIn, setLoggedIn] = useState(false);
   const [userData, setUserData] = useState({});
+  const [username, setUsername] = useState("");
 
   const handleLogout = () => {
     auth.signOut();
@@ -24,11 +26,28 @@ export default function App() {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       setUserData(user);
+      console.log("user ", user.uid);
+      const u = getUserDetail(user.uid);
+      console.log("output", u);
       setLoggedIn(true);
     } else {
       setLoggedIn(false);
     }
   });
+
+  function getUserDetail(id) {
+    console.log("get user detail ", id);
+    const userRef = collection(database, "users");
+    let user = "";
+    getDocs(userRef, id).then((snapshots) => {
+      snapshots.forEach((doc) => {
+        if (doc.id === id) {
+          user = doc.data().username;
+        }
+      });
+    });
+    return user;
+  }
 
   return (
     <userContext.Provider value={userData}>
